@@ -1,4 +1,4 @@
-const STATIC_CACHE = 'zhytomyr-map-static-v2';
+const STATIC_CACHE = 'zhytomyr-map-static-v3';
 const DATA_CACHE = 'zhytomyr-map-data-v1';
 
 const PRECACHE_URLS = [
@@ -7,6 +7,8 @@ const PRECACHE_URLS = [
   './style.css',
   './app.js',
   './manifest.webmanifest',
+  './favicon.ico',
+  './icons/favicon-32.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',

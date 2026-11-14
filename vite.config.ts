@@ -15,7 +15,7 @@ export default defineConfig(() => {
         devOptions: {
           enabled: false,
         },
-        includeAssets: ['icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png'],
+        includeAssets: ['favicon.ico', 'icons/favicon-32.png', 'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png'],
         manifest: {
           id: './',
           name: 'Мапа відключень — Житомирська область',
