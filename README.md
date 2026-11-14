@@ -229,3 +229,8 @@ python scripts/build_geojson.py
 - **Рендеринг мапи**: **[MapLibre GL JS](https://maplibre.org/)** (ліцензія `BSD-3-Clause`).
 - **Дані про відключення**: узагальнена інформація виключно з відкритих публічних джерел; проєкт не відображає об'єкти критичної інфраструктури, підстанції чи лінії електропередач.
 
+
+
+
+[![Rehina Nanaka profile views](https://u8views.com/api/v1/github/profiles/212413806/views/day-week-month-total-count.svg)](https://u8views.com/github/reginanka)
+
