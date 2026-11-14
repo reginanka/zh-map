@@ -646,13 +646,19 @@
 
       // Назви 19 районів текстом (завжди видимі на мінімальному збільшенні)
       if (raionLabelsGeojson && Array.isArray(raionLabelsGeojson.features)) {
-        const labelEls = [];
+        const labelInners = [];
         for (const feat of raionLabelsGeojson.features) {
-          const el = document.createElement('div');
-          el.className = 'raion-label';
-          el.textContent = feat.properties.name;
-          labelEls.push(el);
-          new maplibregl.Marker({ element: el, anchor: 'center' })
+          const wrapper = document.createElement('div');
+          wrapper.style.pointerEvents = 'none';
+          wrapper.style.userSelect = 'none';
+
+          const inner = document.createElement('span');
+          inner.className = 'raion-label';
+          inner.textContent = feat.properties.name;
+          wrapper.appendChild(inner);
+          labelInners.push(inner);
+
+          new maplibregl.Marker({ element: wrapper, anchor: 'center' })
             .setLngLat(feat.geometry.coordinates)
             .addTo(map);
         }
@@ -661,9 +667,9 @@
           const z = map.getZoom();
           const opacity = z > 10.6 ? '0.35' : '1';
           const scale = z < 7.2 ? 'scale(0.9)' : 'scale(1)';
-          for (const el of labelEls) {
-            el.style.opacity = opacity;
-            el.style.transform = scale;
+          for (const inner of labelInners) {
+            inner.style.opacity = opacity;
+            inner.style.transform = scale;
           }
         };
         map.on('zoom', updateLabelVisibility);

@@ -600,6 +600,7 @@ body {
 }
 
 .raion-label {
+  display: inline-block;
   pointer-events: none;
   user-select: none;
   font-family: var(--font-sans);
