@@ -72,7 +72,7 @@ const ZHYTOMYR_CENTER: [number, number] = [28.66, 50.65];
 const ZHYTOMYR_ZOOM = 7.7;
 // Щоб брати дані з іншого репозиторію, замініть на:
 // 'https://raw.githubusercontent.com/<USER>/<REPO>/main/outages.json'
-const OUTAGES_URL = '/data/outages.json';
+const OUTAGES_URL = './data/outages.json';
 
 const DARK_ISOLATED_STYLE: maplibregl.StyleSpecification = {
   version: 8,
@@ -308,27 +308,32 @@ export default function App() {
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    const map = new maplibregl.Map({
-      container: mapContainerRef.current,
-      style: DARK_ISOLATED_STYLE,
-      center: ZHYTOMYR_CENTER,
-      zoom: ZHYTOMYR_ZOOM,
-      minZoom: 6.5,
-      maxZoom: 14,
-      attributionControl: false,
-    });
-    mapRef.current = map;
-
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+    let map: maplibregl.Map;
+    try {
+      map = new maplibregl.Map({
+        container: mapContainerRef.current,
+        style: DARK_ISOLATED_STYLE,
+        center: ZHYTOMYR_CENTER,
+        zoom: ZHYTOMYR_ZOOM,
+        minZoom: 6.5,
+        maxZoom: 14,
+        attributionControl: false,
+      });
+      mapRef.current = map;
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+    } catch {
+      setLoadError('Помилка ініціалізації мапи (WebGL)');
+      return;
+    }
 
     map.on('load', async () => {
       try {
         const [oblastRes, maskRes, raionsRes, labelsRes, geoRes, outagesRes] = await Promise.all([
-          fetch('/data/zhytomyr_oblast.geojson', { cache: 'no-cache' }),
-          fetch('/data/zhytomyr_mask.geojson', { cache: 'no-cache' }),
-          fetch('/data/zhytomyr_raions.geojson', { cache: 'no-cache' }),
-          fetch('/data/zhytomyr_raion_labels.geojson', { cache: 'no-cache' }),
-          fetch('/data/zhytomyr_villages.geojson', { cache: 'no-cache' }),
+          fetch('./data/zhytomyr_oblast.geojson', { cache: 'no-cache' }),
+          fetch('./data/zhytomyr_mask.geojson', { cache: 'no-cache' }),
+          fetch('./data/zhytomyr_raions.geojson', { cache: 'no-cache' }),
+          fetch('./data/zhytomyr_raion_labels.geojson', { cache: 'no-cache' }),
+          fetch('./data/zhytomyr_villages.geojson', { cache: 'no-cache' }),
           fetch(`${OUTAGES_URL}?t=${Date.now()}`, { cache: 'no-cache' }),
         ]);
 

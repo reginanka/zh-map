@@ -6,41 +6,42 @@ import {VitePWA} from 'vite-plugin-pwa';
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [
       react(),
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
         devOptions: {
-          enabled: true,
+          enabled: false,
         },
         includeAssets: ['icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png'],
         manifest: {
-          id: '/',
+          id: './',
           name: 'Мапа відключень — Житомирська область',
           short_name: 'Світло ЖТ',
           description: 'Інтерактивна мапа відключень електроенергії Житомирської області',
-          start_url: '/',
-          scope: '/',
+          start_url: './',
+          scope: './',
           display: 'standalone',
           theme_color: '#06080e',
           background_color: '#06080e',
           lang: 'uk',
           icons: [
             {
-              src: '/icons/icon-192.png',
+              src: './icons/icon-192.png',
               sizes: '192x192',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: '/icons/icon-512.png',
+              src: './icons/icon-512.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: '/icons/icon-512-maskable.png',
+              src: './icons/icon-512-maskable.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable',
@@ -52,7 +53,7 @@ export default defineConfig(() => {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,geojson}'],
           runtimeCaching: [
             {
-              urlPattern: /\/data\/outages\.json/,
+              urlPattern: /data\/outages\.json/,
               handler: 'NetworkFirst',
               options: {
                 cacheName: 'outages-data',
@@ -68,7 +69,7 @@ export default defineConfig(() => {
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve(import.meta.dirname, '.'),
       },
     },
     optimizeDeps: {

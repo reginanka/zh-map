@@ -130,17 +130,29 @@
   let hoveredFeatureId = null;
   let selectedFeatureId = null;
 
-  const map = new maplibregl.Map({
-    container: 'map',
-    style: DARK_ISOLATED_STYLE,
-    center: MAP_CONFIG.center,
-    zoom: MAP_CONFIG.zoom,
-    minZoom: MAP_CONFIG.minZoom,
-    maxZoom: MAP_CONFIG.maxZoom,
-    attributionControl: false,
-  });
+  if (typeof maplibregl === 'undefined') {
+    if (updatedAtEl) updatedAtEl.textContent = 'Не вдалося завантажити рушій мапи';
+    return;
+  }
 
-  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+  let map;
+  try {
+    map = new maplibregl.Map({
+      container: 'map',
+      style: DARK_ISOLATED_STYLE,
+      center: MAP_CONFIG.center,
+      zoom: MAP_CONFIG.zoom,
+      minZoom: MAP_CONFIG.minZoom,
+      maxZoom: MAP_CONFIG.maxZoom,
+      attributionControl: false,
+    });
+
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+  } catch (err) {
+    console.error(err);
+    if (updatedAtEl) updatedAtEl.textContent = 'Помилка ініціалізації мапи (WebGL)';
+    return;
+  }
 
   async function loadMapData() {
     const [oblastRes, maskRes, raionsRes, labelsRes, geoRes, outagesRes] = await Promise.all([
