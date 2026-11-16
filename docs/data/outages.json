@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-16T12:54:30.347261+00:00",
+  "updated_at": "2026-11-16T13:07:31.966796+00:00",
   "data": {
-    "бердичів": 32.6,
+    "бердичів": 30.0,
     "семенівка": 14.3,
     "іванківці": 12.5,
     "брусилів": 32.0,
@@ -137,8 +137,8 @@
     "нова діброва": 100.0
   },
   "summary": {
-    "off_percent": 6.6,
-    "off_streets": 1331,
+    "off_percent": 6.5,
+    "off_streets": 1320,
     "total_streets": 20239,
     "off_settlements": 142
   },
@@ -179,18 +179,18 @@
       "off_settlements_percent": 3.4
     },
     {
-      "name": "Бердичівський",
-      "off_percent": 12.3,
-      "off_streets": 142,
-      "off_settlements": 4,
-      "off_settlements_percent": 6.3
-    },
-    {
       "name": "Радомишльський",
       "off_percent": 11.6,
       "off_streets": 84,
       "off_settlements": 14,
       "off_settlements_percent": 17.7
+    },
+    {
+      "name": "Бердичівський",
+      "off_percent": 11.4,
+      "off_streets": 131,
+      "off_settlements": 4,
+      "off_settlements_percent": 6.3
     },
     {
       "name": "Житомирський",
