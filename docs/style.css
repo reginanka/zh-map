@@ -50,7 +50,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  height: 44px;
+  height: 46px;
+  min-height: 44px;
   padding: 0 14px;
   background: rgba(13, 16, 26, 0.88);
   backdrop-filter: blur(14px);
@@ -356,7 +357,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 44px;
+  height: 46px;
+  min-height: 44px;
+  min-width: 46px;
   padding: 0 14px;
   background: var(--glass-bg);
   backdrop-filter: blur(14px);
@@ -523,8 +526,8 @@ body {
   position: absolute;
   bottom: 16px;
   left: 16px;
-  z-index: 20;
-  width: min(276px, calc(100vw - 32px));
+  z-index: 25;
+  width: min(300px, calc(100vw - 32px));
   padding: 12px 14px;
   background: var(--glass-bg);
   backdrop-filter: blur(14px);
@@ -532,6 +535,9 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   box-shadow: var(--glass-shadow);
+  /* щоб контент під шкалою не обрізався */
+  max-height: none;
+  overflow: visible;
 }
 
 .legend-title {
@@ -637,7 +643,7 @@ body {
 
 @media (max-width: 640px) {
   .situation-btn {
-    top: max(12px, env(safe-area-inset-top));
+    top: max(12px, env(safe-area-inset-top, 0px));
     left: 12px;
     height: 48px;
     padding: 0 14px;
@@ -650,7 +656,7 @@ body {
   }
 
   .reset-view-btn {
-    top: max(12px, env(safe-area-inset-top));
+    top: max(12px, env(safe-area-inset-top, 0px));
     right: 12px;
     height: 48px;
     min-width: 48px;
@@ -659,18 +665,17 @@ body {
     gap: 8px;
   }
 
-  /* залишаємо підпис — інакше кнопка виглядає занадто малою */
   .reset-view-label {
     display: inline;
   }
 
   .legend-panel {
-    bottom: max(12px, env(safe-area-inset-bottom));
+    bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px));
     left: 12px;
     right: 12px;
     width: auto;
     max-width: none;
-    padding: 12px 14px;
+    padding: 12px 14px 14px;
     z-index: 25;
   }
 
@@ -689,18 +694,26 @@ body {
   }
 
   .legend-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 6px;
     font-size: 12px;
     margin-top: 10px;
-    flex-wrap: wrap;
+    padding-top: 8px;
+    line-height: 1.35;
   }
 
   .legend-disclaimer {
+    display: block;
+    margin-top: 6px;
     font-size: 11px;
+    line-height: 1.35;
+    color: rgba(148, 163, 184, 0.85);
   }
 
   .selected-card {
     bottom: auto;
-    top: calc(max(12px, env(safe-area-inset-top)) + 56px);
+    top: calc(max(12px, env(safe-area-inset-top, 0px)) + 56px);
     right: 12px;
     left: 12px;
     width: auto;
@@ -708,6 +721,24 @@ body {
 
   .maplibregl-ctrl-bottom-right {
     display: none;
+  }
+}
+
+/* Сенсорні екрани / «версія для комп’ютера» на телефоні — кнопки не дрібнішають */
+@media (hover: none) and (pointer: coarse) {
+  .situation-btn,
+  .reset-view-btn {
+    min-height: 48px;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .reset-view-label {
+    display: inline;
+  }
+
+  .legend-panel {
+    bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px));
   }
 }
 

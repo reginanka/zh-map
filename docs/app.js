@@ -9,8 +9,8 @@
 
   const MAP_CONFIG = {
     center: [28.66, 50.65],
-    zoom: 7.7,
-    minZoom: 6.5,
+    zoom: 7.2,
+    minZoom: 6.0,
     maxZoom: 14,
     oblastGeojsonUrl: './data/zhytomyr_oblast.geojson',
     maskGeojsonUrl: './data/zhytomyr_mask.geojson',
@@ -801,6 +801,24 @@
             'line-opacity': 0.95,
           },
         });
+      }
+
+
+      // Підігнати область під екран (особливо важливо на мобільних)
+      if (oblastGeojson && oblastGeojson.features && oblastGeojson.features.length) {
+        try {
+          const ob = getFeatureBounds(oblastGeojson.features[0].geometry);
+          const isNarrow = window.innerWidth < 640;
+          map.fitBounds(ob, {
+            padding: isNarrow
+              ? { top: 72, bottom: 140, left: 20, right: 20 }
+              : { top: 48, bottom: 100, left: 40, right: 40 },
+            duration: 0,
+            maxZoom: 8.5,
+          });
+        } catch (e) {
+          console.warn('fitBounds oblast', e);
+        }
       }
 
       // Назви 19 районів текстом (завжди видимі на мінімальному збільшенні)
