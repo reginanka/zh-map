@@ -1,7 +1,16 @@
 {
-  "updated_at": "2026-11-16T19:54:31.734453+00:00",
+  "updated_at": "2026-11-16T20:08:12.293620+00:00",
   "data": {
-    "містечко": 60.0,
+    "брусилів": 10.3,
+    "привороття": 35.3,
+    "нові озеряни": 100.0,
+    "костівці": 100.0,
+    "містечко": 100.0,
+    "ковганівка": 100.0,
+    "осівці": 70.0,
+    "йосипівка": 14.3,
+    "ставище": 11.1,
+    "високе": 5.9,
     "будо-рижани": 100.0,
     "радичі": 100.0,
     "стебниця": 100.0,
@@ -38,10 +47,10 @@
     "дослідне": 100.0
   },
   "summary": {
-    "off_percent": 1.7,
-    "off_streets": 338,
+    "off_percent": 1.9,
+    "off_streets": 388,
     "total_streets": 20239,
-    "off_settlements": 35
+    "off_settlements": 44
   },
   "raions": [
     {
@@ -50,6 +59,13 @@
       "off_streets": 211,
       "off_settlements": 18,
       "off_settlements_percent": 31.0
+    },
+    {
+      "name": "Брусилівський",
+      "off_percent": 14.8,
+      "off_streets": 53,
+      "off_settlements": 10,
+      "off_settlements_percent": 33.3
     },
     {
       "name": "Любарський",
@@ -64,13 +80,6 @@
       "off_streets": 40,
       "off_settlements": 6,
       "off_settlements_percent": 8.6
-    },
-    {
-      "name": "Брусилівський",
-      "off_percent": 0.8,
-      "off_streets": 3,
-      "off_settlements": 1,
-      "off_settlements_percent": 3.3
     },
     {
       "name": "Житомирський",
