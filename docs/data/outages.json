@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16T13:54:34.315646+00:00",
+  "updated_at": "2026-11-16T14:07:35.391283+00:00",
   "data": {
     "зарубинці": 38.5,
     "яроповичі": 100.0,
@@ -87,10 +87,10 @@
     "мишерине": 100.0,
     "криве": 100.0,
     "рудка": 100.0,
-    "корнин": 81.2,
+    "корнин": 100.0,
     "ходорків": 100.0,
     "королівка": 100.0,
-    "корнинське": 5.3,
+    "корнинське": 100.0,
     "пустельники": 100.0,
     "відродження": 100.0,
     "липки": 95.7,
@@ -146,8 +146,8 @@
     "нова діброва": 100.0
   },
   "summary": {
-    "off_percent": 6.6,
-    "off_streets": 1335,
+    "off_percent": 6.7,
+    "off_streets": 1366,
     "total_streets": 20239,
     "off_settlements": 152
   },
@@ -174,18 +174,18 @@
       "off_settlements_percent": 37.9
     },
     {
+      "name": "Попільнянський",
+      "off_percent": 17.2,
+      "off_streets": 244,
+      "off_settlements": 20,
+      "off_settlements_percent": 21.7
+    },
+    {
       "name": "Малинський",
       "off_percent": 15.8,
       "off_streets": 178,
       "off_settlements": 27,
       "off_settlements_percent": 26.0
-    },
-    {
-      "name": "Попільнянський",
-      "off_percent": 15.0,
-      "off_streets": 213,
-      "off_settlements": 20,
-      "off_settlements_percent": 21.7
     },
     {
       "name": "Андрушівський",
