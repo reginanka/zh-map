@@ -7,6 +7,30 @@
     });
   }
 
+  // Масштаб інтерфейсу для телефона в режимі «версія для комп'ютера»:
+  // там сторінка рендериться у ~980px і кнопки/легенда дрібніють.
+  // Масштаб = ширина layout-viewport / ширина екрана пристрою (не залежить від pinch-zoom).
+  function applyUiScale() {
+    const root = document.documentElement;
+    let s = 1;
+    try {
+      const coarse = window.matchMedia('(pointer: coarse)').matches;
+      const layoutW = root.clientWidth || window.innerWidth;
+      const screenW = window.screen && window.screen.width ? window.screen.width : layoutW;
+      if (coarse && layoutW > 640 && screenW > 0) {
+        const ratio = layoutW / screenW;
+        if (ratio > 1.15) s = Math.min(ratio, 3);
+      }
+    } catch (e) {
+      s = 1;
+    }
+    root.style.setProperty('--s', s.toFixed(3));
+    root.classList.toggle('is-ui-scaled', s > 1);
+  }
+  applyUiScale();
+  window.addEventListener('resize', applyUiScale);
+  window.addEventListener('orientationchange', applyUiScale);
+
   const MAP_CONFIG = {
     center: [28.66, 50.65],
     zoom: 7.2,
