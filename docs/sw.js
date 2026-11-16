@@ -1,5 +1,5 @@
-const STATIC_CACHE = 'zhytomyr-map-static-v3';
-const DATA_CACHE = 'zhytomyr-map-data-v1';
+const STATIC_CACHE = 'zhytomyr-map-static-v4';
+const DATA_CACHE = 'zhytomyr-map-data-v2';
 
 const PRECACHE_URLS = [
   './',
@@ -49,18 +49,28 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
 
-  // Network-First для актуальних статусів відключень (outages.json)
+  // Network-First для outages.json — без віддачі застарілого кешу при успішній мережі
   if (url.pathname.endsWith('/outages.json') || url.pathname.endsWith('outages.json')) {
     event.respondWith(
-      fetch(req)
+      fetch(req, { cache: 'no-store' })
         .then((res) => {
           if (res && res.ok) {
             const copy = res.clone();
-            caches.open(DATA_CACHE).then((cache) => cache.put('./data/outages.json', copy));
+            caches.open(DATA_CACHE).then((cache) => {
+              cache.put('./data/outages.json', copy);
+            });
           }
           return res;
         })
-        .catch(() => caches.match('./data/outages.json'))
+        .catch(() =>
+          caches.match('./data/outages.json').then((cached) => {
+            if (cached) return cached;
+            return new Response(
+              JSON.stringify({ updated_at: null, data: {}, summary: null, raions: [] }),
+              { headers: { 'Content-Type': 'application/json' }, status: 200 }
+            );
+          })
+        )
     );
     return;
   }

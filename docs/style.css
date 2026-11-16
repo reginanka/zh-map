@@ -659,3 +659,20 @@ body {
     display: none;
   }
 }
+
+
+/* Анімація кнопки оновлення даних */
+.refresh-icon {
+  transition: transform 0.2s ease;
+}
+.reset-view-btn.is-refreshing {
+  pointer-events: none;
+  opacity: 0.85;
+}
+.refresh-icon.is-spinning {
+  animation: zh-refresh-spin 0.8s linear infinite;
+}
+@keyframes zh-refresh-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

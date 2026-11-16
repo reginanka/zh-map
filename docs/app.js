@@ -22,6 +22,9 @@
     outagesUrl: './data/outages.json',
   };
 
+  // Автооновлення даних відключень (хвилини)
+  const AUTO_REFRESH_MINUTES = 10;
+
   // Порожній темний стиль — видно ТІЛЬКИ Житомирську область, без сусідніх областей
   const DARK_ISOLATED_STYLE = {
     version: 8,
@@ -110,7 +113,7 @@
   const raionsList = document.getElementById('raions-list');
   const villagesList = document.getElementById('villages-list');
   const modalVillageSearch = document.getElementById('modal-village-search');
-  const resetViewBtn = document.getElementById('reset-view-btn');
+  const refreshDataBtn = document.getElementById('refresh-data-btn');
   const hoverTooltip = document.getElementById('hover-tooltip');
   const selectedCard = document.getElementById('selected-card');
   const selectedName = document.getElementById('selected-name');
@@ -161,7 +164,10 @@
       fetch(MAP_CONFIG.raionsGeojsonUrl, { cache: 'no-cache' }),
       fetch(MAP_CONFIG.raionLabelsUrl, { cache: 'no-cache' }),
       fetch(MAP_CONFIG.geojsonUrl, { cache: 'no-cache' }),
-      fetch(`${MAP_CONFIG.outagesUrl}?t=${Date.now()}`, { cache: 'no-cache' }),
+      fetch(`${MAP_CONFIG.outagesUrl}?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' },
+      }),
     ]);
 
     if (!geoRes.ok) throw new Error('Не вдалося завантажити GeoJSON');
@@ -179,12 +185,25 @@
     const outagesMap = outagesPayload.data || {};
     updatedAtEl.textContent = `Оновлено: ${formatUpdatedAt(outagesPayload.updated_at)}`;
 
+    window.__zhLastVillagesGeojson = geojson;
     settlementsIndex = [];
     geojson.features.forEach((feat, idx) => {
       const props = feat.properties || {};
       const id = String(props.id ?? idx);
-      const rawPct = outagesMap[id];
-      const pct = rawPct !== undefined && rawPct !== null ? Number(rawPct) : 0;
+      let pct = 0;
+      if (outagesMap[id] !== undefined && outagesMap[id] !== null) {
+        pct = Number(outagesMap[id]);
+      } else {
+        const nameKey = String(props.name || '')
+          .toLowerCase()
+          .replace(/^с\.\s*/u, '')
+          .replace(/^місто\s+/u, '')
+          .replace(/^м\.\s*/u, '')
+          .trim();
+        if (nameKey && outagesMap[nameKey] !== undefined && outagesMap[nameKey] !== null) {
+          pct = Number(outagesMap[nameKey]);
+        }
+      }
 
       feat.id = idx;
       feat.properties = {
@@ -220,6 +239,129 @@
 
     updateSituationStats(outagesPayload);
     return { oblastGeojson, maskGeojson, raionsGeojson, raionLabelsGeojson, geojson };
+  }
+
+  function lookupOutagePct(outagesMap, featureId, featureName) {
+    if (!outagesMap) return 0;
+    if (featureId != null && outagesMap[featureId] !== undefined && outagesMap[featureId] !== null) {
+      return Number(outagesMap[featureId]);
+    }
+    const nameKey = String(featureName || '')
+      .toLowerCase()
+      .replace(/^с\.\s*/u, '')
+      .replace(/^місто\s+/u, '')
+      .replace(/^м\.\s*/u, '')
+      .trim();
+    if (nameKey && outagesMap[nameKey] !== undefined && outagesMap[nameKey] !== null) {
+      return Number(outagesMap[nameKey]);
+    }
+    return 0;
+  }
+
+  async function fetchOutagesPayload() {
+    const url = `${MAP_CONFIG.outagesUrl}?t=${Date.now()}`;
+    const res = await fetch(url, {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' },
+    });
+    if (!res.ok) throw new Error(`outages HTTP ${res.status}`);
+    return res.json();
+  }
+
+  function applyOutagesToMap(outagesPayload) {
+    if (!map || !map.getSource('villages')) return;
+
+    const outagesMap = outagesPayload.data || {};
+    const src = map.getSource('villages');
+    const data = src._data || src.serialize?.()?.data;
+    // MapLibre GeoJSONSource: get own copy via _data if available
+    let geojson = null;
+    try {
+      // Prefer internal data if present
+      if (src._data) geojson = JSON.parse(JSON.stringify(src._data));
+    } catch (_) {}
+
+    // Rebuild from settlementsIndex + update source features
+    // Safer path: re-fetch is heavy; mutate feature properties via setData
+    // We keep last geojson on window-scoped var
+    if (!window.__zhLastVillagesGeojson) return;
+
+    geojson = JSON.parse(JSON.stringify(window.__zhLastVillagesGeojson));
+    settlementsIndex = [];
+    geojson.features.forEach((feat, idx) => {
+      const props = feat.properties || {};
+      const id = String(props.id ?? idx);
+      const pct = lookupOutagePct(outagesMap, id, props.name);
+      feat.id = idx;
+      feat.properties = {
+        ...props,
+        id,
+        outage_percent: pct,
+        fill_color: computeOutageColor(pct),
+      };
+      const ring = feat.geometry.coordinates?.[0] || [];
+      let cx = 0;
+      let cy = 0;
+      if (ring.length > 0) {
+        for (const pt of ring) {
+          cx += pt[0];
+          cy += pt[1];
+        }
+        cx /= ring.length;
+        cy /= ring.length;
+      }
+      settlementsIndex.push({
+        featureId: idx,
+        id,
+        name: props.name || 'Без назви',
+        hromada: props.hromada || '',
+        pct,
+        center: [cx, cy],
+        geometry: feat.geometry,
+        searchKey: `${(props.name || '').toLowerCase()} ${(props.hromada || '').toLowerCase()}`,
+      });
+    });
+
+    src.setData(geojson);
+    window.__zhLastVillagesGeojson = geojson;
+    if (updatedAtEl) {
+      updatedAtEl.textContent = `Оновлено: ${formatUpdatedAt(outagesPayload.updated_at)}`;
+    }
+    updateSituationStats(outagesPayload);
+  }
+
+  let refreshInFlight = false;
+  async function refreshOutagesData({ silent = false } = {}) {
+    if (refreshInFlight) return false;
+    refreshInFlight = true;
+    const icon = refreshDataBtn?.querySelector('.refresh-icon');
+    if (!silent && refreshDataBtn) {
+      refreshDataBtn.classList.add('is-refreshing');
+      icon?.classList.add('is-spinning');
+    }
+    try {
+      const payload = await fetchOutagesPayload();
+      applyOutagesToMap(payload);
+      return true;
+    } catch (err) {
+      console.error('refreshOutagesData', err);
+      if (!silent && updatedAtEl) {
+        const prev = updatedAtEl.textContent;
+        updatedAtEl.textContent = 'Не вдалося оновити';
+        setTimeout(() => {
+          if (updatedAtEl.textContent === 'Не вдалося оновити') {
+            updatedAtEl.textContent = prev;
+          }
+        }, 2500);
+      }
+      return false;
+    } finally {
+      refreshInFlight = false;
+      if (refreshDataBtn) {
+        refreshDataBtn.classList.remove('is-refreshing');
+        icon?.classList.remove('is-spinning');
+      }
+    }
   }
 
   function showSelectedCard(props) {
@@ -468,12 +610,29 @@
     renderVillagesModalList(e.target.value);
   });
 
-  resetViewBtn.addEventListener('click', () => {
-    map.flyTo({
-      center: MAP_CONFIG.center,
-      zoom: MAP_CONFIG.zoom,
-      duration: 750,
+  if (refreshDataBtn) {
+    refreshDataBtn.addEventListener('click', async () => {
+      await refreshOutagesData({ silent: false });
+      map.flyTo({
+        center: MAP_CONFIG.center,
+        zoom: MAP_CONFIG.zoom,
+        duration: 750,
+      });
     });
+  }
+
+  // Автооновлення раз на N хвилин (лише коли вкладка видима)
+  setInterval(() => {
+    if (document.visibilityState === 'visible') {
+      refreshOutagesData({ silent: true });
+    }
+  }, AUTO_REFRESH_MINUTES * 60 * 1000);
+
+  // Оновити одразу після повернення в застосунок
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      refreshOutagesData({ silent: true });
+    }
   });
 
   selectedClose.addEventListener('click', clearSelection);
