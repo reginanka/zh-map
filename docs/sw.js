@@ -1,4 +1,4 @@
-const STATIC_CACHE = 'zhytomyr-map-static-v5';
+const STATIC_CACHE = 'zhytomyr-map-static-v6';
 const DATA_CACHE = 'zhytomyr-map-data-v2';
 
 const PRECACHE_URLS = [

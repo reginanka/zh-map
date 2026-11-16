@@ -207,6 +207,7 @@
     }
 
     const outagesMap = outagesPayload.data || {};
+    const normalizedOutagesMap = buildNormalizedOutagesMap(outagesMap);
     updatedAtEl.textContent = `Оновлено: ${formatUpdatedAt(outagesPayload.updated_at)}`;
 
     window.__zhLastVillagesGeojson = geojson;
@@ -214,20 +215,7 @@
     geojson.features.forEach((feat, idx) => {
       const props = feat.properties || {};
       const id = String(props.id ?? idx);
-      let pct = 0;
-      if (outagesMap[id] !== undefined && outagesMap[id] !== null) {
-        pct = Number(outagesMap[id]);
-      } else {
-        const nameKey = String(props.name || '')
-          .toLowerCase()
-          .replace(/^с\.\s*/u, '')
-          .replace(/^місто\s+/u, '')
-          .replace(/^м\.\s*/u, '')
-          .trim();
-        if (nameKey && outagesMap[nameKey] !== undefined && outagesMap[nameKey] !== null) {
-          pct = Number(outagesMap[nameKey]);
-        }
-      }
+      const pct = lookupOutagePct(outagesMap, normalizedOutagesMap, id, props.name);
 
       feat.id = idx;
       feat.properties = {
@@ -237,17 +225,7 @@
         fill_color: computeOutageColor(pct),
       };
 
-      const ring = feat.geometry.coordinates?.[0] || [];
-      let cx = 0;
-      let cy = 0;
-      if (ring.length > 0) {
-        for (const pt of ring) {
-          cx += pt[0];
-          cy += pt[1];
-        }
-        cx /= ring.length;
-        cy /= ring.length;
-      }
+      const center = getGeometryCenter(feat.geometry);
 
       settlementsIndex.push({
         featureId: idx,
@@ -255,9 +233,9 @@
         name: props.name || 'Без назви',
         hromada: props.hromada || '',
         pct,
-        center: [cx, cy],
+        center,
         geometry: feat.geometry,
-        searchKey: `${(props.name || '').toLowerCase()} ${(props.hromada || '').toLowerCase()}`,
+        searchKey: `${normalizeOutageKey(props.name)} ${normalizeOutageKey(props.hromada)}`,
       });
     });
 
@@ -265,19 +243,62 @@
     return { oblastGeojson, maskGeojson, raionsGeojson, raionLabelsGeojson, geojson };
   }
 
-  function lookupOutagePct(outagesMap, featureId, featureName) {
+  function normalizeOutageKey(raw) {
+    return String(raw || '')
+      .toLowerCase()
+      .replace(/[\u2019\u2018\u02bc\u02bb\u2032`]/g, "'")
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function buildNormalizedOutagesMap(outagesMap) {
+    const normalized = Object.create(null);
+    if (!outagesMap || typeof outagesMap !== 'object') return normalized;
+    for (const [k, v] of Object.entries(outagesMap)) {
+      if (v === undefined || v === null) continue;
+      const nk = normalizeOutageKey(k);
+      if (!nk) continue;
+      const num = Number(v);
+      if (!Number.isFinite(num)) continue;
+      if (normalized[nk] === undefined || num > normalized[nk]) {
+        normalized[nk] = num;
+      }
+    }
+    return normalized;
+  }
+
+  function getGeometryCenter(geometry) {
+    if (!geometry) return [0, 0];
+    const ring = geometry.type === 'MultiPolygon'
+      ? (geometry.coordinates?.[0]?.[0] || [])
+      : (geometry.coordinates?.[0] || []);
+    let cx = 0;
+    let cy = 0;
+    if (ring.length > 0) {
+      for (const pt of ring) {
+        cx += pt[0];
+        cy += pt[1];
+      }
+      cx /= ring.length;
+      cy /= ring.length;
+    }
+    return [cx, cy];
+  }
+
+  function lookupOutagePct(outagesMap, normalizedOutagesMap, featureId, featureName) {
     if (!outagesMap) return 0;
     if (featureId != null && outagesMap[featureId] !== undefined && outagesMap[featureId] !== null) {
       return Number(outagesMap[featureId]);
     }
-    const nameKey = String(featureName || '')
-      .toLowerCase()
-      .replace(/^с\.\s*/u, '')
-      .replace(/^місто\s+/u, '')
-      .replace(/^м\.\s*/u, '')
+    const normId = normalizeOutageKey(featureId);
+    if (normId && normalizedOutagesMap[normId] !== undefined) {
+      return normalizedOutagesMap[normId];
+    }
+    const nameKey = normalizeOutageKey(featureName)
+      .replace(/^(?:с\.|село|місто|м\.|селище|смт\.?)\s+/u, '')
       .trim();
-    if (nameKey && outagesMap[nameKey] !== undefined && outagesMap[nameKey] !== null) {
-      return Number(outagesMap[nameKey]);
+    if (nameKey && normalizedOutagesMap[nameKey] !== undefined) {
+      return normalizedOutagesMap[nameKey];
     }
     return 0;
   }
@@ -296,6 +317,7 @@
     if (!map || !map.getSource('villages')) return;
 
     const outagesMap = outagesPayload.data || {};
+    const normalizedOutagesMap = buildNormalizedOutagesMap(outagesMap);
     const src = map.getSource('villages');
     const data = src._data || src.serialize?.()?.data;
     // MapLibre GeoJSONSource: get own copy via _data if available
@@ -315,7 +337,7 @@
     geojson.features.forEach((feat, idx) => {
       const props = feat.properties || {};
       const id = String(props.id ?? idx);
-      const pct = lookupOutagePct(outagesMap, id, props.name);
+      const pct = lookupOutagePct(outagesMap, normalizedOutagesMap, id, props.name);
       feat.id = idx;
       feat.properties = {
         ...props,
@@ -323,26 +345,16 @@
         outage_percent: pct,
         fill_color: computeOutageColor(pct),
       };
-      const ring = feat.geometry.coordinates?.[0] || [];
-      let cx = 0;
-      let cy = 0;
-      if (ring.length > 0) {
-        for (const pt of ring) {
-          cx += pt[0];
-          cy += pt[1];
-        }
-        cx /= ring.length;
-        cy /= ring.length;
-      }
+      const center = getGeometryCenter(feat.geometry);
       settlementsIndex.push({
         featureId: idx,
         id,
         name: props.name || 'Без назви',
         hromada: props.hromada || '',
         pct,
-        center: [cx, cy],
+        center,
         geometry: feat.geometry,
-        searchKey: `${(props.name || '').toLowerCase()} ${(props.hromada || '').toLowerCase()}`,
+        searchKey: `${normalizeOutageKey(props.name)} ${normalizeOutageKey(props.hromada)}`,
       });
     });
 
@@ -436,7 +448,7 @@
   let cachedOffVillages = [];
 
   function renderVillagesModalList(query) {
-    const q = (query || '').trim().toLowerCase();
+    const q = normalizeOutageKey(query);
     const list = q
       ? settlementsIndex
           .filter((item) => item.searchKey.includes(q))
