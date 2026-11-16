@@ -297,7 +297,7 @@ export default function App() {
   }, [settlements, outagesSummary, outagesRaions]);
 
   const filteredModalVillages = useMemo(() => {
-    const q = modalSearch.trim().toLowerCase();
+    const q = modalSearch.trim().toLowerCase().replace(/[\u2019\u2018\u02bc\u02bb\u2032`]/g, "'");
     if (!q) return situationStats.offVillages.slice(0, 150);
     return settlements
       .filter((item) => item.searchKey.includes(q))
@@ -355,14 +355,41 @@ export default function App() {
         setOutagesSummary(outagesPayload.summary ?? null);
         setOutagesRaions(outagesPayload.raions ?? null);
 
+        const normalizeOutageKey = (raw: unknown): string =>
+          String(raw || '')
+            .toLowerCase()
+            .replace(/[\u2019\u2018\u02bc\u02bb\u2032`]/g, "'")
+            .replace(/\s+/g, ' ')
+            .trim();
+
+        const outagesMap = outagesPayload.data || {};
+        const normalizedOutagesMap: Record<string, number> = {};
+        for (const [k, v] of Object.entries(outagesMap)) {
+          if (v === undefined || v === null) continue;
+          const nk = normalizeOutageKey(k);
+          const num = Number(v);
+          if (nk && Number.isFinite(num)) {
+            if (normalizedOutagesMap[nk] === undefined || num > normalizedOutagesMap[nk]) {
+              normalizedOutagesMap[nk] = num;
+            }
+          }
+        }
+
         const indexList: SettlementItem[] = [];
         geojson.features.forEach((feat: GeoJsonFeature, idx: number) => {
           const props = (feat.properties || {}) as Record<string, unknown>;
           const id = String(props.id ?? idx);
-          const rawPct = outagesPayload.data?.[id];
-          const pct = rawPct !== undefined && rawPct !== null ? Number(rawPct) : 0;
           const name = String(props.name || 'Без назви');
           const hromada = String(props.hromada || '');
+          const normId = normalizeOutageKey(id);
+          const strippedName = normalizeOutageKey(name)
+            .replace(/^(?:с\.|село|місто|м\.|селище|смт\.?)\s+/u, '')
+            .trim();
+          const rawPct =
+            outagesMap[id] ??
+            normalizedOutagesMap[normId] ??
+            normalizedOutagesMap[strippedName];
+          const pct = rawPct !== undefined && rawPct !== null ? Number(rawPct) : 0;
 
           feat.id = idx;
           feat.properties = {
@@ -373,7 +400,10 @@ export default function App() {
             fill_color: computeOutageColor(pct),
           };
 
-          const ring = (feat.geometry.coordinates as number[][][])?.[0] || [];
+          const ring =
+            feat.geometry.type === 'MultiPolygon'
+              ? ((feat.geometry.coordinates as number[][][][])?.[0]?.[0] || [])
+              : ((feat.geometry.coordinates as number[][][])?.[0] || []);
           let cx = 0;
           let cy = 0;
           if (ring.length > 0) {
@@ -393,7 +423,7 @@ export default function App() {
             pct,
             center: [cx, cy],
             geometry: feat.geometry,
-            searchKey: `${name.toLowerCase()} ${hromada.toLowerCase()}`,
+            searchKey: `${normalizeOutageKey(name)} ${normalizeOutageKey(hromada)}`,
           });
         });
 
