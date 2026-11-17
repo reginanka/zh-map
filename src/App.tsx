@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { BarChart3, RotateCcw, Search, X } from 'lucide-react';
 
 interface GeoJsonGeometry {
@@ -67,6 +68,9 @@ interface OutagesPayload {
   raions?: OutagesRaionItem[];
   data: Record<string, number>;
 }
+
+// MapLibre 6 шукає воркер поруч із бандлом, а Vite його туди не кладе — вказуємо файл явно.
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 const ZHYTOMYR_CENTER: [number, number] = [28.66, 50.65];
 const ZHYTOMYR_ZOOM = 7.7;
@@ -820,7 +824,7 @@ export default function App() {
   };
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden bg-[#06080e]">
+    <main className="fixed inset-0 overflow-hidden bg-[#06080e]">
       <div
         ref={mapContainerRef}
         className="w-full h-full"
