@@ -1,26 +1,15 @@
 {
-  "updated_at": "2026-11-17T09:33:32.225470+00:00",
+  "updated_at": "2026-11-17T09:54:34.755092+00:00",
   "data": {
     "містечко": 60.0,
     "житомир": 0.7,
-    "троянів": 48.9,
-    "пилипівка": 5.0,
     "оліївка": 9.4,
-    "рудня-городище": 100.0,
-    "роздольне": 100.0,
-    "гай": 100.0,
-    "соснівка": 100.0,
-    "глибочок": 7.7,
     "піски": 50.0,
     "ставище": 90.0,
     "почуйки": 100.0,
     "теснівка": 12.5,
     "коростишів": 41.1,
     "мамрин": 30.8,
-    "коростень": 1.2,
-    "хотинівка": 6.7,
-    "іскорость": 87.5,
-    "купеч": 25.0,
     "давидки": 30.0,
     "селець": 100.0,
     "мотійки": 100.0,
@@ -73,10 +62,10 @@
     "гранітне": 100.0
   },
   "summary": {
-    "off_percent": 2.9,
-    "off_streets": 596,
+    "off_percent": 2.6,
+    "off_streets": 518,
     "total_streets": 20239,
-    "off_settlements": 75
+    "off_settlements": 64
   },
   "raions": [
     {
@@ -101,13 +90,6 @@
       "off_settlements_percent": 14.8
     },
     {
-      "name": "Житомирський",
-      "off_percent": 2.9,
-      "off_streets": 80,
-      "off_settlements": 9,
-      "off_settlements_percent": 10.6
-    },
-    {
       "name": "Попільнянський",
       "off_percent": 1.7,
       "off_streets": 24,
@@ -115,18 +97,18 @@
       "off_settlements_percent": 5.4
     },
     {
-      "name": "Коростенський",
-      "off_percent": 0.8,
-      "off_streets": 13,
-      "off_settlements": 4,
-      "off_settlements_percent": 2.8
-    },
-    {
       "name": "Брусилівський",
       "off_percent": 0.8,
       "off_streets": 3,
       "off_settlements": 1,
       "off_settlements_percent": 3.3
+    },
+    {
+      "name": "Житомирський",
+      "off_percent": 0.5,
+      "off_streets": 15,
+      "off_settlements": 2,
+      "off_settlements_percent": 2.4
     }
   ]
 }
