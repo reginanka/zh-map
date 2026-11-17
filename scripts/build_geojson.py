@@ -387,7 +387,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--output",
-        default="docs/data/zhytomyr_villages.geojson",
+        default="public/data/zhytomyr_villages.geojson",
         help="Шлях до підсумкового GeoJSON файлу",
     )
     parser.add_argument(
