@@ -50,7 +50,7 @@ export default defineConfig(() => {
         },
         workbox: {
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,geojson}'],
+          globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,geojson}'],
           runtimeCaching: [
             {
               urlPattern: /data\/outages\.json/,
