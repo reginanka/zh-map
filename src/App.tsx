@@ -72,8 +72,20 @@ interface OutagesPayload {
 // MapLibre 6 шукає воркер поруч із бандлом, а Vite його туди не кладе — вказуємо файл явно.
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
-const ZHYTOMYR_CENTER: [number, number] = [28.66, 50.65];
-const ZHYTOMYR_ZOOM = 7.7;
+const ZHYTOMYR_BOUNDS: [[number, number], [number, number]] = [
+  [27.1864173, 49.5836448],
+  [29.7352238, 51.6811359],
+];
+const VILLAGE_LABEL_ZOOM_OFFSET = 0.45;
+const VILLAGE_LABEL_NO_COLLISION_ZOOM = 11.5;
+
+function getOblastFitPadding(): maplibregl.PaddingOptions {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  if (isMobile) {
+    return { top: 76, bottom: 156, left: 18, right: 18 };
+  }
+  return { top: 44, bottom: 44, left: 48, right: 48 };
+}
 // Щоб брати дані з іншого репозиторію, замініть на:
 // 'https://raw.githubusercontent.com/<USER>/<REPO>/main/outages.json'
 const OUTAGES_URL = './data/outages.json';
@@ -151,6 +163,7 @@ export default function App() {
   const mapRef = useRef<maplibregl.Map | null>(null);
   const hoveredIdRef = useRef<number | null>(null);
   const selectedIdRef = useRef<number | null>(null);
+  const hasUserInteractedRef = useRef(false);
   const [settlements, setSettlements] = useState<SettlementItem[]>([]);
   const [outagesSummary, setOutagesSummary] = useState<OutagesSummary | null>(null);
   const [outagesRaions, setOutagesRaions] = useState<OutagesRaionItem[] | null>(null);
@@ -313,18 +326,57 @@ export default function App() {
     if (!mapContainerRef.current) return;
 
     let map: maplibregl.Map;
+    let baseOverviewZoom = 7.0;
+    const getVillageMinZoom = () => baseOverviewZoom + VILLAGE_LABEL_ZOOM_OFFSET;
+    let refreshLabelVisibility: (() => void) | null = null;
+    let refreshVillageLabels: (() => void) | null = null;
+
+    const syncOverviewMetrics = () => {
+      const cam = map.cameraForBounds(ZHYTOMYR_BOUNDS, {
+        padding: getOblastFitPadding(),
+      });
+      if (cam?.zoom !== undefined) {
+        baseOverviewZoom = cam.zoom;
+      } else {
+        baseOverviewZoom = map.getZoom();
+      }
+      map.setMinZoom(Math.max(4.5, baseOverviewZoom - 0.08));
+    };
+
     try {
       map = new maplibregl.Map({
         container: mapContainerRef.current,
         style: DARK_ISOLATED_STYLE,
-        center: ZHYTOMYR_CENTER,
-        zoom: ZHYTOMYR_ZOOM,
-        minZoom: 6.5,
+        bounds: ZHYTOMYR_BOUNDS,
+        fitBoundsOptions: {
+          padding: getOblastFitPadding(),
+        },
+        minZoom: 4.5,
         maxZoom: 14,
         attributionControl: false,
       });
       mapRef.current = map;
+      syncOverviewMetrics();
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+
+      const markUserInteracted = (e: { originalEvent?: unknown }) => {
+        if (e.originalEvent) {
+          hasUserInteractedRef.current = true;
+        }
+      };
+      map.on('dragstart', markUserInteracted);
+      map.on('zoomstart', markUserInteracted);
+      map.on('resize', () => {
+        syncOverviewMetrics();
+        if (!hasUserInteractedRef.current) {
+          map.fitBounds(ZHYTOMYR_BOUNDS, {
+            padding: getOblastFitPadding(),
+            duration: 0,
+          });
+        }
+        refreshLabelVisibility?.();
+        refreshVillageLabels?.();
+      });
     } catch {
       setLoadError('Помилка ініціалізації мапи (WebGL)');
       return;
@@ -595,46 +647,54 @@ export default function App() {
           });
         }
 
-        // Назви 19 районів текстом (завжди видимі на мінімальному збільшенні)
+        // Назви 19 районів текстом (видимі на загальному огляді, зникають при наближенні)
         if (raionLabelsGeojson && Array.isArray(raionLabelsGeojson.features)) {
-          const labelEls: HTMLDivElement[] = [];
+          const labelEls: HTMLSpanElement[] = [];
           for (const feat of raionLabelsGeojson.features) {
             const coords = feat.geometry.coordinates as [number, number];
-            const el = document.createElement('div');
-            el.textContent = String(feat.properties?.name || '');
-            el.style.pointerEvents = 'none';
-            el.style.userSelect = 'none';
-            el.style.fontSize = '11px';
-            el.style.fontWeight = '700';
-            el.style.letterSpacing = '0.02em';
-            el.style.color = 'rgba(254, 243, 199, 0.94)';
-            el.style.textShadow =
+            const wrapper = document.createElement('div');
+            wrapper.style.pointerEvents = 'none';
+            wrapper.style.userSelect = 'none';
+
+            const inner = document.createElement('span');
+            inner.textContent = String(feat.properties?.name || '');
+            inner.style.display = 'block';
+            inner.style.fontSize = '11px';
+            inner.style.fontWeight = '700';
+            inner.style.letterSpacing = '0.02em';
+            inner.style.color = 'rgba(254, 243, 199, 0.94)';
+            inner.style.textShadow =
               '0 1px 3px rgba(6,8,14,0.98), 0 0 8px rgba(6,8,14,0.95), 0 0 2px rgba(6,8,14,1)';
-            el.style.whiteSpace = 'nowrap';
-            el.style.transition = 'opacity 200ms ease';
-            labelEls.push(el);
-            new maplibregl.Marker({ element: el, anchor: 'center' })
+            inner.style.whiteSpace = 'nowrap';
+            inner.style.transition = 'opacity 200ms ease';
+            wrapper.appendChild(inner);
+            labelEls.push(inner);
+
+            new maplibregl.Marker({ element: wrapper, anchor: 'center' })
               .setLngLat(coords)
               .addTo(map);
           }
 
           const updateLabelVisibility = () => {
             const z = map.getZoom();
-            const opacity = z > 9.0 ? '0.35' : '1';
+            const opacity = z >= getVillageMinZoom() ? '0' : '1';
             for (const el of labelEls) {
               el.style.opacity = opacity;
             }
           };
+          refreshLabelVisibility = updateLabelVisibility;
           map.on('zoom', updateLabelVisibility);
           updateLabelVisibility();
         }
 
-        // Назви населених пунктів: з'являються раніше (zoom >= VILLAGE_LABEL_MIN_ZOOM), спершу міста й селища,
-        // а коли карта наближена достатньо — усі, без перевірки на перекриття.
-        const VILLAGE_LABEL_MIN_ZOOM = 9.0;
-        const VILLAGE_LABEL_NO_COLLISION_ZOOM = 11.5;
-        const labelPriority = (name: string) =>
-          /^(м\.|місто|селище)/i.test(name) ? 0 : 1;
+        // Назви населених пунктів: з'являються лише при невеликому наближенні від оглядового масштабу,
+        // спершу міста й селища без перекриттів, а при сильному наближенні — усі.
+        const labelPriority = (name: string) => {
+          if (/^(м\.|місто)/i.test(name)) return 0;
+          if (/^(смт\.?|селище)/i.test(name)) return 1;
+          if (/^с\/рада/i.test(name)) return 3;
+          return 2;
+        };
         const labelOrder = [...indexList].sort(
           (a, b) => labelPriority(a.name) - labelPriority(b.name),
         );
@@ -644,20 +704,22 @@ export default function App() {
           activeVillageMarkers = [];
 
           const z = map.getZoom();
-          if (z < VILLAGE_LABEL_MIN_ZOOM) return;
+          if (z < getVillageMinZoom()) return;
 
           const bounds = map.getBounds();
           const placedBoxes: Array<{ x1: number; x2: number; y1: number; y2: number }> = [];
           const skipCollision = z >= VILLAGE_LABEL_NO_COLLISION_ZOOM;
-          const padX = 34;
-          const padY = 12;
+          const padY = z < 9.0 ? 13 : 11;
 
           for (const item of labelOrder) {
             const [lng, lat] = item.center;
             if (!bounds.contains([lng, lat])) continue;
 
+            const isCity = /^(м\.|місто)/i.test(item.name);
+
             if (!skipCollision) {
               const pt = map.project([lng, lat]);
+              const padX = Math.max(36, Math.round(item.name.length * 3.5) + 6);
               const box = {
                 x1: pt.x - padX,
                 x2: pt.x + padX,
@@ -680,8 +742,8 @@ export default function App() {
             el.textContent = item.name;
             el.style.pointerEvents = 'none';
             el.style.userSelect = 'none';
-            el.style.fontSize = '11px';
-            el.style.fontWeight = '600';
+            el.style.fontSize = isCity ? '11.5px' : '10.5px';
+            el.style.fontWeight = isCity ? '700' : '600';
             el.style.color = '#ffffff';
             el.style.textShadow =
               '0 1px 3px rgba(6,8,14,0.98), 0 0 6px rgba(6,8,14,0.95), 0 0 2px rgba(6,8,14,1)';
@@ -696,6 +758,15 @@ export default function App() {
           }
         };
 
+        refreshVillageLabels = updateVillageLabels;
+        let inVillageZoom = map.getZoom() >= getVillageMinZoom();
+        map.on('zoom', () => {
+          const next = map.getZoom() >= getVillageMinZoom();
+          if (next !== inVillageZoom) {
+            inVillageZoom = next;
+            updateVillageLabels();
+          }
+        });
         map.on('moveend', updateVillageLabels);
         map.on('zoomend', updateVillageLabels);
         updateVillageLabels();
@@ -774,6 +845,7 @@ export default function App() {
     const map = mapRef.current;
     if (!map) return;
 
+    hasUserInteractedRef.current = true;
     if (selectedIdRef.current !== null) {
       map.setFeatureState({ source: 'villages', id: selectedIdRef.current }, { selected: false });
     }
@@ -797,6 +869,7 @@ export default function App() {
   const handleSelectRaion = (bounds: maplibregl.LngLatBounds | null) => {
     setSituationOpen(false);
     if (!bounds || !mapRef.current) return;
+    hasUserInteractedRef.current = true;
     mapRef.current.fitBounds(bounds, {
       padding: { top: 80, bottom: 90, left: 50, right: 50 },
       maxZoom: 10.2,
@@ -805,9 +878,9 @@ export default function App() {
   };
 
   const handleResetView = () => {
-    mapRef.current?.flyTo({
-      center: ZHYTOMYR_CENTER,
-      zoom: ZHYTOMYR_ZOOM,
+    hasUserInteractedRef.current = false;
+    mapRef.current?.fitBounds(ZHYTOMYR_BOUNDS, {
+      padding: getOblastFitPadding(),
       duration: 750,
     });
   };
