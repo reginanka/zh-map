@@ -1307,19 +1307,22 @@ export default function App() {
                 <div className="mt-3 mb-2.5 flex items-center gap-2 h-10 px-3 rounded-xl bg-[#0e1424] border border-white/10 focus-within:border-amber-400/45 shrink-0">
                   <Search className="w-4 h-4 text-slate-400 shrink-0" />
                   <input
-                    type="search"
+                    type="text"
                     value={modalSearch}
                     onChange={(e) => setModalSearch(e.target.value)}
                     placeholder="Фільтр за назвою села або району..."
                     className="flex-1 min-w-0 bg-transparent text-sm text-slate-100 placeholder:text-slate-500 outline-none"
+                    autoComplete="off"
+                    enterKeyHint="search"
                   />
                   {modalSearch && (
                     <button
                       type="button"
                       onClick={() => setModalSearch('')}
-                      className="text-slate-400 hover:text-slate-200"
+                      aria-label="Очистити пошук"
+                      className="inline-flex items-center justify-center w-7 h-7 rounded-lg text-slate-400 hover:bg-white/10 hover:text-slate-100 transition-colors shrink-0"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      <X className="w-4 h-4" />
                     </button>
                   )}
                 </div>

@@ -30,3 +30,11 @@
 .maplibregl-ctrl-group button {
   filter: invert(1);
 }
+
+/* Ховаємо нативний хрестик у type=search (на випадок, якщо десь лишиться) */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
