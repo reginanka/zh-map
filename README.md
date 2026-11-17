@@ -8,7 +8,7 @@ An interactive, minimalist **Progressive Web App (PWA)** visualizing real-time p
 - **Isolated Dark Map**: Custom dark obsidian theme (`#06080e`) rendered with **MapLibre GL JS**, featuring an outer oblast boundary glow, exact village-aligned district borders, and zoom-dependent labels.
 - **Continuous Color Formula**: Smooth mathematical HSL gradient (`0%` lit = bright gold → `100%` outage/emergency = dark obsidian), supporting fractional percentages (e.g., `32.5%`, `63.1%`).
 - **Situation Analytics**: Full-screen overview showing oblast-wide outage percentage, street/settlement counts, a sorted problemness ranking of all 19 districts (click to fly to district), and a searchable settlements tab.
-- **Serverless Data Sync**: External cron jobs push a lightweight JSON (`docs/data/outages.json`) via the GitHub Contents API — no database or backend required on the frontend.
+- **Serverless Data Sync**: External cron jobs push a lightweight JSON (`public/data/outages.json`) via the GitHub Contents API — no database or backend required on the frontend.
 - **Offline-Ready PWA**: Caches GeoJSON layers and assets locally while fetching `outages.json` with a **Network-First** strategy.
 
 > **Disclaimer**: This is an **unofficial**, independent informational project not affiliated with JSC "Zhytomyroblenergo" or any government authority. All displayed metrics are aggregated from publicly available open sources and reflect residential outage estimates only (no critical infrastructure, substations, power lines, or technical failure details are shown). Settlement polygons are approximate Voronoi visualizations, not official cadastral borders. Data is provided **"as is"** without any warranty of accuracy, completeness, or timeliness.
@@ -46,12 +46,10 @@ An interactive, minimalist **Progressive Web App (PWA)** visualizing real-time p
 ## Структура проєкту
 
 ```text
-├── docs/                                 # Готовий статичний сайт для GitHub Pages
-│   ├── index.html                        # Головна сторінка + PWA мета-теги
-│   ├── style.css                         # Стилі інтерфейсу та модального вікна «Ситуація»
-│   ├── app.js                            # Логіка MapLibre GL JS, формула кольорів, реєстрація SW
-│   ├── manifest.webmanifest              # PWA-маніфест (відносні шляхи для GitHub Pages)
-│   ├── sw.js                             # Service Worker (кеш GeoJSON + Network-First для даних)
+├── index.html                            # Точка входу Vite
+├── src/                                  # React + TypeScript (MapLibre GL JS, формула кольорів)
+├── public/                               # Статичні файли, які Vite копіює в збірку як є
+│   ├── favicon.ico
 │   ├── icons/                            # PWA-іконки (192x192, 512x512, maskable, apple-touch-icon)
 │   └── data/
 │       ├── outages.json                  # Актуальні дані відключень (оновлюється ботом/кроном)
@@ -61,19 +59,21 @@ An interactive, minimalist **Progressive Web App (PWA)** visualizing real-time p
 │       ├── zhytomyr_raions.geojson       # Межі 19 районів по контурах сіл
 │       ├── zhytomyr_raion_labels.geojson # Центроїди підписів районів
 │       └── zhytomyr_villages.geojson     # 2 047 полігонів населених пунктів
-├── src/                                  # React + Vite версія (для локального прев'ю)
-├── public/                               # Копія статичних даних та іконок для Vite
-└── scripts/
-    └── build_geojson.py                  # Генерація полігонів із data/addresses_directory
+├── scripts/
+│   └── build_geojson.py                  # Генерація полігонів із data/addresses_directory
+├── vite.config.ts                        # Збірка + PWA (service worker генерується автоматично)
+└── .github/workflows/deploy.yml          # Збірка й деплой на GitHub Pages після кожного пушу в main
 ```
+
+Єдина папка з даними — `public/data/`. Папки `docs/` більше немає: сайт збирається Vite у `dist/` і публікується GitHub Actions.
 
 ---
 
 ## 1. Публікація на GitHub Pages (безкоштовно)
 
 1. Відкрийте репозиторій на GitHub → **Settings** → **Pages**.
-2. У блоці **Build and deployment** → **Source** виберіть **Deploy from a branch**.
-3. Виберіть гілку **`main`** та папку **`/docs`**, натисніть **Save**.
+2. У блоці **Build and deployment** → **Source** виберіть **GitHub Actions**.
+3. Після кожного пушу в `main` (зокрема коміту бота з новим `outages.json`) workflow `.github/workflows/deploy.yml` збирає проєкт (`bun run build`) і публікує папку `dist/`.
 4. Через 1–2 хвилини мапа та PWA будуть доступні за адресою:
    `https://<ваш-логін>.github.io/<назва-репозиторію>/`
 
@@ -81,7 +81,7 @@ An interactive, minimalist **Progressive Web App (PWA)** visualizing real-time p
 
 ## 2. Налаштування оновлення даних через GitHub API
 
-Мапа не потребує бази даних чи власного бекенду — ваш сторонній крон/скрипт періодично (оптимально раз на 10–15 хвилин) оновлює файл `docs/data/outages.json` через **GitHub REST API** (безкоштовно, ліміт 5 000 запитів/год).
+Мапа не потребує бази даних чи власного бекенду — ваш сторонній крон/скрипт періодично (оптимально раз на 10–15 хвилин) оновлює файл `public/data/outages.json` через **GitHub REST API** (безкоштовно, ліміт 5 000 запитів/год).
 
 ### Крок 1. Створення токена (PAT)
 1. Перейдіть на GitHub у **Settings** (профіль) → **Developer settings** → **Personal access tokens** → **Fine-grained tokens** → **Generate new token**.
@@ -93,7 +93,7 @@ An interactive, minimalist **Progressive Web App (PWA)** visualizing real-time p
 Додайте у `.env` або змінні середовища сервера/бота:
 - `MAP_GITHUB_REPO` — `ваш-логін/назва-репозиторію`
 - `MAP_GITHUB_TOKEN` — створений Personal Access Token
-- `MAP_GITHUB_PATH` — `docs/data/outages.json` *(за замовчуванням)*
+- `MAP_GITHUB_PATH` — `public/data/outages.json` *(за замовчуванням)*
 
 ### Крок 3. Готовий код для відправлення з Python (`httpx`)
 ```python
@@ -106,7 +106,7 @@ import httpx
 def push_outages_to_github(payload: dict) -> None:
     repo = os.getenv("MAP_GITHUB_REPO", "").strip()
     token = os.getenv("MAP_GITHUB_TOKEN", "").strip()
-    path = os.getenv("MAP_GITHUB_PATH", "docs/data/outages.json").strip()
+    path = os.getenv("MAP_GITHUB_PATH", "public/data/outages.json").strip()
     if not repo or not token:
         return
 
@@ -136,9 +136,9 @@ def push_outages_to_github(payload: dict) -> None:
 
 ---
 
-## 3. Формат JSON (`docs/data/outages.json`)
+## 3. Формат JSON (`public/data/outages.json`)
 
-Шаблон доступний у `docs/data/outages.template.json`:
+Шаблон доступний у `public/data/outages.template.json`:
 
 ```json
 {
@@ -185,10 +185,10 @@ def push_outages_to_github(payload: dict) -> None:
   - **Android (Chrome)**: меню браузера → *«Встановити застосунок»* / *«Додати на головний екран»*.
   - **iOS (Safari)**: кнопка *«Поділитися»* → *«На екран «Домів»»*.
   - **ПК (Chrome / Edge)**: іконка встановлення праворуч в адресному рядку.
-- **Кешування (`docs/sw.js`)**:
-  - Усі статичні ресурси (`index.html`, `style.css`, `app.js`, іконки, усі `.geojson`) кешуються локально.
+- **Кешування (service worker генерується `vite-plugin-pwa`, див. `vite.config.ts`)**:
+  - Усі статичні ресурси (`index.html`, зібрані JS/CSS, іконки, усі `.geojson`) кешуються локально.
   - `outages.json` завантажується за стратегією **Network-First** (з параметром `?t=...` проти кешування браузером) — за наявності інтернету завжди підтягуються найсвіжіші дані, а офлайн показується останній збережений стан.
-  - Якщо ви зміните `docs/app.js` або `docs/style.css` і хочете примусово оновити кеш у користувачів, збільште версію `STATIC_CACHE` (наприклад, `zhytomyr-map-static-v2`) у `docs/sw.js`.
+  - Новий деплой автоматично оновлює service worker (`registerType: 'autoUpdate'`), вручну піднімати версію кешу не потрібно.
 
 ---
 
