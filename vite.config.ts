@@ -49,16 +49,30 @@ export default defineConfig(() => {
           ],
         },
         workbox: {
+          cleanupOutdatedCaches: true,
+          clientsClaim: true,
+          skipWaiting: true,
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
           globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,geojson}'],
+          globIgnores: ['**/data/outages*.json'],
           runtimeCaching: [
             {
               urlPattern: /data\/outages\.json/,
               handler: 'NetworkFirst',
               options: {
                 cacheName: 'outages-data',
+                networkTimeoutSeconds: 6,
+                fetchOptions: {
+                  cache: 'no-store',
+                },
+                matchOptions: {
+                  ignoreSearch: true,
+                },
+                cacheableResponse: {
+                  statuses: [200],
+                },
                 expiration: {
-                  maxEntries: 5,
+                  maxEntries: 2,
                   maxAgeSeconds: 60 * 60 * 24,
                 },
               },
