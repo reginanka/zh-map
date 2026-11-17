@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
-import { BarChart3, Maximize2, RefreshCw, Search, X } from 'lucide-react';
+import { BarChart3, RotateCcw, Search, X } from 'lucide-react';
 
 interface GeoJsonGeometry {
   type: string;
@@ -201,7 +201,6 @@ export default function App() {
   const [outagesSummary, setOutagesSummary] = useState<OutagesSummary | null>(null);
   const [outagesRaions, setOutagesRaions] = useState<OutagesRaionItem[] | null>(null);
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [situationOpen, setSituationOpen] = useState(false);
   const [situationTab, setSituationTab] = useState<'raions' | 'villages'>('raions');
@@ -290,7 +289,6 @@ export default function App() {
     async (manual = false) => {
       if (isFetchingOutagesRef.current || baseVillagesRef.current.length === 0) return;
       isFetchingOutagesRef.current = true;
-      setIsRefreshing(true);
 
       try {
         if (manual && 'serviceWorker' in navigator) {
@@ -314,7 +312,6 @@ export default function App() {
         }
       } finally {
         isFetchingOutagesRef.current = false;
-        setIsRefreshing(false);
       }
     },
     [applyOutagesPayload]
@@ -1030,6 +1027,7 @@ export default function App() {
       padding: getOblastFitPadding(),
       duration: 750,
     });
+    void refreshOutagesData(true);
   };
 
   const handleCloseSelected = () => {
@@ -1057,7 +1055,7 @@ export default function App() {
         type="button"
         onClick={() => setSituationOpen(true)}
         aria-label="Переглянути, скільки населених пунктів без світла по області"
-        className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-2 sm:gap-2.5 h-11 px-3 sm:px-3.5 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/25 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[12.5px] sm:text-[13px] font-semibold text-slate-50 hover:border-amber-400/55 active:scale-[0.98] transition-all whitespace-nowrap"
+        className="absolute top-4 left-4 z-20 inline-flex items-center gap-2.5 h-11 px-3.5 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/25 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/55 active:scale-[0.98] transition-all whitespace-nowrap"
       >
         <BarChart3 className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
         <span>Загалом без світла</span>
@@ -1068,34 +1066,17 @@ export default function App() {
         )}
       </button>
 
-      {/* Кнопки оновлення даних та скидання виду (верхній правий кут) */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 sm:gap-2">
-        <button
-          type="button"
-          onClick={() => void refreshOutagesData(true)}
-          disabled={isRefreshing}
-          title="Оновити дані про відключення"
-          aria-label="Оновити дані про відключення"
-          className="inline-flex items-center gap-2 h-11 px-3 sm:px-3.5 bg-[#0d101a]/84 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/45 active:scale-[0.98] disabled:opacity-70 transition-all whitespace-nowrap shrink-0"
-        >
-          <RefreshCw
-            className={`w-4 h-4 text-amber-400 ${isRefreshing ? 'animate-spin' : ''}`}
-            aria-hidden="true"
-          />
-          <span className="hidden sm:inline">Оновити</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={handleResetView}
-          title="Показати всю Житомирську область"
-          aria-label="Показати всю Житомирську область"
-          className="inline-flex items-center gap-2 h-11 px-3 sm:px-3.5 bg-[#0d101a]/84 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/45 active:scale-[0.98] transition-all whitespace-nowrap shrink-0"
-        >
-          <Maximize2 className="w-4 h-4" aria-hidden="true" />
-          <span className="hidden sm:inline">Вся область</span>
-        </button>
-      </div>
+      {/* Кнопка скидання виду */}
+      <button
+        type="button"
+        onClick={handleResetView}
+        title="Показати всю Житомирську область"
+        aria-label="Показати всю Житомирську область"
+        className="absolute top-4 right-4 z-20 inline-flex items-center gap-2 h-11 px-3 sm:px-3.5 bg-[#0d101a]/84 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/45 active:scale-[0.98] transition-all whitespace-nowrap shrink-0"
+      >
+        <RotateCcw className="w-4 h-4" aria-hidden="true" />
+        <span className="hidden sm:inline">Вся область</span>
+      </button>
 
       {/* Glassmorphism Tooltip при наведенні */}
       {hoverInfo && (
@@ -1200,28 +1181,12 @@ export default function App() {
             <span>100%</span>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-2 mt-2.5 pt-2 border-t border-white/10 text-[11.5px] text-slate-400">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <span className="shrink-0">Житомирська обл.</span>
-            <span aria-hidden="true">·</span>
-            <span className="font-mono-tabular truncate">
-              {loadError
-                ? loadError
-                : isRefreshing
-                  ? 'Оновлення...'
-                  : `Оновлено: ${formatUpdatedAt(updatedAt)}`}
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={() => void refreshOutagesData(true)}
-            disabled={isRefreshing}
-            title="Оновити дані"
-            aria-label="Оновити дані"
-            className="inline-flex items-center justify-center w-6 h-6 rounded-md text-slate-400 hover:text-amber-300 hover:bg-white/10 disabled:opacity-60 transition-colors shrink-0"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} aria-hidden="true" />
-          </button>
+        <div className="flex items-center gap-1.5 mt-2.5 pt-2 border-t border-white/10 text-[11.5px] text-slate-400">
+          <span>Житомирська обл.</span>
+          <span aria-hidden="true">·</span>
+          <span className="font-mono-tabular">
+            {loadError ? loadError : `Оновлено: ${formatUpdatedAt(updatedAt)}`}
+          </span>
         </div>
         <div className="mt-1 text-[10.5px] leading-tight text-slate-400/70">
           Неофіційний проєкт · відкриті джерела, можливі неточності
@@ -1254,26 +1219,14 @@ export default function App() {
                     : `${situationStats.offCount} з ${situationStats.totalCount} населених пунктів області мають відключення`}
                 </p>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => void refreshOutagesData(true)}
-                  disabled={isRefreshing}
-                  title="Оновити дані"
-                  aria-label="Оновити дані"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-amber-300 hover:bg-white/10 hover:text-amber-200 disabled:opacity-60 transition-colors shrink-0"
-                >
-                  <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSituationOpen(false)}
-                  aria-label="Закрити"
-                  className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-colors shrink-0"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setSituationOpen(false)}
+                aria-label="Закрити"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-colors shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
 
             {/* Загальний прогрес-бар області */}
