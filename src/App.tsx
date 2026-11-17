@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
-import { BarChart3, RotateCcw, Search, X } from 'lucide-react';
+import { BarChart3, Maximize2, RefreshCw, Search, X } from 'lucide-react';
 
 interface GeoJsonGeometry {
   type: string;
@@ -158,16 +158,50 @@ function getFeatureBounds(geometry: GeoJsonGeometry): maplibregl.LngLatBounds {
   return bounds;
 }
 
+function normalizeOutageKey(raw: unknown): string {
+  return String(raw || '')
+    .toLowerCase()
+    .replace(/[\u2019\u2018\u02bc\u02bb\u2032`]/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+async function fetchOutagesPayload(): Promise<OutagesPayload> {
+  const res = await fetch(`${OUTAGES_URL}?t=${Date.now()}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
+  return (await res.json()) as OutagesPayload;
+}
+
+interface BaseVillageFeature {
+  featureId: number;
+  id: string;
+  name: string;
+  hromada: string;
+  center: [number, number];
+  geometry: GeoJsonGeometry;
+  searchKey: string;
+  normId: string;
+  strippedName: string;
+}
+
 export default function App() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const baseVillagesRef = useRef<BaseVillageFeature[]>([]);
   const hoveredIdRef = useRef<number | null>(null);
   const selectedIdRef = useRef<number | null>(null);
   const hasUserInteractedRef = useRef(false);
+  const lastOutagesFetchRef = useRef<number>(0);
+  const isFetchingOutagesRef = useRef<boolean>(false);
   const [settlements, setSettlements] = useState<SettlementItem[]>([]);
   const [outagesSummary, setOutagesSummary] = useState<OutagesSummary | null>(null);
   const [outagesRaions, setOutagesRaions] = useState<OutagesRaionItem[] | null>(null);
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [situationOpen, setSituationOpen] = useState(false);
   const [situationTab, setSituationTab] = useState<'raions' | 'villages'>('raions');
@@ -178,6 +212,118 @@ export default function App() {
     hromada: string;
     pct: number | null;
   } | null>(null);
+
+  const applyOutagesPayload = useCallback((outagesPayload: OutagesPayload): GeoJsonFeatureCollection => {
+    setUpdatedAt(outagesPayload.updated_at);
+    setOutagesSummary(outagesPayload.summary ?? null);
+    setOutagesRaions(outagesPayload.raions ?? null);
+    setLoadError(null);
+
+    const outagesMap = outagesPayload.data || {};
+    const normalizedOutagesMap: Record<string, number> = {};
+    for (const [k, v] of Object.entries(outagesMap)) {
+      if (v === undefined || v === null) continue;
+      const nk = normalizeOutageKey(k);
+      const num = Number(v);
+      if (nk && Number.isFinite(num)) {
+        if (normalizedOutagesMap[nk] === undefined || num > normalizedOutagesMap[nk]) {
+          normalizedOutagesMap[nk] = num;
+        }
+      }
+    }
+
+    const indexList: SettlementItem[] = [];
+    const features: GeoJsonFeature[] = [];
+
+    for (const base of baseVillagesRef.current) {
+      const rawPct =
+        outagesMap[base.id] ??
+        normalizedOutagesMap[base.normId] ??
+        normalizedOutagesMap[base.strippedName];
+      const pct = rawPct !== undefined && rawPct !== null ? Number(rawPct) : 0;
+
+      features.push({
+        type: 'Feature',
+        id: base.featureId,
+        properties: {
+          id: base.id,
+          name: base.name,
+          hromada: base.hromada,
+          outage_percent: pct,
+          fill_color: computeOutageColor(pct),
+        },
+        geometry: base.geometry,
+      });
+
+      indexList.push({
+        featureId: base.featureId,
+        id: base.id,
+        name: base.name,
+        hromada: base.hromada,
+        pct,
+        center: base.center,
+        geometry: base.geometry,
+        searchKey: base.searchKey,
+      });
+    }
+
+    setSettlements(indexList);
+
+    if (selectedIdRef.current !== null) {
+      const selectedItem = indexList.find((item) => item.featureId === selectedIdRef.current);
+      if (selectedItem) {
+        setSelectedInfo({
+          name: selectedItem.name,
+          hromada: selectedItem.hromada,
+          pct: selectedItem.pct,
+        });
+      }
+    }
+
+    return {
+      type: 'FeatureCollection',
+      features,
+    };
+  }, []);
+
+  const refreshOutagesData = useCallback(
+    async (manual = false) => {
+      if (isFetchingOutagesRef.current || baseVillagesRef.current.length === 0) return;
+      isFetchingOutagesRef.current = true;
+      setIsRefreshing(true);
+
+      try {
+        if (manual && 'serviceWorker' in navigator) {
+          navigator.serviceWorker
+            .getRegistration()
+            .then((reg) => reg?.update())
+            .catch(() => {});
+        }
+
+        const payload = await fetchOutagesPayload();
+        lastOutagesFetchRef.current = Date.now();
+        const updatedGeojson = applyOutagesPayload(payload);
+
+        const source = mapRef.current?.getSource('villages') as maplibregl.GeoJSONSource | undefined;
+        if (source) {
+          source.setData(updatedGeojson as unknown as Parameters<maplibregl.GeoJSONSource['setData']>[0]);
+        }
+      } catch {
+        if (baseVillagesRef.current.length === 0) {
+          setLoadError('Помилка завантаження даних');
+        }
+      } finally {
+        isFetchingOutagesRef.current = false;
+        setIsRefreshing(false);
+      }
+    },
+    [applyOutagesPayload]
+  );
+
+  const refreshOutagesRef = useRef(refreshOutagesData);
+  refreshOutagesRef.current = refreshOutagesData;
+  const applyOutagesRef = useRef(applyOutagesPayload);
+  applyOutagesRef.current = applyOutagesPayload;
 
   const situationStats = useMemo(() => {
     const total = settlements.length;
@@ -384,13 +530,13 @@ export default function App() {
 
     map.on('load', async () => {
       try {
-        const [oblastRes, maskRes, raionsRes, labelsRes, geoRes, outagesRes] = await Promise.all([
+        const [oblastRes, maskRes, raionsRes, labelsRes, geoRes, outagesPayload] = await Promise.all([
           fetch('./data/zhytomyr_oblast.geojson', { cache: 'no-cache' }),
           fetch('./data/zhytomyr_mask.geojson', { cache: 'no-cache' }),
           fetch('./data/zhytomyr_raions.geojson', { cache: 'no-cache' }),
           fetch('./data/zhytomyr_raion_labels.geojson', { cache: 'no-cache' }),
           fetch('./data/zhytomyr_villages.geojson', { cache: 'no-cache' }),
-          fetch(`${OUTAGES_URL}?t=${Date.now()}`, { cache: 'no-cache' }),
+          fetchOutagesPayload().catch(() => ({ updated_at: null, data: {} } as OutagesPayload)),
         ]);
 
         if (!geoRes.ok) throw new Error('Помилка завантаження GeoJSON');
@@ -400,38 +546,9 @@ export default function App() {
         const raionLabelsGeojson = labelsRes.ok ? (await labelsRes.json()) as GeoJsonFeatureCollection : null;
         const geojson = (await geoRes.json()) as GeoJsonFeatureCollection;
 
-        let outagesPayload: OutagesPayload = {
-          updated_at: null,
-          data: {},
-        };
-        if (outagesRes.ok) {
-          outagesPayload = await outagesRes.json();
-        }
-        setUpdatedAt(outagesPayload.updated_at);
-        setOutagesSummary(outagesPayload.summary ?? null);
-        setOutagesRaions(outagesPayload.raions ?? null);
+        lastOutagesFetchRef.current = Date.now();
 
-        const normalizeOutageKey = (raw: unknown): string =>
-          String(raw || '')
-            .toLowerCase()
-            .replace(/[\u2019\u2018\u02bc\u02bb\u2032`]/g, "'")
-            .replace(/\s+/g, ' ')
-            .trim();
-
-        const outagesMap = outagesPayload.data || {};
-        const normalizedOutagesMap: Record<string, number> = {};
-        for (const [k, v] of Object.entries(outagesMap)) {
-          if (v === undefined || v === null) continue;
-          const nk = normalizeOutageKey(k);
-          const num = Number(v);
-          if (nk && Number.isFinite(num)) {
-            if (normalizedOutagesMap[nk] === undefined || num > normalizedOutagesMap[nk]) {
-              normalizedOutagesMap[nk] = num;
-            }
-          }
-        }
-
-        const indexList: SettlementItem[] = [];
+        const baseVillages: BaseVillageFeature[] = [];
         geojson.features.forEach((feat: GeoJsonFeature, idx: number) => {
           const props = (feat.properties || {}) as Record<string, unknown>;
           const id = String(props.id ?? idx);
@@ -441,20 +558,6 @@ export default function App() {
           const strippedName = normalizeOutageKey(name)
             .replace(/^(?:с\.|село|місто|м\.|селище|смт\.?)\s+/u, '')
             .trim();
-          const rawPct =
-            outagesMap[id] ??
-            normalizedOutagesMap[normId] ??
-            normalizedOutagesMap[strippedName];
-          const pct = rawPct !== undefined && rawPct !== null ? Number(rawPct) : 0;
-
-          feat.id = idx;
-          feat.properties = {
-            id,
-            name,
-            hromada,
-            outage_percent: pct,
-            fill_color: computeOutageColor(pct),
-          };
 
           const ring =
             feat.geometry.type === 'MultiPolygon'
@@ -471,23 +574,35 @@ export default function App() {
             cy /= ring.length;
           }
 
-          indexList.push({
+          baseVillages.push({
             featureId: idx,
             id,
             name,
             hromada,
-            pct,
             center: [cx, cy],
             geometry: feat.geometry,
             searchKey: `${normalizeOutageKey(name)} ${normalizeOutageKey(hromada)}`,
+            normId,
+            strippedName,
           });
         });
 
-        setSettlements(indexList);
+        baseVillagesRef.current = baseVillages;
+        const styledGeojson = applyOutagesRef.current(outagesPayload);
+        const indexList: SettlementItem[] = styledGeojson.features.map((feat, idx) => ({
+          featureId: idx,
+          id: baseVillages[idx].id,
+          name: baseVillages[idx].name,
+          hromada: baseVillages[idx].hromada,
+          pct: Number(feat.properties?.outage_percent ?? 0),
+          center: baseVillages[idx].center,
+          geometry: baseVillages[idx].geometry,
+          searchKey: baseVillages[idx].searchKey,
+        }));
 
         map.addSource('villages', {
           type: 'geojson',
-          data: geojson as unknown as string,
+          data: styledGeojson as unknown as string,
         });
 
         // Чітка заливка кожного населеного пункту (вогняне світло при 0%, темрява при аварії)
@@ -840,6 +955,38 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const AUTO_REFRESH_INTERVAL_MS = 2 * 60 * 1000;
+    const MIN_VISIBILITY_GAP_MS = 15 * 1000;
+
+    const maybeRefresh = () => {
+      if (document.visibilityState !== 'visible') return;
+      if (Date.now() - lastOutagesFetchRef.current < MIN_VISIBILITY_GAP_MS) return;
+      void refreshOutagesRef.current(false);
+    };
+
+    const intervalId = window.setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        void refreshOutagesRef.current(false);
+      }
+    }, AUTO_REFRESH_INTERVAL_MS);
+
+    const handleOnline = () => {
+      void refreshOutagesRef.current(false);
+    };
+
+    document.addEventListener('visibilitychange', maybeRefresh);
+    window.addEventListener('focus', maybeRefresh);
+    window.addEventListener('online', handleOnline);
+
+    return () => {
+      window.clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', maybeRefresh);
+      window.removeEventListener('focus', maybeRefresh);
+      window.removeEventListener('online', handleOnline);
+    };
+  }, []);
+
   const handleSelectSettlement = (item: SettlementItem) => {
     setSituationOpen(false);
     const map = mapRef.current;
@@ -910,7 +1057,7 @@ export default function App() {
         type="button"
         onClick={() => setSituationOpen(true)}
         aria-label="Переглянути, скільки населених пунктів без світла по області"
-        className="absolute top-4 left-4 z-20 inline-flex items-center gap-2.5 h-11 px-3.5 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/25 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/55 active:scale-[0.98] transition-all whitespace-nowrap"
+        className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 inline-flex items-center gap-2 sm:gap-2.5 h-11 px-3 sm:px-3.5 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/25 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[12.5px] sm:text-[13px] font-semibold text-slate-50 hover:border-amber-400/55 active:scale-[0.98] transition-all whitespace-nowrap"
       >
         <BarChart3 className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
         <span>Загалом без світла</span>
@@ -921,17 +1068,34 @@ export default function App() {
         )}
       </button>
 
-      {/* Кнопка скидання виду */}
-      <button
-        type="button"
-        onClick={handleResetView}
-        title="Показати всю Житомирську область"
-        aria-label="Показати всю Житомирську область"
-        className="absolute top-4 right-4 z-20 inline-flex items-center gap-2 h-11 px-3 sm:px-3.5 bg-[#0d101a]/84 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/45 active:scale-[0.98] transition-all whitespace-nowrap shrink-0"
-      >
-        <RotateCcw className="w-4 h-4" aria-hidden="true" />
-        <span className="hidden sm:inline">Вся область</span>
-      </button>
+      {/* Кнопки оновлення даних та скидання виду (верхній правий кут) */}
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 sm:gap-2">
+        <button
+          type="button"
+          onClick={() => void refreshOutagesData(true)}
+          disabled={isRefreshing}
+          title="Оновити дані про відключення"
+          aria-label="Оновити дані про відключення"
+          className="inline-flex items-center gap-2 h-11 px-3 sm:px-3.5 bg-[#0d101a]/84 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/45 active:scale-[0.98] disabled:opacity-70 transition-all whitespace-nowrap shrink-0"
+        >
+          <RefreshCw
+            className={`w-4 h-4 text-amber-400 ${isRefreshing ? 'animate-spin' : ''}`}
+            aria-hidden="true"
+          />
+          <span className="hidden sm:inline">Оновити</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={handleResetView}
+          title="Показати всю Житомирську область"
+          aria-label="Показати всю Житомирську область"
+          className="inline-flex items-center gap-2 h-11 px-3 sm:px-3.5 bg-[#0d101a]/84 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/45 active:scale-[0.98] transition-all whitespace-nowrap shrink-0"
+        >
+          <Maximize2 className="w-4 h-4" aria-hidden="true" />
+          <span className="hidden sm:inline">Вся область</span>
+        </button>
+      </div>
 
       {/* Glassmorphism Tooltip при наведенні */}
       {hoverInfo && (
@@ -1036,12 +1200,28 @@ export default function App() {
             <span>100%</span>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 mt-2.5 pt-2 border-t border-white/10 text-[11.5px] text-slate-400">
-          <span>Житомирська обл.</span>
-          <span aria-hidden="true">·</span>
-          <span className="font-mono-tabular">
-            {loadError ? loadError : `Оновлено: ${formatUpdatedAt(updatedAt)}`}
-          </span>
+        <div className="flex items-center justify-between gap-2 mt-2.5 pt-2 border-t border-white/10 text-[11.5px] text-slate-400">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className="shrink-0">Житомирська обл.</span>
+            <span aria-hidden="true">·</span>
+            <span className="font-mono-tabular truncate">
+              {loadError
+                ? loadError
+                : isRefreshing
+                  ? 'Оновлення...'
+                  : `Оновлено: ${formatUpdatedAt(updatedAt)}`}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => void refreshOutagesData(true)}
+            disabled={isRefreshing}
+            title="Оновити дані"
+            aria-label="Оновити дані"
+            className="inline-flex items-center justify-center w-6 h-6 rounded-md text-slate-400 hover:text-amber-300 hover:bg-white/10 disabled:opacity-60 transition-colors shrink-0"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} aria-hidden="true" />
+          </button>
         </div>
         <div className="mt-1 text-[10.5px] leading-tight text-slate-400/70">
           Неофіційний проєкт · відкриті джерела, можливі неточності
@@ -1074,14 +1254,26 @@ export default function App() {
                     : `${situationStats.offCount} з ${situationStats.totalCount} населених пунктів області мають відключення`}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setSituationOpen(false)}
-                aria-label="Закрити"
-                className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-colors shrink-0"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => void refreshOutagesData(true)}
+                  disabled={isRefreshing}
+                  title="Оновити дані"
+                  aria-label="Оновити дані"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-amber-300 hover:bg-white/10 hover:text-amber-200 disabled:opacity-60 transition-colors shrink-0"
+                >
+                  <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSituationOpen(false)}
+                  aria-label="Закрити"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-colors shrink-0"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Загальний прогрес-бар області */}
