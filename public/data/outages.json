@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-17T19:32:30.047458+00:00",
+  "updated_at": "2026-11-17T19:50:36.885587+00:00",
   "data": {
     "нова олександрівка": 14.3,
     "кам'янка": 23.1,
@@ -137,15 +137,13 @@
     "коростки": 12.5,
     "филинці": 100.0,
     "веселка": 100.0,
-    "борушківці": 80.0,
-    "пулини": 52.2,
-    "івановичі": 7.1
+    "борушківці": 80.0
   },
   "summary": {
-    "off_percent": 8.0,
-    "off_streets": 1614,
+    "off_percent": 7.8,
+    "off_streets": 1577,
     "total_streets": 20239,
-    "off_settlements": 149
+    "off_settlements": 147
   },
   "raions": [
     {
@@ -168,13 +166,6 @@
       "off_streets": 609,
       "off_settlements": 69,
       "off_settlements_percent": 31.2
-    },
-    {
-      "name": "Пулинський",
-      "off_percent": 7.1,
-      "off_streets": 37,
-      "off_settlements": 2,
-      "off_settlements_percent": 3.2
     },
     {
       "name": "Житомирський",
