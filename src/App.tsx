@@ -616,7 +616,7 @@ export default function App() {
 
           const updateLabelVisibility = () => {
             const z = map.getZoom();
-            const opacity = z > 10.6 ? '0.35' : '1';
+            const opacity = z > 9.0 ? '0.35' : '1';
             for (const el of labelEls) {
               el.style.opacity = opacity;
             }
@@ -625,22 +625,30 @@ export default function App() {
           updateLabelVisibility();
         }
 
-        // Назви населених пунктів: приховані на мінімальному зумі, з'являються при наближенні (zoom >= 10.6)
+        // Назви населених пунктів: з'являються раніше (zoom >= VILLAGE_LABEL_MIN_ZOOM), спершу міста й селища,
+        // а коли карта наближена достатньо — усі, без перевірки на перекриття.
+        const VILLAGE_LABEL_MIN_ZOOM = 9.0;
+        const VILLAGE_LABEL_NO_COLLISION_ZOOM = 11.5;
+        const labelPriority = (name: string) =>
+          /^(м\.|місто|селище)/i.test(name) ? 0 : 1;
+        const labelOrder = [...indexList].sort(
+          (a, b) => labelPriority(a.name) - labelPriority(b.name),
+        );
         let activeVillageMarkers: maplibregl.Marker[] = [];
         const updateVillageLabels = () => {
           for (const m of activeVillageMarkers) m.remove();
           activeVillageMarkers = [];
 
           const z = map.getZoom();
-          if (z < 10.6) return;
+          if (z < VILLAGE_LABEL_MIN_ZOOM) return;
 
           const bounds = map.getBounds();
           const placedBoxes: Array<{ x1: number; x2: number; y1: number; y2: number }> = [];
-          const skipCollision = z >= 12.0;
+          const skipCollision = z >= VILLAGE_LABEL_NO_COLLISION_ZOOM;
           const padX = 34;
           const padY = 12;
 
-          for (const item of indexList) {
+          for (const item of labelOrder) {
             const [lng, lat] = item.center;
             if (!bounds.contains([lng, lat])) continue;
 
@@ -824,11 +832,11 @@ export default function App() {
       <button
         type="button"
         onClick={() => setSituationOpen(true)}
-        aria-label="Переглянути ситуацію по області"
+        aria-label="Переглянути, скільки населених пунктів без світла по області"
         className="absolute top-4 left-4 z-20 inline-flex items-center gap-2.5 h-11 px-3.5 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/25 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/55 active:scale-[0.98] transition-all whitespace-nowrap"
       >
         <BarChart3 className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
-        <span>Ситуація</span>
+        <span>Загалом без світла</span>
         {settlements.length > 0 && (
           <span className="font-mono-tabular text-amber-300 font-bold">
             {situationStats.oblastOffPct}%
@@ -932,7 +940,7 @@ export default function App() {
         className="absolute bottom-3 left-3 right-3 sm:right-auto sm:bottom-4 sm:left-4 z-20 sm:w-[276px] px-3.5 py-3 bg-[#0d101a]/84 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)]"
       >
         <div className="text-xs font-semibold text-slate-50 mb-2">
-          Освітлення населених пунктів
+          Відсоток знеструмлень
         </div>
         <div>
           <div
@@ -940,6 +948,7 @@ export default function App() {
             className="h-2 w-full rounded border border-white/12"
             style={{
               background: buildFormulaGradientCss(),
+              backgroundOrigin: 'border-box',
             }}
           />
           <div className="flex justify-between mt-1.5 font-mono-tabular text-[11px] text-slate-400">
@@ -967,7 +976,7 @@ export default function App() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Ситуація з електропостачанням по області"
+          aria-label="Загалом без світла по області"
           className="fixed inset-0 z-40 bg-[#080c17]/96 backdrop-blur-xl flex flex-col"
         >
           <div className="w-full max-w-2xl mx-auto flex flex-col h-full px-4 pt-5 pb-4">
@@ -991,7 +1000,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setSituationOpen(false)}
-                aria-label="Закрити огляд ситуації"
+                aria-label="Закрити"
                 className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-colors shrink-0"
               >
                 <X className="w-4 h-4" />
