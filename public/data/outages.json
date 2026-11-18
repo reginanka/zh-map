@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-18T17:44:35.844374+00:00",
+  "updated_at": "2026-11-18T18:02:31.260522+00:00",
   "data": {
     "невідомо": 100.0,
-    "житомир": 3.7,
+    "житомир": 0.9,
     "довжик": 39.6,
     "давидівка": 39.1,
     "барашівка": 100.0,
@@ -21,15 +21,13 @@
     "полянка": 100.0,
     "будисько": 100.0,
     "середня": 100.0,
-    "йосипівка": 100.0,
-    "звягель": 23.5,
-    "велика горбаша": 7.1
+    "йосипівка": 100.0
   },
   "summary": {
-    "off_percent": 3.0,
-    "off_streets": 604,
+    "off_percent": 2.3,
+    "off_streets": 466,
     "total_streets": 20239,
-    "off_settlements": 30
+    "off_settlements": 26
   },
   "raions": [
     {
@@ -41,17 +39,10 @@
     },
     {
       "name": "Житомирський",
-      "off_percent": 6.3,
-      "off_streets": 176,
+      "off_percent": 5.3,
+      "off_streets": 148,
       "off_settlements": 13,
       "off_settlements_percent": 15.3
-    },
-    {
-      "name": "Звягельський",
-      "off_percent": 4.4,
-      "off_streets": 110,
-      "off_settlements": 4,
-      "off_settlements_percent": 1.8
     }
   ]
 }
