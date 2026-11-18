@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T08:26:30.872991+00:00",
+  "updated_at": "2026-11-18T08:44:34.659765+00:00",
   "data": {
     "дібрівка": 100.0,
     "тартак": 100.0,
@@ -161,6 +161,7 @@
     "великий яблунець": 66.7,
     "єлизаветпіль": 100.0,
     "лебідь": 100.0,
+    "киянка": 7.7,
     "вільшанка": 100.0,
     "зосимівка": 100.0,
     "нові серби": 100.0,
@@ -211,9 +212,9 @@
   },
   "summary": {
     "off_percent": 9.8,
-    "off_streets": 1978,
+    "off_streets": 1980,
     "total_streets": 20239,
-    "off_settlements": 222
+    "off_settlements": 223
   },
   "raions": [
     {
@@ -233,9 +234,9 @@
     {
       "name": "Звягельський",
       "off_percent": 23.3,
-      "off_streets": 580,
-      "off_settlements": 61,
-      "off_settlements_percent": 27.6
+      "off_streets": 582,
+      "off_settlements": 62,
+      "off_settlements_percent": 28.1
     },
     {
       "name": "Малинський",
