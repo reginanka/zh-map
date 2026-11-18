@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-11-18T21:56:30.192600+00:00",
+  "updated_at": "2026-11-18T22:14:32.075285+00:00",
   "data": {
+    "бердичів": 0.7,
     "березівка": 17.5,
     "михайлівка": 100.0,
     "стрижівка": 17.4,
@@ -75,13 +76,19 @@
     "середня": 100.0,
     "вересна": 100.0,
     "забара": 100.0,
-    "йосипівка": 100.0
+    "йосипівка": 100.0,
+    "куліші": 30.4,
+    "садки": 100.0,
+    "покощеве": 100.0,
+    "середи": 100.0,
+    "ємільчине": 84.7,
+    "руденька": 16.7
   },
   "summary": {
-    "off_percent": 4.6,
-    "off_streets": 934,
+    "off_percent": 5.2,
+    "off_streets": 1056,
     "total_streets": 20239,
-    "off_settlements": 79
+    "off_settlements": 86
   },
   "raions": [
     {
@@ -99,11 +106,25 @@
       "off_settlements_percent": 84.8
     },
     {
+      "name": "Звягельський",
+      "off_percent": 4.8,
+      "off_streets": 119,
+      "off_settlements": 6,
+      "off_settlements_percent": 2.7
+    },
+    {
       "name": "Житомирський",
       "off_percent": 0.5,
       "off_streets": 15,
       "off_settlements": 2,
       "off_settlements_percent": 2.4
+    },
+    {
+      "name": "Бердичівський",
+      "off_percent": 0.3,
+      "off_streets": 3,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.6
     }
   ]
 }
