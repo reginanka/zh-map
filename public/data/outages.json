@@ -1,8 +1,7 @@
 {
-  "updated_at": "2026-11-18T10:50:31.471904+00:00",
+  "updated_at": "2026-11-18T11:08:47.115389+00:00",
   "data": {
-    "брусилів": 9.3,
-    "ставище": 22.2,
+    "брусилів": 17.5,
     "житомир": 0.7,
     "оліївка": 9.4,
     "звягель": 29.9,
@@ -61,10 +60,10 @@
     "магдин": 100.0
   },
   "summary": {
-    "off_percent": 3.8,
-    "off_streets": 775,
+    "off_percent": 3.9,
+    "off_streets": 781,
     "total_streets": 20239,
-    "off_settlements": 63
+    "off_settlements": 62
   },
   "raions": [
     {
@@ -83,10 +82,10 @@
     },
     {
       "name": "Брусилівський",
-      "off_percent": 3.1,
-      "off_streets": 11,
-      "off_settlements": 2,
-      "off_settlements_percent": 6.7
+      "off_percent": 4.8,
+      "off_streets": 17,
+      "off_settlements": 1,
+      "off_settlements_percent": 3.3
     },
     {
       "name": "Житомирський",
