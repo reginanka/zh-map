@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T14:26:33.873789+00:00",
+  "updated_at": "2026-11-18T14:44:33.176367+00:00",
   "data": {
     "брусилів": 17.5,
     "житомир": 0.7,
@@ -51,14 +51,13 @@
     "лісове": 100.0,
     "діброва": 87.5,
     "лугове": 100.0,
-    "калинівка": 100.0,
-    "магдин": 100.0
+    "калинівка": 100.0
   },
   "summary": {
     "off_percent": 3.1,
-    "off_streets": 636,
+    "off_streets": 633,
     "total_streets": 20239,
-    "off_settlements": 57
+    "off_settlements": 56
   },
   "raions": [
     {
@@ -86,13 +85,6 @@
       "name": "Звягельський",
       "off_percent": 0.3,
       "off_streets": 8,
-      "off_settlements": 1,
-      "off_settlements_percent": 0.5
-    },
-    {
-      "name": "Овруцький",
-      "off_percent": 0.2,
-      "off_streets": 3,
       "off_settlements": 1,
       "off_settlements_percent": 0.5
     }
