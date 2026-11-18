@@ -1,8 +1,18 @@
 {
-  "updated_at": "2026-11-18T02:08:28.227197+00:00",
+  "updated_at": "2026-11-18T02:26:34.238764+00:00",
   "data": {
+    "грабівка": 83.3,
     "житомир": 0.7,
     "оліївка": 9.4,
+    "мамрин": 53.8,
+    "стрижівка": 8.0,
+    "глибочок": 100.0,
+    "харитонівка": 100.0,
+    "трикопці": 100.0,
+    "кулішівка": 100.0,
+    "смолівка": 100.0,
+    "рудня": 60.0,
+    "розкидайлівка": 100.0,
     "новобратське": 100.0,
     "барвінки": 100.0,
     "стримівщина": 100.0,
@@ -23,10 +33,10 @@
     "чоповичі": 100.0
   },
   "summary": {
-    "off_percent": 1.0,
-    "off_streets": 194,
+    "off_percent": 1.2,
+    "off_streets": 248,
     "total_streets": 20239,
-    "off_settlements": 20
+    "off_settlements": 31
   },
   "raions": [
     {
@@ -37,11 +47,18 @@
       "off_settlements_percent": 17.3
     },
     {
+      "name": "Коростишівський",
+      "off_percent": 8.4,
+      "off_streets": 49,
+      "off_settlements": 10,
+      "off_settlements_percent": 17.2
+    },
+    {
       "name": "Житомирський",
-      "off_percent": 0.5,
-      "off_streets": 15,
-      "off_settlements": 2,
-      "off_settlements_percent": 2.4
+      "off_percent": 0.7,
+      "off_streets": 20,
+      "off_settlements": 3,
+      "off_settlements_percent": 3.5
     }
   ]
 }
