@@ -1,18 +1,10 @@
 {
-  "updated_at": "2026-11-18T13:32:28.832788+00:00",
+  "updated_at": "2026-11-18T13:50:28.955561+00:00",
   "data": {
     "брусилів": 17.5,
     "житомир": 0.7,
     "оліївка": 9.4,
-    "звягель": 16.8,
-    "майстрів": 35.0,
-    "наталівка": 93.3,
-    "олександрівка": 100.0,
-    "маковиці": 77.8,
-    "пилиповичі": 8.3,
     "великий яблунець": 66.7,
-    "єлизаветпіль": 100.0,
-    "киянка": 7.7,
     "болярка": 80.0,
     "михайлівка": 26.3,
     "осни": 50.0,
@@ -63,10 +55,10 @@
     "магдин": 100.0
   },
   "summary": {
-    "off_percent": 3.8,
-    "off_streets": 775,
+    "off_percent": 3.1,
+    "off_streets": 636,
     "total_streets": 20239,
-    "off_settlements": 65
+    "off_settlements": 57
   },
   "raions": [
     {
@@ -75,13 +67,6 @@
       "off_streets": 593,
       "off_settlements": 52,
       "off_settlements_percent": 85.2
-    },
-    {
-      "name": "Звягельський",
-      "off_percent": 5.9,
-      "off_streets": 147,
-      "off_settlements": 9,
-      "off_settlements_percent": 4.1
     },
     {
       "name": "Брусилівський",
@@ -96,6 +81,13 @@
       "off_streets": 15,
       "off_settlements": 2,
       "off_settlements_percent": 2.4
+    },
+    {
+      "name": "Звягельський",
+      "off_percent": 0.3,
+      "off_streets": 8,
+      "off_settlements": 1,
+      "off_settlements_percent": 0.5
     },
     {
       "name": "Овруцький",
