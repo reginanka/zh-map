@@ -910,6 +910,10 @@ export default function App() {
               ? Number(props.outage_percent)
               : null;
 
+          // На сенсорних екранах тап теж викликає mousemove — підказку біля пальця не показуємо,
+          // там і так відкривається закріплена картка зверху.
+          if (!window.matchMedia('(hover: hover)').matches) return;
+
           setHoverInfo({
             name: props.name || 'Населений пункт',
             hromada: props.hromada || '',
