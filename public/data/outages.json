@@ -1,9 +1,18 @@
 {
-  "updated_at": "2026-11-18T12:02:34.123655+00:00",
+  "updated_at": "2026-11-18T12:20:31.266446+00:00",
   "data": {
     "брусилів": 17.5,
     "житомир": 0.7,
     "оліївка": 9.4,
+    "білка": 77.8,
+    "новини": 66.7,
+    "старий майдан": 100.0,
+    "шереметів": 100.0,
+    "червоносілка": 100.0,
+    "великий луг": 100.0,
+    "павлівка": 100.0,
+    "грузливець": 100.0,
+    "калиновий гай": 100.0,
     "звягель": 29.9,
     "гульськ": 6.1,
     "майстрів": 35.0,
@@ -66,10 +75,10 @@
     "магдин": 100.0
   },
   "summary": {
-    "off_percent": 4.2,
-    "off_streets": 841,
+    "off_percent": 4.5,
+    "off_streets": 916,
     "total_streets": 20239,
-    "off_settlements": 68
+    "off_settlements": 78
   },
   "raions": [
     {
@@ -78,6 +87,13 @@
       "off_streets": 593,
       "off_settlements": 52,
       "off_settlements_percent": 85.2
+    },
+    {
+      "name": "Пулинський",
+      "off_percent": 13.9,
+      "off_streets": 73,
+      "off_settlements": 9,
+      "off_settlements_percent": 14.3
     },
     {
       "name": "Звягельський",
@@ -106,6 +122,13 @@
       "off_streets": 3,
       "off_settlements": 1,
       "off_settlements_percent": 0.5
+    },
+    {
+      "name": "Баранівський",
+      "off_percent": 0.2,
+      "off_streets": 2,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.6
     }
   ]
 }
