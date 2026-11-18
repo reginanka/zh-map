@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-18T12:38:40.400694+00:00",
+  "updated_at": "2026-11-18T12:56:32.014244+00:00",
   "data": {
-    "брусилів": 9.3,
+    "брусилів": 17.5,
     "житомир": 0.7,
     "оліївка": 9.4,
     "звягель": 13.3,
@@ -60,8 +60,8 @@
     "магдин": 100.0
   },
   "summary": {
-    "off_percent": 3.4,
-    "off_streets": 697,
+    "off_percent": 3.5,
+    "off_streets": 705,
     "total_streets": 20239,
     "off_settlements": 62
   },
@@ -74,18 +74,18 @@
       "off_settlements_percent": 85.2
     },
     {
+      "name": "Брусилівський",
+      "off_percent": 4.8,
+      "off_streets": 17,
+      "off_settlements": 1,
+      "off_settlements_percent": 3.3
+    },
+    {
       "name": "Звягельський",
       "off_percent": 3.1,
       "off_streets": 77,
       "off_settlements": 6,
       "off_settlements_percent": 2.7
-    },
-    {
-      "name": "Брусилівський",
-      "off_percent": 2.5,
-      "off_streets": 9,
-      "off_settlements": 1,
-      "off_settlements_percent": 3.3
     },
     {
       "name": "Житомирський",
