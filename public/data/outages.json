@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T18:02:31.260522+00:00",
+  "updated_at": "2026-11-18T18:20:35.384196+00:00",
   "data": {
     "невідомо": 100.0,
     "житомир": 0.9,
@@ -21,13 +21,19 @@
     "полянка": 100.0,
     "будисько": 100.0,
     "середня": 100.0,
-    "йосипівка": 100.0
+    "йосипівка": 100.0,
+    "кожухівка": 9.1,
+    "коростень": 17.7,
+    "купище": 88.9,
+    "велень": 100.0,
+    "жабче": 100.0,
+    "клочеве": 10.0
   },
   "summary": {
-    "off_percent": 2.3,
-    "off_streets": 466,
+    "off_percent": 2.7,
+    "off_streets": 549,
     "total_streets": 20239,
-    "off_settlements": 26
+    "off_settlements": 32
   },
   "raions": [
     {
@@ -43,6 +49,13 @@
       "off_streets": 148,
       "off_settlements": 13,
       "off_settlements_percent": 15.3
+    },
+    {
+      "name": "Коростенський",
+      "off_percent": 4.9,
+      "off_streets": 83,
+      "off_settlements": 6,
+      "off_settlements_percent": 4.2
     }
   ]
 }
