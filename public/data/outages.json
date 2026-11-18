@@ -1,24 +1,14 @@
 {
-  "updated_at": "2026-11-18T17:08:34.591137+00:00",
+  "updated_at": "2026-11-18T17:26:36.378140+00:00",
   "data": {
-    "брусилів": 9.3,
-    "житомир": 3.5,
+    "невідомо": 100.0,
+    "житомир": 3.7,
+    "довжик": 39.6,
+    "давидівка": 39.1,
+    "барашівка": 100.0,
     "оліївка": 9.4,
-    "улянівка": 100.0,
-    "булдичів": 87.5,
-    "вільха": 100.0,
-    "дертка": 100.0,
-    "миропіль": 98.3,
-    "колодяжне": 100.0,
-    "печанівка": 100.0,
-    "мала козара": 62.5,
-    "мала токарівка": 50.0,
-    "ольшанка": 100.0,
-    "паволочка": 100.0,
-    "шевченка": 100.0,
-    "химрич": 16.7,
-    "цеберка": 100.0,
-    "бубни": 100.0,
+    "бондарці": 100.0,
+    "іванівка": 70.7,
     "баранівка": 99.4,
     "табори": 100.0,
     "стара гута": 100.0,
@@ -32,13 +22,14 @@
     "будисько": 100.0,
     "середня": 100.0,
     "йосипівка": 100.0,
-    "звягель": 0.7
+    "звягель": 23.5,
+    "велика горбаша": 7.1
   },
   "summary": {
-    "off_percent": 2.6,
-    "off_streets": 517,
+    "off_percent": 3.0,
+    "off_streets": 604,
     "total_streets": 20239,
-    "off_settlements": 33
+    "off_settlements": 30
   },
   "raions": [
     {
@@ -49,32 +40,18 @@
       "off_settlements_percent": 21.3
     },
     {
-      "name": "Романівський",
-      "off_percent": 25.6,
-      "off_streets": 144,
-      "off_settlements": 16,
-      "off_settlements_percent": 26.7
-    },
-    {
-      "name": "Брусилівський",
-      "off_percent": 2.5,
-      "off_streets": 9,
-      "off_settlements": 1,
-      "off_settlements_percent": 3.3
-    },
-    {
       "name": "Житомирський",
-      "off_percent": 1.5,
-      "off_streets": 43,
-      "off_settlements": 2,
-      "off_settlements_percent": 2.4
+      "off_percent": 6.3,
+      "off_streets": 176,
+      "off_settlements": 13,
+      "off_settlements_percent": 15.3
     },
     {
       "name": "Звягельський",
-      "off_percent": 0.1,
-      "off_streets": 3,
-      "off_settlements": 1,
-      "off_settlements_percent": 0.5
+      "off_percent": 4.4,
+      "off_streets": 110,
+      "off_settlements": 4,
+      "off_settlements_percent": 1.8
     }
   ]
 }
