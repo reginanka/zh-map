@@ -1,9 +1,15 @@
 {
-  "updated_at": "2026-11-18T15:02:31.302592+00:00",
+  "updated_at": "2026-11-18T15:20:35.609466+00:00",
   "data": {
     "брусилів": 17.5,
     "житомир": 0.7,
     "оліївка": 9.4,
+    "звягель": 16.6,
+    "кущове": 42.9,
+    "чижівка": 89.5,
+    "вишківка": 100.0,
+    "нова романівка": 7.7,
+    "івашківка": 14.3,
     "великий яблунець": 66.7,
     "болярка": 80.0,
     "михайлівка": 26.3,
@@ -54,10 +60,10 @@
     "калинівка": 100.0
   },
   "summary": {
-    "off_percent": 3.1,
-    "off_streets": 633,
+    "off_percent": 3.6,
+    "off_streets": 735,
     "total_streets": 20239,
-    "off_settlements": 56
+    "off_settlements": 62
   },
   "raions": [
     {
@@ -75,18 +81,18 @@
       "off_settlements_percent": 3.3
     },
     {
+      "name": "Звягельський",
+      "off_percent": 4.4,
+      "off_streets": 110,
+      "off_settlements": 7,
+      "off_settlements_percent": 3.2
+    },
+    {
       "name": "Житомирський",
       "off_percent": 0.5,
       "off_streets": 15,
       "off_settlements": 2,
       "off_settlements_percent": 2.4
-    },
-    {
-      "name": "Звягельський",
-      "off_percent": 0.3,
-      "off_streets": 8,
-      "off_settlements": 1,
-      "off_settlements_percent": 0.5
     }
   ]
 }
