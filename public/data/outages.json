@@ -1,14 +1,11 @@
 {
-  "updated_at": "2026-11-18T13:14:37.610220+00:00",
+  "updated_at": "2026-11-18T13:32:28.832788+00:00",
   "data": {
     "брусилів": 17.5,
     "житомир": 0.7,
     "оліївка": 9.4,
-    "звягель": 29.9,
-    "гульськ": 6.1,
+    "звягель": 16.8,
     "майстрів": 35.0,
-    "стриєва": 14.3,
-    "сусли": 15.0,
     "наталівка": 93.3,
     "олександрівка": 100.0,
     "маковиці": 77.8,
@@ -66,10 +63,10 @@
     "магдин": 100.0
   },
   "summary": {
-    "off_percent": 4.2,
-    "off_streets": 841,
+    "off_percent": 3.8,
+    "off_streets": 775,
     "total_streets": 20239,
-    "off_settlements": 68
+    "off_settlements": 65
   },
   "raions": [
     {
@@ -81,10 +78,10 @@
     },
     {
       "name": "Звягельський",
-      "off_percent": 8.5,
-      "off_streets": 213,
-      "off_settlements": 12,
-      "off_settlements_percent": 5.4
+      "off_percent": 5.9,
+      "off_streets": 147,
+      "off_settlements": 9,
+      "off_settlements_percent": 4.1
     },
     {
       "name": "Брусилівський",
