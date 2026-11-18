@@ -197,6 +197,9 @@ export default function App() {
   const hasUserInteractedRef = useRef(false);
   const lastOutagesFetchRef = useRef<number>(0);
   const isFetchingOutagesRef = useRef<boolean>(false);
+  // Відбиток останніх застосованих даних: якщо після чергового опитування дані не змінились —
+  // мапу й інтерфейс не чіпаємо взагалі (бот оновлює outages.json раз на ~18 хв, а опитування — кожні 2).
+  const lastPayloadSigRef = useRef<string>('');
   const [settlements, setSettlements] = useState<SettlementItem[]>([]);
   const [outagesSummary, setOutagesSummary] = useState<OutagesSummary | null>(null);
   const [outagesRaions, setOutagesRaions] = useState<OutagesRaionItem[] | null>(null);
@@ -300,6 +303,11 @@ export default function App() {
 
         const payload = await fetchOutagesPayload();
         lastOutagesFetchRef.current = Date.now();
+
+        const sig = JSON.stringify(payload);
+        if (sig === lastPayloadSigRef.current) return;
+        lastPayloadSigRef.current = sig;
+
         const updatedGeojson = applyOutagesPayload(payload);
 
         const source = mapRef.current?.getSource('villages') as maplibregl.GeoJSONSource | undefined;
@@ -585,6 +593,7 @@ export default function App() {
         });
 
         baseVillagesRef.current = baseVillages;
+        lastPayloadSigRef.current = JSON.stringify(outagesPayload);
         const styledGeojson = applyOutagesRef.current(outagesPayload);
         const indexList: SettlementItem[] = styledGeojson.features.map((feat, idx) => ({
           featureId: idx,

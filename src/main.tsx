@@ -7,6 +7,22 @@ import './index.css';
 if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   registerSW({
     immediate: true,
+    // Вийшла нова версія застосунку. За замовчуванням плагін одразу робить location.reload(),
+    // тобто сторінка перезавантажується просто під користувачем (білий екран, мапа зникає).
+    // Тому перезавантажуємо тихо — тільки коли застосунок згорнули або вкладка прихована.
+    onNeedReload() {
+      const reloadWhenHidden = () => {
+        if (document.visibilityState === 'hidden') {
+          document.removeEventListener('visibilitychange', reloadWhenHidden);
+          window.location.reload();
+        }
+      };
+      if (document.visibilityState === 'hidden') {
+        window.location.reload();
+      } else {
+        document.addEventListener('visibilitychange', reloadWhenHidden);
+      }
+    },
     onRegisteredSW(_swUrl, registration) {
       if (!registration) return;
       registration.update().catch(() => {});
