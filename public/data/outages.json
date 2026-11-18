@@ -1,29 +1,14 @@
 {
-  "updated_at": "2026-11-18T12:20:31.266446+00:00",
+  "updated_at": "2026-11-18T12:26:30.168099+00:00",
   "data": {
-    "брусилів": 17.5,
+    "брусилів": 9.3,
     "житомир": 0.7,
     "оліївка": 9.4,
-    "білка": 77.8,
-    "новини": 66.7,
-    "старий майдан": 100.0,
-    "шереметів": 100.0,
-    "червоносілка": 100.0,
-    "великий луг": 100.0,
-    "павлівка": 100.0,
-    "грузливець": 100.0,
-    "калиновий гай": 100.0,
-    "звягель": 29.9,
+    "звягель": 13.3,
     "гульськ": 6.1,
-    "майстрів": 35.0,
     "стриєва": 14.3,
     "сусли": 15.0,
-    "наталівка": 93.3,
-    "олександрівка": 100.0,
-    "маковиці": 77.8,
-    "пилиповичі": 8.3,
     "великий яблунець": 66.7,
-    "єлизаветпіль": 100.0,
     "киянка": 7.7,
     "болярка": 80.0,
     "михайлівка": 26.3,
@@ -75,10 +60,10 @@
     "магдин": 100.0
   },
   "summary": {
-    "off_percent": 4.5,
-    "off_streets": 916,
+    "off_percent": 3.4,
+    "off_streets": 697,
     "total_streets": 20239,
-    "off_settlements": 78
+    "off_settlements": 62
   },
   "raions": [
     {
@@ -89,23 +74,16 @@
       "off_settlements_percent": 85.2
     },
     {
-      "name": "Пулинський",
-      "off_percent": 13.9,
-      "off_streets": 73,
-      "off_settlements": 9,
-      "off_settlements_percent": 14.3
-    },
-    {
       "name": "Звягельський",
-      "off_percent": 8.5,
-      "off_streets": 213,
-      "off_settlements": 12,
-      "off_settlements_percent": 5.4
+      "off_percent": 3.1,
+      "off_streets": 77,
+      "off_settlements": 6,
+      "off_settlements_percent": 2.7
     },
     {
       "name": "Брусилівський",
-      "off_percent": 4.8,
-      "off_streets": 17,
+      "off_percent": 2.5,
+      "off_streets": 9,
       "off_settlements": 1,
       "off_settlements_percent": 3.3
     },
@@ -122,13 +100,6 @@
       "off_streets": 3,
       "off_settlements": 1,
       "off_settlements_percent": 0.5
-    },
-    {
-      "name": "Баранівський",
-      "off_percent": 0.2,
-      "off_streets": 2,
-      "off_settlements": 1,
-      "off_settlements_percent": 1.6
     }
   ]
 }
