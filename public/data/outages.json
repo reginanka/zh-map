@@ -1,17 +1,30 @@
 {
-  "updated_at": "2026-11-19T02:44:30.394518+00:00",
+  "updated_at": "2026-11-19T03:02:30.831595+00:00",
   "data": {
     "бердичів": 0.7,
     "житомир": 0.7,
-    "оліївка": 9.4
+    "оліївка": 9.4,
+    "хлупляни": 10.0,
+    "рудня": 66.7,
+    "бережесть": 100.0,
+    "виступовичі": 100.0,
+    "прилуки": 100.0,
+    "думинське": 100.0
   },
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 18,
+    "off_percent": 0.3,
+    "off_streets": 53,
     "total_streets": 20239,
-    "off_settlements": 3
+    "off_settlements": 9
   },
   "raions": [
+    {
+      "name": "Овруцький",
+      "off_percent": 1.8,
+      "off_streets": 35,
+      "off_settlements": 6,
+      "off_settlements_percent": 3.3
+    },
     {
       "name": "Житомирський",
       "off_percent": 0.5,
