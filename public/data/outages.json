@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-19T06:38:28.598023+00:00",
+  "updated_at": "2026-11-19T06:56:33.284138+00:00",
   "data": {
     "бердичів": 0.7,
-    "житомир": 0.7,
+    "житомир": 3.5,
     "оліївка": 9.3,
     "давидки": 30.0,
     "селець": 100.0,
@@ -38,8 +38,8 @@
     "думинське": 100.0
   },
   "summary": {
-    "off_percent": 1.4,
-    "off_streets": 275,
+    "off_percent": 1.5,
+    "off_streets": 303,
     "total_streets": 20239,
     "off_settlements": 36
   },
@@ -53,8 +53,8 @@
     },
     {
       "name": "Житомирський",
-      "off_percent": 0.5,
-      "off_streets": 15,
+      "off_percent": 1.5,
+      "off_streets": 43,
       "off_settlements": 2,
       "off_settlements_percent": 2.4
     },
