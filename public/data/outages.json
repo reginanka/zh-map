@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19T03:20:26.964549+00:00",
+  "updated_at": "2026-11-19T03:38:33.351588+00:00",
   "data": {
     "бердичів": 0.7,
     "житомир": 0.7,
@@ -9,21 +9,22 @@
     "бережесть": 100.0,
     "виступовичі": 100.0,
     "прилуки": 100.0,
-    "думинське": 100.0
+    "думинське": 100.0,
+    "кварцитне": 68.3
   },
   "summary": {
-    "off_percent": 0.3,
-    "off_streets": 53,
+    "off_percent": 0.5,
+    "off_streets": 94,
     "total_streets": 20239,
-    "off_settlements": 9
+    "off_settlements": 10
   },
   "raions": [
     {
       "name": "Овруцький",
-      "off_percent": 1.8,
-      "off_streets": 35,
-      "off_settlements": 6,
-      "off_settlements_percent": 3.3
+      "off_percent": 4.0,
+      "off_streets": 76,
+      "off_settlements": 7,
+      "off_settlements_percent": 3.8
     },
     {
       "name": "Житомирський",
