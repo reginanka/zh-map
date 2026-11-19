@@ -1,30 +1,16 @@
 {
-  "updated_at": "2026-11-19T19:14:38.952928+00:00",
+  "updated_at": "2026-11-19T19:32:36.538767+00:00",
   "data": {
-    "дібрівка": 70.0,
-    "тартак": 100.0,
-    "кам'яний брід": 100.0,
-    "червонодвірка": 100.0,
-    "жовте": 100.0,
-    "млини": 100.0,
-    "рудня": 100.0,
     "житомир": 0.7,
     "оліївка": 9.3
   },
   "summary": {
-    "off_percent": 0.4,
-    "off_streets": 82,
+    "off_percent": 0.1,
+    "off_streets": 15,
     "total_streets": 20239,
-    "off_settlements": 10
+    "off_settlements": 2
   },
   "raions": [
-    {
-      "name": "Баранівський",
-      "off_percent": 7.7,
-      "off_streets": 67,
-      "off_settlements": 8,
-      "off_settlements_percent": 13.1
-    },
     {
       "name": "Житомирський",
       "off_percent": 0.5,
