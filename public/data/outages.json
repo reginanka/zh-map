@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19T11:44:42.440785+00:00",
+  "updated_at": "2026-11-19T12:02:31.801911+00:00",
   "data": {
     "бердичів": 1.2,
     "суслівка": 100.0,
@@ -146,7 +146,6 @@
     "крупчатка": 100.0,
     "нова рудня": 100.0,
     "красносілка": 100.0,
-    "івашківка": 57.1,
     "соснівка": 100.0,
     "устинівка": 26.7,
     "кам'янка": 94.4,
@@ -241,10 +240,10 @@
     "думинське": 100.0
   },
   "summary": {
-    "off_percent": 14.3,
-    "off_streets": 2885,
+    "off_percent": 14.2,
+    "off_streets": 2881,
     "total_streets": 20239,
-    "off_settlements": 257
+    "off_settlements": 256
   },
   "raions": [
     {
@@ -295,13 +294,6 @@
       "off_streets": 15,
       "off_settlements": 2,
       "off_settlements_percent": 2.4
-    },
-    {
-      "name": "Звягельський",
-      "off_percent": 0.2,
-      "off_streets": 4,
-      "off_settlements": 1,
-      "off_settlements_percent": 0.5
     }
   ]
 }
