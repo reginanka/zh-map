@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-11-19T09:02:44.004079+00:00",
+  "updated_at": "2026-11-19T09:20:33.093575+00:00",
   "data": {
-    "бердичів": 0.7,
+    "бердичів": 1.2,
     "житомир": 0.7,
     "оліївка": 9.3,
     "давидки": 30.0,
@@ -32,24 +32,33 @@
     "ровба": 100.0,
     "тичків": 100.0,
     "бережесть": 100.0,
+    "семени": 100.0,
     "виступовичі": 100.0,
     "прилуки": 100.0,
+    "павлюківка": 100.0,
     "червоносілка": 50.0,
     "думинське": 100.0
   },
   "summary": {
     "off_percent": 1.4,
-    "off_streets": 275,
+    "off_streets": 291,
     "total_streets": 20239,
-    "off_settlements": 36
+    "off_settlements": 39
   },
   "raions": [
     {
       "name": "Овруцький",
-      "off_percent": 13.5,
-      "off_streets": 257,
-      "off_settlements": 33,
-      "off_settlements_percent": 18.1
+      "off_percent": 14.0,
+      "off_streets": 267,
+      "off_settlements": 35,
+      "off_settlements_percent": 19.2
+    },
+    {
+      "name": "Бердичівський",
+      "off_percent": 0.8,
+      "off_streets": 9,
+      "off_settlements": 2,
+      "off_settlements_percent": 3.2
     },
     {
       "name": "Житомирський",
@@ -57,13 +66,6 @@
       "off_streets": 15,
       "off_settlements": 2,
       "off_settlements_percent": 2.4
-    },
-    {
-      "name": "Бердичівський",
-      "off_percent": 0.3,
-      "off_streets": 3,
-      "off_settlements": 1,
-      "off_settlements_percent": 1.6
     }
   ]
 }
