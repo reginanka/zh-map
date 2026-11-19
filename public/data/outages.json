@@ -1,10 +1,13 @@
 {
-  "updated_at": "2026-11-19T16:50:30.824303+00:00",
+  "updated_at": "2026-11-19T17:08:30.709514+00:00",
   "data": {
-    "житомир": 10.5,
-    "оліївка": 18.6,
-    "світин": 5.9,
-    "вереси": 43.5,
+    "високе": 5.9,
+    "корчівка": 36.4,
+    "сліпчиці": 100.0,
+    "головине": 100.0,
+    "бежів": 41.7,
+    "житомир": 0.7,
+    "оліївка": 9.3,
     "болярка": 80.0,
     "теснівка": 30.0,
     "лісівщина": 100.0,
@@ -187,10 +190,10 @@
     "рокитне": 100.0
   },
   "summary": {
-    "off_percent": 12.0,
-    "off_streets": 2424,
+    "off_percent": 11.6,
+    "off_streets": 2338,
     "total_streets": 20239,
-    "off_settlements": 199
+    "off_settlements": 202
   },
   "raions": [
     {
@@ -215,11 +218,18 @@
       "off_settlements_percent": 25.0
     },
     {
+      "name": "Черняхівський",
+      "off_percent": 7.8,
+      "off_streets": 59,
+      "off_settlements": 6,
+      "off_settlements_percent": 10.5
+    },
+    {
       "name": "Житомирський",
-      "off_percent": 5.7,
-      "off_streets": 160,
-      "off_settlements": 5,
-      "off_settlements_percent": 5.9
+      "off_percent": 0.5,
+      "off_streets": 15,
+      "off_settlements": 2,
+      "off_settlements_percent": 2.4
     },
     {
       "name": "Овруцький",
