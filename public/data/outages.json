@@ -1,10 +1,21 @@
 {
-  "updated_at": "2026-11-19T23:08:26.415617+00:00",
-  "data": {},
+  "updated_at": "2026-11-19T23:26:31.045870+00:00",
+  "data": {
+    "головине": 38.9
+  },
   "summary": {
-    "off_percent": 0.0,
-    "off_streets": 0,
+    "off_percent": 0.1,
+    "off_streets": 14,
     "total_streets": 20239,
-    "off_settlements": 0
-  }
+    "off_settlements": 1
+  },
+  "raions": [
+    {
+      "name": "Черняхівський",
+      "off_percent": 1.9,
+      "off_streets": 14,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.8
+    }
+  ]
 }
