@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T14:43:43.140171+00:00",
+  "updated_at": "2026-11-20T15:01:34.277408+00:00",
   "data": {
     "соболівка": 50.0,
     "бартуха": 100.0,
@@ -19,12 +19,9 @@
     "ковганівка": 100.0,
     "йосипівка": 100.0,
     "ставище": 11.1,
-    "високе": 62.9,
-    "городище": 100.0,
-    "андріївка": 14.3,
-    "черняхів": 25.9,
+    "високе": 5.9,
     "березівка": 18.6,
-    "житомир": 3.2,
+    "житомир": 6.7,
     "дениші": 65.7,
     "болярка": 78.6,
     "василівка": 66.7,
@@ -102,10 +99,10 @@
     "гранітне": 100.0
   },
   "summary": {
-    "off_percent": 5.5,
-    "off_streets": 1106,
+    "off_percent": 5.3,
+    "off_streets": 1069,
     "total_streets": 20239,
-    "off_settlements": 107
+    "off_settlements": 103
   },
   "raions": [
     {
@@ -123,25 +120,18 @@
       "off_settlements_percent": 23.3
     },
     {
+      "name": "Житомирський",
+      "off_percent": 10.9,
+      "off_streets": 303,
+      "off_settlements": 24,
+      "off_settlements_percent": 28.2
+    },
+    {
       "name": "Коростишівський",
       "off_percent": 10.6,
       "off_streets": 62,
       "off_settlements": 9,
       "off_settlements_percent": 15.5
-    },
-    {
-      "name": "Черняхівський",
-      "off_percent": 9.7,
-      "off_streets": 73,
-      "off_settlements": 5,
-      "off_settlements_percent": 8.8
-    },
-    {
-      "name": "Житомирський",
-      "off_percent": 9.6,
-      "off_streets": 267,
-      "off_settlements": 24,
-      "off_settlements_percent": 28.2
     },
     {
       "name": "Коростенський",
