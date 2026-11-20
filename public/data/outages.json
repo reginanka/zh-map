@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T13:49:42.868715+00:00",
+  "updated_at": "2026-11-20T14:07:36.029503+00:00",
   "data": {
     "соболівка": 50.0,
     "бартуха": 100.0,
@@ -97,29 +97,21 @@
     "дриглів": 60.0,
     "рудня": 25.0,
     "новина": 100.0,
-    "кожухівка": 9.1,
-    "коростень": 17.7,
     "ришавка": 100.0,
-    "купище": 88.9,
     "вишневе": 100.0,
-    "велень": 100.0,
-    "жабче": 100.0,
     "калинівка": 100.0,
-    "клочеве": 10.0,
     "лісобуда": 100.0,
     "красногірка": 100.0,
     "мойсіївка": 100.0,
     "зарубинка": 100.0,
     "мошківка": 100.0,
-    "рудня-городищенська": 75.0,
-    "барвінки": 15.0,
-    "ялцівка": 85.7
+    "рудня-городищенська": 75.0
   },
   "summary": {
-    "off_percent": 5.0,
-    "off_streets": 1022,
+    "off_percent": 4.6,
+    "off_streets": 929,
     "total_streets": 20239,
-    "off_settlements": 123
+    "off_settlements": 114
   },
   "raions": [
     {
@@ -158,13 +150,6 @@
       "off_settlements_percent": 28.2
     },
     {
-      "name": "Коростенський",
-      "off_percent": 7.9,
-      "off_streets": 133,
-      "off_settlements": 16,
-      "off_settlements_percent": 11.3
-    },
-    {
       "name": "Брусилівський",
       "off_percent": 4.8,
       "off_streets": 17,
@@ -172,11 +157,11 @@
       "off_settlements_percent": 20.0
     },
     {
-      "name": "Малинський",
-      "off_percent": 1.2,
-      "off_streets": 13,
-      "off_settlements": 4,
-      "off_settlements_percent": 3.8
+      "name": "Коростенський",
+      "off_percent": 3.0,
+      "off_streets": 50,
+      "off_settlements": 10,
+      "off_settlements_percent": 7.0
     },
     {
       "name": "Чуднівський",
@@ -184,6 +169,13 @@
       "off_streets": 6,
       "off_settlements": 1,
       "off_settlements_percent": 1.7
+    },
+    {
+      "name": "Малинський",
+      "off_percent": 0.3,
+      "off_streets": 3,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.0
     }
   ]
 }
