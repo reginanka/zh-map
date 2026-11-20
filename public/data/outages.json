@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T10:31:38.098532+00:00",
+  "updated_at": "2026-11-20T10:49:33.497091+00:00",
   "data": {
     "улянівка": 100.0,
     "булдичів": 87.5,
@@ -16,9 +16,6 @@
     "химрич": 16.7,
     "цеберка": 100.0,
     "бубни": 100.0,
-    "став-слобода": 100.0,
-    "кочерів": 71.4,
-    "поташня": 100.0,
     "липники": 97.1,
     "малахівка": 100.0,
     "осни": 100.0,
@@ -29,9 +26,9 @@
   },
   "summary": {
     "off_percent": 1.1,
-    "off_streets": 231,
+    "off_streets": 214,
     "total_streets": 20239,
-    "off_settlements": 26
+    "off_settlements": 23
   },
   "raions": [
     {
@@ -47,13 +44,6 @@
       "off_streets": 70,
       "off_settlements": 7,
       "off_settlements_percent": 4.9
-    },
-    {
-      "name": "Радомишльський",
-      "off_percent": 2.3,
-      "off_streets": 17,
-      "off_settlements": 3,
-      "off_settlements_percent": 3.8
     }
   ]
 }
