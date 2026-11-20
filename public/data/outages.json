@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T18:01:31.255135+00:00",
+  "updated_at": "2026-11-20T18:19:30.995445+00:00",
   "data": {
     "садове": 100.0,
     "травневе": 100.0,
@@ -7,13 +7,14 @@
     "минійки": 100.0,
     "смиківка": 100.0,
     "кам'яний брід": 84.6,
+    "зеремля": 10.0,
     "малин": 16.3
   },
   "summary": {
-    "off_percent": 0.4,
-    "off_streets": 90,
+    "off_percent": 0.5,
+    "off_streets": 92,
     "total_streets": 20239,
-    "off_settlements": 7
+    "off_settlements": 8
   },
   "raions": [
     {
@@ -29,6 +30,13 @@
       "off_streets": 48,
       "off_settlements": 1,
       "off_settlements_percent": 1.0
+    },
+    {
+      "name": "Баранівський",
+      "off_percent": 0.2,
+      "off_streets": 2,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.6
     }
   ]
 }
