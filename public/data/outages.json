@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T10:49:33.497091+00:00",
+  "updated_at": "2026-11-20T11:07:49.434217+00:00",
   "data": {
     "улянівка": 100.0,
     "булдичів": 87.5,
@@ -15,20 +15,13 @@
     "шевченка": 100.0,
     "химрич": 16.7,
     "цеберка": 100.0,
-    "бубни": 100.0,
-    "липники": 97.1,
-    "малахівка": 100.0,
-    "осни": 100.0,
-    "повч": 100.0,
-    "рудня-повчанська": 100.0,
-    "лугини": 7.9,
-    "буда": 100.0
+    "бубни": 100.0
   },
   "summary": {
-    "off_percent": 1.1,
-    "off_streets": 214,
+    "off_percent": 0.7,
+    "off_streets": 144,
     "total_streets": 20239,
-    "off_settlements": 23
+    "off_settlements": 16
   },
   "raions": [
     {
@@ -37,13 +30,6 @@
       "off_streets": 144,
       "off_settlements": 16,
       "off_settlements_percent": 26.7
-    },
-    {
-      "name": "Коростенський",
-      "off_percent": 4.1,
-      "off_streets": 70,
-      "off_settlements": 7,
-      "off_settlements_percent": 4.9
     }
   ]
 }
