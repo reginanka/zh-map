@@ -1,10 +1,23 @@
 {
-  "updated_at": "2026-11-20T09:19:36.706228+00:00",
-  "data": {},
+  "updated_at": "2026-11-20T09:37:40.220034+00:00",
+  "data": {
+    "став-слобода": 100.0,
+    "кочерів": 71.4,
+    "поташня": 100.0
+  },
   "summary": {
-    "off_percent": 0.0,
-    "off_streets": 0,
+    "off_percent": 0.1,
+    "off_streets": 17,
     "total_streets": 20239,
-    "off_settlements": 0
-  }
+    "off_settlements": 3
+  },
+  "raions": [
+    {
+      "name": "Радомишльський",
+      "off_percent": 2.3,
+      "off_streets": 17,
+      "off_settlements": 3,
+      "off_settlements_percent": 3.8
+    }
+  ]
 }
