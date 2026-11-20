@@ -1,28 +1,10 @@
 {
-  "updated_at": "2026-11-20T08:25:36.593095+00:00",
-  "data": {
-    "калинівка": 100.0,
-    "левків": 100.0,
-    "житомир": 0.3,
-    "глибочиця": 82.4,
-    "березина": 25.0,
-    "гадзинка": 6.2,
-    "бистрі": 100.0,
-    "клітчин": 85.7
-  },
+  "updated_at": "2026-11-20T08:43:39.634792+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.7,
-    "off_streets": 140,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 9
-  },
-  "raions": [
-    {
-      "name": "Житомирський",
-      "off_percent": 5.0,
-      "off_streets": 140,
-      "off_settlements": 9,
-      "off_settlements_percent": 10.6
-    }
-  ]
+    "off_settlements": 0
+  }
 }
