@@ -1,15 +1,13 @@
 {
-  "updated_at": "2026-11-21T09:37:37.191569+00:00",
+  "updated_at": "2026-11-21T09:55:33.655421+00:00",
   "data": {
-    "житомир": 10.8,
-    "врублівка": 10.5,
-    "гордіївка": 11.1
+    "житомир": 10.8
   },
   "summary": {
-    "off_percent": 0.6,
-    "off_streets": 114,
+    "off_percent": 0.5,
+    "off_streets": 111,
     "total_streets": 20239,
-    "off_settlements": 5
+    "off_settlements": 3
   },
   "raions": [
     {
@@ -18,13 +16,6 @@
       "off_streets": 111,
       "off_settlements": 3,
       "off_settlements_percent": 3.5
-    },
-    {
-      "name": "Романівський",
-      "off_percent": 0.5,
-      "off_streets": 3,
-      "off_settlements": 2,
-      "off_settlements_percent": 3.3
     }
   ]
 }
