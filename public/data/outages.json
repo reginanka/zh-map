@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-21T16:49:30.471305+00:00",
+  "updated_at": "2026-11-21T17:07:26.901904+00:00",
   "data": {
     "бурківці": 20.0,
     "вільшанка": 41.7,
@@ -12,15 +12,13 @@
     "дацьки": 100.0,
     "кілки": 12.5,
     "ясопіль": 100.0,
-    "м'ясківка": 100.0,
-    "брусилів": 8.2,
-    "романівка": 21.4
+    "м'ясківка": 100.0
   },
   "summary": {
     "off_percent": 0.5,
-    "off_streets": 107,
+    "off_streets": 96,
     "total_streets": 20239,
-    "off_settlements": 14
+    "off_settlements": 12
   },
   "raions": [
     {
@@ -29,13 +27,6 @@
       "off_streets": 96,
       "off_settlements": 12,
       "off_settlements_percent": 20.0
-    },
-    {
-      "name": "Брусилівський",
-      "off_percent": 3.1,
-      "off_streets": 11,
-      "off_settlements": 2,
-      "off_settlements_percent": 6.7
     }
   ]
 }
