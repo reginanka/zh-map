@@ -1,15 +1,25 @@
 {
-  "updated_at": "2026-11-21T05:43:36.582560+00:00",
+  "updated_at": "2026-11-21T06:01:38.156875+00:00",
   "data": {
-    "іванівка": 12.1
+    "іванівка": 12.1,
+    "малин": 24.4,
+    "малинівка": 96.3,
+    "юрівка": 20.0
   },
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 12,
+    "off_percent": 0.5,
+    "off_streets": 111,
     "total_streets": 20239,
-    "off_settlements": 1
+    "off_settlements": 4
   },
   "raions": [
+    {
+      "name": "Малинський",
+      "off_percent": 8.8,
+      "off_streets": 99,
+      "off_settlements": 3,
+      "off_settlements_percent": 2.9
+    },
     {
       "name": "Житомирський",
       "off_percent": 0.4,
