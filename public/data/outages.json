@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-11-21T10:49:25.665592+00:00",
+  "updated_at": "2026-11-21T11:07:27.010091+00:00",
   "data": {
-    "житомир": 10.8
+    "брусилів": 8.2
   },
   "summary": {
-    "off_percent": 0.5,
-    "off_streets": 111,
+    "off_percent": 0.0,
+    "off_streets": 8,
     "total_streets": 20239,
-    "off_settlements": 3
+    "off_settlements": 1
   },
   "raions": [
     {
-      "name": "Житомирський",
-      "off_percent": 4.0,
-      "off_streets": 111,
-      "off_settlements": 3,
-      "off_settlements_percent": 3.5
+      "name": "Брусилівський",
+      "off_percent": 2.2,
+      "off_streets": 8,
+      "off_settlements": 1,
+      "off_settlements_percent": 3.3
     }
   ]
 }
