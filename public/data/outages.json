@@ -1,14 +1,13 @@
 {
-  "updated_at": "2026-11-21T13:31:29.385906+00:00",
+  "updated_at": "2026-11-21T13:49:35.692808+00:00",
   "data": {
-    "брусилів": 8.2,
-    "малин": 1.0
+    "брусилів": 8.2
   },
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 11,
+    "off_percent": 0.0,
+    "off_streets": 8,
     "total_streets": 20239,
-    "off_settlements": 2
+    "off_settlements": 1
   },
   "raions": [
     {
@@ -17,13 +16,6 @@
       "off_streets": 8,
       "off_settlements": 1,
       "off_settlements_percent": 3.3
-    },
-    {
-      "name": "Малинський",
-      "off_percent": 0.3,
-      "off_streets": 3,
-      "off_settlements": 1,
-      "off_settlements_percent": 1.0
     }
   ]
 }
