@@ -1,16 +1,19 @@
 {
-  "updated_at": "2026-11-21T07:49:31.514132+00:00",
+  "updated_at": "2026-11-21T08:07:28.837285+00:00",
   "data": {
+    "житомир": 10.8,
     "іванівка": 12.1,
+    "врублівка": 10.5,
+    "гордіївка": 11.1,
     "малин": 24.4,
     "малинівка": 96.3,
     "юрівка": 20.0
   },
   "summary": {
-    "off_percent": 0.5,
-    "off_streets": 111,
+    "off_percent": 1.1,
+    "off_streets": 225,
     "total_streets": 20239,
-    "off_settlements": 4
+    "off_settlements": 9
   },
   "raions": [
     {
@@ -22,10 +25,17 @@
     },
     {
       "name": "Житомирський",
-      "off_percent": 0.4,
-      "off_streets": 12,
-      "off_settlements": 1,
-      "off_settlements_percent": 1.2
+      "off_percent": 4.4,
+      "off_streets": 123,
+      "off_settlements": 4,
+      "off_settlements_percent": 4.7
+    },
+    {
+      "name": "Романівський",
+      "off_percent": 0.5,
+      "off_streets": 3,
+      "off_settlements": 2,
+      "off_settlements_percent": 3.3
     }
   ]
 }
