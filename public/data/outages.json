@@ -1,21 +1,10 @@
 {
-  "updated_at": "2026-11-22T08:24:26.992255+00:00",
-  "data": {
-    "карвинівка": 12.5
-  },
+  "updated_at": "2026-11-22T08:42:28.546879+00:00",
+  "data": {},
   "summary": {
     "off_percent": 0.0,
-    "off_streets": 2,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 1
-  },
-  "raions": [
-    {
-      "name": "Романівський",
-      "off_percent": 0.4,
-      "off_streets": 2,
-      "off_settlements": 1,
-      "off_settlements_percent": 1.7
-    }
-  ]
+    "off_settlements": 0
+  }
 }
