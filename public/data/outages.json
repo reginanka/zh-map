@@ -1,10 +1,21 @@
 {
-  "updated_at": "2026-11-22T18:54:30.263697+00:00",
-  "data": {},
+  "updated_at": "2026-11-22T19:12:31.272436+00:00",
+  "data": {
+    "ємільчине": 5.1
+  },
   "summary": {
     "off_percent": 0.0,
-    "off_streets": 0,
+    "off_streets": 5,
     "total_streets": 20239,
-    "off_settlements": 0
-  }
+    "off_settlements": 1
+  },
+  "raions": [
+    {
+      "name": "Звягельський",
+      "off_percent": 0.2,
+      "off_streets": 5,
+      "off_settlements": 1,
+      "off_settlements_percent": 0.5
+    }
+  ]
 }
