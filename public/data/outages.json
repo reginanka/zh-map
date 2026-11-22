@@ -1,21 +1,10 @@
 {
-  "updated_at": "2026-11-22T15:36:31.784327+00:00",
-  "data": {
-    "коростень": 3.2
-  },
+  "updated_at": "2026-11-22T15:54:32.835521+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 11,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 1
-  },
-  "raions": [
-    {
-      "name": "Коростенський",
-      "off_percent": 0.6,
-      "off_streets": 11,
-      "off_settlements": 1,
-      "off_settlements_percent": 0.7
-    }
-  ]
+    "off_settlements": 0
+  }
 }
