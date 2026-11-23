@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-11-23T12:18:38.928532+00:00",
+  "updated_at": "2026-11-23T12:36:37.087836+00:00",
   "data": {
-    "житомир": 6.4,
+    "житомир": 6.3,
     "ємільчине": 5.1,
     "гранітне": 100.0
   },
   "summary": {
     "off_percent": 0.4,
-    "off_streets": 85,
+    "off_streets": 84,
     "total_streets": 20239,
     "off_settlements": 3
   },
@@ -15,7 +15,7 @@
     {
       "name": "Житомирський",
       "off_percent": 2.3,
-      "off_streets": 64,
+      "off_streets": 63,
       "off_settlements": 1,
       "off_settlements_percent": 1.2
     },
