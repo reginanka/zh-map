@@ -1,14 +1,13 @@
 {
-  "updated_at": "2026-11-23T13:48:40.974260+00:00",
+  "updated_at": "2026-11-23T14:06:34.271804+00:00",
   "data": {
-    "житомир": 6.3,
-    "ємільчине": 5.1
+    "житомир": 6.3
   },
   "summary": {
     "off_percent": 0.3,
-    "off_streets": 68,
+    "off_streets": 63,
     "total_streets": 20239,
-    "off_settlements": 2
+    "off_settlements": 1
   },
   "raions": [
     {
@@ -17,13 +16,6 @@
       "off_streets": 63,
       "off_settlements": 1,
       "off_settlements_percent": 1.2
-    },
-    {
-      "name": "Звягельський",
-      "off_percent": 0.2,
-      "off_streets": 5,
-      "off_settlements": 1,
-      "off_settlements_percent": 0.5
     }
   ]
 }
