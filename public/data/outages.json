@@ -1,7 +1,6 @@
 {
-  "updated_at": "2026-11-23T08:06:35.908393+00:00",
+  "updated_at": "2026-11-23T08:24:38.258601+00:00",
   "data": {
-    "грабівка": 83.3,
     "ліщин": 100.0,
     "піски": 80.8,
     "тарасівка": 100.0,
@@ -13,37 +12,21 @@
     "лісівщина": 100.0,
     "буймир": 100.0,
     "іванків": 7.1,
-    "мамрин": 46.2,
-    "стрижівка": 8.0,
-    "глибочок": 100.0,
-    "харитонівка": 100.0,
-    "трикопці": 100.0,
-    "кулішівка": 100.0,
-    "смолівка": 100.0,
-    "рудня": 60.0,
-    "розкидайлівка": 100.0,
     "гранітне": 100.0
   },
   "summary": {
-    "off_percent": 1.0,
-    "off_streets": 210,
+    "off_percent": 0.8,
+    "off_streets": 160,
     "total_streets": 20239,
-    "off_settlements": 25
+    "off_settlements": 14
   },
   "raions": [
     {
-      "name": "Коростишівський",
-      "off_percent": 7.7,
-      "off_streets": 45,
-      "off_settlements": 10,
-      "off_settlements_percent": 17.2
-    },
-    {
       "name": "Житомирський",
-      "off_percent": 5.3,
-      "off_streets": 148,
-      "off_settlements": 13,
-      "off_settlements_percent": 15.3
+      "off_percent": 5.1,
+      "off_streets": 143,
+      "off_settlements": 12,
+      "off_settlements_percent": 14.1
     },
     {
       "name": "Малинський",
