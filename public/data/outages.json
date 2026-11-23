@@ -1,15 +1,23 @@
 {
-  "updated_at": "2026-11-23T01:12:30.470075+00:00",
+  "updated_at": "2026-11-23T01:30:36.913931+00:00",
   "data": {
-    "ємільчине": 5.1
+    "ємільчине": 5.1,
+    "гранітне": 100.0
   },
   "summary": {
-    "off_percent": 0.0,
-    "off_streets": 5,
+    "off_percent": 0.1,
+    "off_streets": 21,
     "total_streets": 20239,
-    "off_settlements": 1
+    "off_settlements": 2
   },
   "raions": [
+    {
+      "name": "Малинський",
+      "off_percent": 1.4,
+      "off_streets": 16,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.0
+    },
     {
       "name": "Звягельський",
       "off_percent": 0.2,
