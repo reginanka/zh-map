@@ -1,16 +1,32 @@
 {
-  "updated_at": "2026-11-23T06:54:33.239903+00:00",
+  "updated_at": "2026-11-23T07:12:31.640400+00:00",
   "data": {
-    "ємільчине": 5.1,
+    "грабівка": 83.3,
+    "мамрин": 46.2,
+    "стрижівка": 8.0,
+    "глибочок": 100.0,
+    "харитонівка": 100.0,
+    "трикопці": 100.0,
+    "кулішівка": 100.0,
+    "смолівка": 100.0,
+    "рудня": 60.0,
+    "розкидайлівка": 100.0,
     "гранітне": 100.0
   },
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 21,
+    "off_percent": 0.3,
+    "off_streets": 66,
     "total_streets": 20239,
-    "off_settlements": 2
+    "off_settlements": 12
   },
   "raions": [
+    {
+      "name": "Коростишівський",
+      "off_percent": 7.7,
+      "off_streets": 45,
+      "off_settlements": 10,
+      "off_settlements_percent": 17.2
+    },
     {
       "name": "Малинський",
       "off_percent": 1.4,
@@ -19,11 +35,11 @@
       "off_settlements_percent": 1.0
     },
     {
-      "name": "Звягельський",
+      "name": "Житомирський",
       "off_percent": 0.2,
       "off_streets": 5,
       "off_settlements": 1,
-      "off_settlements_percent": 0.5
+      "off_settlements_percent": 1.2
     }
   ]
 }
