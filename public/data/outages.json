@@ -1,34 +1,16 @@
 {
-  "updated_at": "2026-11-23T10:12:35.809738+00:00",
+  "updated_at": "2026-11-23T10:30:36.185025+00:00",
   "data": {
-    "ліщин": 100.0,
-    "піски": 80.8,
-    "тарасівка": 100.0,
-    "млинище": 100.0,
-    "лука": 100.0,
-    "скоморохи": 69.6,
-    "туровець": 100.0,
-    "мошківка": 100.0,
-    "лісівщина": 100.0,
-    "буймир": 100.0,
-    "іванків": 7.1,
     "ємільчине": 5.1,
     "гранітне": 100.0
   },
   "summary": {
-    "off_percent": 0.8,
-    "off_streets": 165,
+    "off_percent": 0.1,
+    "off_streets": 21,
     "total_streets": 20239,
-    "off_settlements": 15
+    "off_settlements": 2
   },
   "raions": [
-    {
-      "name": "Житомирський",
-      "off_percent": 5.1,
-      "off_streets": 143,
-      "off_settlements": 12,
-      "off_settlements_percent": 14.1
-    },
     {
       "name": "Малинський",
       "off_percent": 1.4,
@@ -42,13 +24,6 @@
       "off_streets": 5,
       "off_settlements": 1,
       "off_settlements_percent": 0.5
-    },
-    {
-      "name": "Андрушівський",
-      "off_percent": 0.2,
-      "off_streets": 1,
-      "off_settlements": 1,
-      "off_settlements_percent": 2.8
     }
   ]
 }
