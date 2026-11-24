@@ -1,10 +1,7 @@
 {
-  "updated_at": "2026-11-24T20:59:34.028100+00:00",
+  "updated_at": "2026-11-24T21:17:39.019430+00:00",
   "data": {
     "грабівка": 83.3,
-    "зарічани": 6.5,
-    "станишівка": 43.7,
-    "житомир": 19.0,
     "теснівка": 87.5,
     "коростишів": 26.3,
     "мамрин": 53.8,
@@ -37,10 +34,10 @@
     "червоний гай": 100.0
   },
   "summary": {
-    "off_percent": 2.3,
-    "off_streets": 462,
+    "off_percent": 1.2,
+    "off_streets": 235,
     "total_streets": 20239,
-    "off_settlements": 36
+    "off_settlements": 32
   },
   "raions": [
     {
@@ -52,10 +49,10 @@
     },
     {
       "name": "Житомирський",
-      "off_percent": 8.3,
-      "off_streets": 232,
-      "off_settlements": 5,
-      "off_settlements_percent": 5.9
+      "off_percent": 0.2,
+      "off_streets": 5,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.2
     }
   ]
 }
