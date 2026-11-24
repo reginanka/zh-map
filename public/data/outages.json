@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-24T23:41:30.288881+00:00",
+  "updated_at": "2026-11-24T23:59:33.282958+00:00",
   "data": {
     "грабівка": 83.3,
-    "коростишів": 11.1,
+    "коростишів": 44.2,
     "мамрин": 53.8,
     "стрижівка": 8.0,
     "глибочок": 100.0,
@@ -15,21 +15,22 @@
     "смолівка": 100.0,
     "рудня": 60.0,
     "розкидайлівка": 100.0,
-    "городське": 100.0
+    "городське": 100.0,
+    "новогородецьке": 33.3
   },
   "summary": {
-    "off_percent": 0.5,
-    "off_streets": 96,
+    "off_percent": 0.8,
+    "off_streets": 160,
     "total_streets": 20239,
-    "off_settlements": 15
+    "off_settlements": 16
   },
   "raions": [
     {
       "name": "Коростишівський",
-      "off_percent": 15.6,
-      "off_streets": 91,
-      "off_settlements": 14,
-      "off_settlements_percent": 24.1
+      "off_percent": 26.6,
+      "off_streets": 155,
+      "off_settlements": 15,
+      "off_settlements_percent": 25.9
     },
     {
       "name": "Житомирський",
