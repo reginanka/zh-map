@@ -1,6 +1,9 @@
 {
-  "updated_at": "2026-11-24T19:11:41.340278+00:00",
+  "updated_at": "2026-11-24T19:29:31.883375+00:00",
   "data": {
+    "зарічани": 6.5,
+    "станишівка": 43.7,
+    "житомир": 19.0,
     "теснівка": 25.0,
     "коростишів": 23.2,
     "високий камінь": 100.0,
@@ -11,10 +14,10 @@
     "царівка": 100.0
   },
   "summary": {
-    "off_percent": 0.4,
-    "off_streets": 79,
+    "off_percent": 1.5,
+    "off_streets": 306,
     "total_streets": 20239,
-    "off_settlements": 8
+    "off_settlements": 12
   },
   "raions": [
     {
@@ -23,6 +26,13 @@
       "off_streets": 79,
       "off_settlements": 8,
       "off_settlements_percent": 13.8
+    },
+    {
+      "name": "Житомирський",
+      "off_percent": 8.2,
+      "off_streets": 227,
+      "off_settlements": 4,
+      "off_settlements_percent": 4.7
     }
   ]
 }
