@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24T01:11:38.566847+00:00",
+  "updated_at": "2026-11-24T01:29:27.654580+00:00",
   "data": {
     "дібрівка": 70.0,
     "тартак": 100.0,
@@ -12,13 +12,16 @@
     "рудня": 100.0,
     "суємці": 68.2,
     "володимирівка": 100.0,
-    "зеремля": 100.0
+    "зеремля": 100.0,
+    "щербини": 100.0,
+    "дідушанка": 100.0,
+    "ялинівка": 100.0
   },
   "summary": {
-    "off_percent": 0.7,
-    "off_streets": 135,
+    "off_percent": 0.8,
+    "off_streets": 152,
     "total_streets": 20239,
-    "off_settlements": 14
+    "off_settlements": 17
   },
   "raions": [
     {
@@ -27,6 +30,13 @@
       "off_streets": 135,
       "off_settlements": 14,
       "off_settlements_percent": 23.0
+    },
+    {
+      "name": "Черняхівський",
+      "off_percent": 2.3,
+      "off_streets": 17,
+      "off_settlements": 3,
+      "off_settlements_percent": 5.3
     }
   ]
 }
