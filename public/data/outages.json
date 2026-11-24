@@ -1,23 +1,10 @@
 {
-  "updated_at": "2026-11-24T02:41:39.450016+00:00",
-  "data": {
-    "щербини": 100.0,
-    "дідушанка": 100.0,
-    "ялинівка": 100.0
-  },
+  "updated_at": "2026-11-24T02:59:27.487785+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 17,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 3
-  },
-  "raions": [
-    {
-      "name": "Черняхівський",
-      "off_percent": 2.3,
-      "off_streets": 17,
-      "off_settlements": 3,
-      "off_settlements_percent": 5.3
-    }
-  ]
+    "off_settlements": 0
+  }
 }
