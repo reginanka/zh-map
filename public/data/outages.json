@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-11-24T21:35:35.816358+00:00",
+  "updated_at": "2026-11-24T21:53:30.881743+00:00",
   "data": {
     "грабівка": 83.3,
-    "коростишів": 26.3,
+    "коростишів": 11.1,
     "мамрин": 53.8,
     "стрижівка": 8.0,
     "глибочок": 100.0,
@@ -18,16 +18,16 @@
     "городське": 100.0
   },
   "summary": {
-    "off_percent": 0.6,
-    "off_streets": 125,
+    "off_percent": 0.5,
+    "off_streets": 96,
     "total_streets": 20239,
     "off_settlements": 15
   },
   "raions": [
     {
       "name": "Коростишівський",
-      "off_percent": 20.6,
-      "off_streets": 120,
+      "off_percent": 15.6,
+      "off_streets": 91,
       "off_settlements": 14,
       "off_settlements_percent": 24.1
     },
