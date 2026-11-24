@@ -1,10 +1,21 @@
 {
-  "updated_at": "2026-11-24T05:59:42.487621+00:00",
-  "data": {},
+  "updated_at": "2026-11-24T06:17:33.872571+00:00",
+  "data": {
+    "писарівка": 66.7
+  },
   "summary": {
     "off_percent": 0.0,
-    "off_streets": 0,
+    "off_streets": 2,
     "total_streets": 20239,
-    "off_settlements": 0
-  }
+    "off_settlements": 1
+  },
+  "raions": [
+    {
+      "name": "Малинський",
+      "off_percent": 0.2,
+      "off_streets": 2,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.0
+    }
+  ]
 }
