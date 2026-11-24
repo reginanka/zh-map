@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24T08:59:37.909293+00:00",
+  "updated_at": "2026-11-24T09:17:42.112873+00:00",
   "data": {
     "грабівка": 83.3,
     "коростишів": 32.6,
@@ -22,13 +22,14 @@
     "рудня": 60.0,
     "розкидайлівка": 100.0,
     "новогородецьке": 33.3,
-    "продубіївка": 33.3
+    "продубіївка": 33.3,
+    "барвінки": 10.0
   },
   "summary": {
     "off_percent": 0.8,
-    "off_streets": 160,
+    "off_streets": 162,
     "total_streets": 20239,
-    "off_settlements": 22
+    "off_settlements": 23
   },
   "raions": [
     {
@@ -44,6 +45,13 @@
       "off_streets": 5,
       "off_settlements": 1,
       "off_settlements_percent": 1.2
+    },
+    {
+      "name": "Малинський",
+      "off_percent": 0.2,
+      "off_streets": 2,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.0
     }
   ]
 }
