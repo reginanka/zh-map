@@ -1,24 +1,10 @@
 {
-  "updated_at": "2026-11-25T19:47:33.622500+00:00",
-  "data": {
-    "шатрище": 41.7,
-    "бехи": 6.7,
-    "коростень": 14.5,
-    "вороневе": 20.0
-  },
+  "updated_at": "2026-11-25T20:05:28.408676+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.3,
-    "off_streets": 58,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 4
-  },
-  "raions": [
-    {
-      "name": "Коростенський",
-      "off_percent": 3.4,
-      "off_streets": 58,
-      "off_settlements": 4,
-      "off_settlements_percent": 2.8
-    }
-  ]
+    "off_settlements": 0
+  }
 }
