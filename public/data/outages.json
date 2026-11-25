@@ -1,10 +1,6 @@
 {
-  "updated_at": "2026-11-25T17:05:30.437543+00:00",
+  "updated_at": "2026-11-25T17:23:33.753824+00:00",
   "data": {
-    "кам'янка": 36.4,
-    "маркова волиця": 100.0,
-    "котлярка": 90.0,
-    "сокільча": 100.0,
     "високий камінь": 100.0,
     "шахворостівка": 100.0,
     "козіївка": 83.3,
@@ -16,10 +12,10 @@
     "городське": 100.0
   },
   "summary": {
-    "off_percent": 0.5,
-    "off_streets": 98,
+    "off_percent": 0.3,
+    "off_streets": 54,
     "total_streets": 20239,
-    "off_settlements": 16
+    "off_settlements": 10
   },
   "raions": [
     {
@@ -28,13 +24,6 @@
       "off_streets": 54,
       "off_settlements": 10,
       "off_settlements_percent": 17.2
-    },
-    {
-      "name": "Попільнянський",
-      "off_percent": 3.1,
-      "off_streets": 44,
-      "off_settlements": 6,
-      "off_settlements_percent": 6.5
     }
   ]
 }
