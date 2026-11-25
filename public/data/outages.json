@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25T17:59:32.667759+00:00",
+  "updated_at": "2026-11-25T18:17:30.465724+00:00",
   "data": {
     "високий камінь": 100.0,
     "шахворостівка": 100.0,
@@ -9,13 +9,17 @@
     "осикове": 100.0,
     "осиковий копець": 100.0,
     "видумка": 100.0,
-    "городське": 100.0
+    "городське": 100.0,
+    "шатрище": 41.7,
+    "бехи": 6.7,
+    "коростень": 14.5,
+    "вороневе": 20.0
   },
   "summary": {
-    "off_percent": 0.3,
-    "off_streets": 54,
+    "off_percent": 0.6,
+    "off_streets": 112,
     "total_streets": 20239,
-    "off_settlements": 10
+    "off_settlements": 14
   },
   "raions": [
     {
@@ -24,6 +28,13 @@
       "off_streets": 54,
       "off_settlements": 10,
       "off_settlements_percent": 17.2
+    },
+    {
+      "name": "Коростенський",
+      "off_percent": 3.4,
+      "off_streets": 58,
+      "off_settlements": 4,
+      "off_settlements_percent": 2.8
     }
   ]
 }
