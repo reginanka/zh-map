@@ -1,22 +1,10 @@
 {
-  "updated_at": "2026-11-25T02:59:29.970345+00:00",
-  "data": {
-    "коростишів": 39.5,
-    "новогородецьке": 33.3
-  },
+  "updated_at": "2026-11-25T03:17:31.903865+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.4,
-    "off_streets": 76,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 2
-  },
-  "raions": [
-    {
-      "name": "Коростишівський",
-      "off_percent": 13.0,
-      "off_streets": 76,
-      "off_settlements": 2,
-      "off_settlements_percent": 3.4
-    }
-  ]
+    "off_settlements": 0
+  }
 }
