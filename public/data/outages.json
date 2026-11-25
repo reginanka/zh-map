@@ -1,10 +1,26 @@
 {
-  "updated_at": "2026-11-25T07:47:29.869793+00:00",
-  "data": {},
+  "updated_at": "2026-11-25T08:05:32.993821+00:00",
+  "data": {
+    "будо-рижани": 100.0,
+    "радичі": 100.0,
+    "стебниця": 100.0,
+    "гайки": 100.0,
+    "рижани": 9.1,
+    "катеринівка": 100.0
+  },
   "summary": {
-    "off_percent": 0.0,
-    "off_streets": 0,
+    "off_percent": 0.2,
+    "off_streets": 40,
     "total_streets": 20239,
-    "off_settlements": 0
-  }
+    "off_settlements": 6
+  },
+  "raions": [
+    {
+      "name": "Хорошівський",
+      "off_percent": 6.3,
+      "off_streets": 40,
+      "off_settlements": 6,
+      "off_settlements_percent": 8.6
+    }
+  ]
 }
