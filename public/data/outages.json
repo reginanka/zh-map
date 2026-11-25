@@ -1,23 +1,15 @@
 {
-  "updated_at": "2026-11-25T14:41:41.528624+00:00",
+  "updated_at": "2026-11-25T14:59:30.611058+00:00",
   "data": {
-    "житомир": 0.1,
-    "дриглів": 50.0
+    "житомир": 0.1
   },
   "summary": {
     "off_percent": 0.0,
-    "off_streets": 6,
+    "off_streets": 1,
     "total_streets": 20239,
-    "off_settlements": 2
+    "off_settlements": 1
   },
   "raions": [
-    {
-      "name": "Чуднівський",
-      "off_percent": 0.7,
-      "off_streets": 5,
-      "off_settlements": 1,
-      "off_settlements_percent": 1.7
-    },
     {
       "name": "Житомирський",
       "off_percent": 0.0,
