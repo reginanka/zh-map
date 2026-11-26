@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26T08:41:43.882680+00:00",
+  "updated_at": "2026-11-26T08:59:45.438743+00:00",
   "data": {
     "степок": 27.8,
     "іванопіль": 97.6,
@@ -11,6 +11,7 @@
     "галіївка": 50.0,
     "андріяшівка": 8.3,
     "буряки": 100.0,
+    "житомир": 0.1,
     "троянів": 48.9,
     "пилипівка": 5.0,
     "рудня-городище": 100.0,
@@ -38,9 +39,9 @@
   },
   "summary": {
     "off_percent": 1.1,
-    "off_streets": 229,
+    "off_streets": 230,
     "total_streets": 20239,
-    "off_settlements": 35
+    "off_settlements": 36
   },
   "raions": [
     {
@@ -58,18 +59,18 @@
       "off_settlements_percent": 15.5
     },
     {
+      "name": "Житомирський",
+      "off_percent": 2.4,
+      "off_streets": 66,
+      "off_settlements": 8,
+      "off_settlements_percent": 9.4
+    },
+    {
       "name": "Коростенський",
       "off_percent": 2.4,
       "off_streets": 41,
       "off_settlements": 8,
       "off_settlements_percent": 5.6
-    },
-    {
-      "name": "Житомирський",
-      "off_percent": 2.3,
-      "off_streets": 65,
-      "off_settlements": 7,
-      "off_settlements_percent": 8.2
     },
     {
       "name": "Бердичівський",
