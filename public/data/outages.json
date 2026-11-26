@@ -1,16 +1,10 @@
 {
-  "updated_at": "2026-11-26T09:17:34.509054+00:00",
+  "updated_at": "2026-11-26T09:35:33.446274+00:00",
   "data": {
     "житомир": 0.1,
-    "троянів": 48.9,
-    "пилипівка": 5.0,
-    "рудня-городище": 100.0,
-    "роздольне": 100.0,
-    "гай": 100.0,
-    "соснівка": 100.0,
-    "глибочок": 7.7,
-    "коростишів": 7.4,
-    "мамрин": 7.7,
+    "коростишів": 8.9,
+    "мамрин": 76.9,
+    "стрижівка": 8.0,
     "шахворостівка": 100.0,
     "машина": 100.0,
     "горіхове": 100.0,
@@ -29,18 +23,18 @@
     "мошківка": 100.0
   },
   "summary": {
-    "off_percent": 0.7,
-    "off_streets": 146,
+    "off_percent": 0.5,
+    "off_streets": 95,
     "total_streets": 20239,
-    "off_settlements": 26
+    "off_settlements": 20
   },
   "raions": [
     {
       "name": "Коростишівський",
-      "off_percent": 6.5,
-      "off_streets": 38,
-      "off_settlements": 9,
-      "off_settlements_percent": 15.5
+      "off_percent": 8.9,
+      "off_streets": 52,
+      "off_settlements": 10,
+      "off_settlements_percent": 17.2
     },
     {
       "name": "Коростенський",
@@ -51,10 +45,10 @@
     },
     {
       "name": "Житомирський",
-      "off_percent": 2.4,
-      "off_streets": 66,
-      "off_settlements": 8,
-      "off_settlements_percent": 9.4
+      "off_percent": 0.0,
+      "off_streets": 1,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.2
     }
   ]
 }
