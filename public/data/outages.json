@@ -1,11 +1,10 @@
 {
-  "updated_at": "2026-11-26T14:23:36.376164+00:00",
+  "updated_at": "2026-11-26T14:41:36.922466+00:00",
   "data": {
     "мар'янівка": 66.7,
     "ставки": 100.0,
-    "радомишль": 94.0,
-    "лутівка": 100.0,
-    "чудин": 100.0,
+    "радомишль": 87.5,
+    "лутівка": 7.1,
     "рудня-городецька": 100.0,
     "кичкирі": 100.0,
     "глиниця": 100.0,
@@ -24,18 +23,18 @@
     "продубіївка": 33.3
   },
   "summary": {
-    "off_percent": 1.4,
-    "off_streets": 276,
+    "off_percent": 1.2,
+    "off_streets": 247,
     "total_streets": 20239,
-    "off_settlements": 22
+    "off_settlements": 21
   },
   "raions": [
     {
       "name": "Радомишльський",
-      "off_percent": 32.7,
-      "off_streets": 237,
-      "off_settlements": 12,
-      "off_settlements_percent": 15.2
+      "off_percent": 28.7,
+      "off_streets": 208,
+      "off_settlements": 11,
+      "off_settlements_percent": 13.9
     },
     {
       "name": "Коростишівський",
