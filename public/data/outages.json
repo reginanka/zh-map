@@ -1,16 +1,6 @@
 {
-  "updated_at": "2026-11-26T08:59:45.438743+00:00",
+  "updated_at": "2026-11-26T09:17:34.509054+00:00",
   "data": {
-    "степок": 27.8,
-    "іванопіль": 97.6,
-    "жеребки": 76.9,
-    "польова слобідка": 100.0,
-    "медведиха": 100.0,
-    "дібрівка": 60.0,
-    "мала волиця": 100.0,
-    "галіївка": 50.0,
-    "андріяшівка": 8.3,
-    "буряки": 100.0,
     "житомир": 0.1,
     "троянів": 48.9,
     "пилипівка": 5.0,
@@ -34,23 +24,17 @@
     "вишневе": 100.0,
     "калинівка": 100.0,
     "красногірка": 100.0,
+    "літки": 7.7,
     "зарубинка": 100.0,
     "мошківка": 100.0
   },
   "summary": {
-    "off_percent": 1.1,
-    "off_streets": 230,
+    "off_percent": 0.7,
+    "off_streets": 146,
     "total_streets": 20239,
-    "off_settlements": 36
+    "off_settlements": 26
   },
   "raions": [
-    {
-      "name": "Чуднівський",
-      "off_percent": 10.2,
-      "off_streets": 72,
-      "off_settlements": 9,
-      "off_settlements_percent": 15.0
-    },
     {
       "name": "Коростишівський",
       "off_percent": 6.5,
@@ -59,25 +43,18 @@
       "off_settlements_percent": 15.5
     },
     {
+      "name": "Коростенський",
+      "off_percent": 2.5,
+      "off_streets": 42,
+      "off_settlements": 9,
+      "off_settlements_percent": 6.3
+    },
+    {
       "name": "Житомирський",
       "off_percent": 2.4,
       "off_streets": 66,
       "off_settlements": 8,
       "off_settlements_percent": 9.4
-    },
-    {
-      "name": "Коростенський",
-      "off_percent": 2.4,
-      "off_streets": 41,
-      "off_settlements": 8,
-      "off_settlements_percent": 5.6
-    },
-    {
-      "name": "Бердичівський",
-      "off_percent": 1.1,
-      "off_streets": 13,
-      "off_settlements": 3,
-      "off_settlements_percent": 4.8
     }
   ]
 }
