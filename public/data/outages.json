@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26T11:23:39.952603+00:00",
+  "updated_at": "2026-11-26T11:41:38.620460+00:00",
   "data": {
     "мар'янівка": 66.7,
     "забілоччя": 50.0,
@@ -50,15 +50,14 @@
     "мамрин": 76.9,
     "стрижівка": 8.0,
     "васьковичі": 18.8,
-    "літки": 7.7,
     "михайлівка": 87.5,
     "плещівка": 100.0
   },
   "summary": {
     "off_percent": 2.6,
-    "off_streets": 531,
+    "off_streets": 530,
     "total_streets": 20239,
-    "off_settlements": 56
+    "off_settlements": 55
   },
   "raions": [
     {
@@ -78,9 +77,9 @@
     {
       "name": "Коростенський",
       "off_percent": 1.2,
-      "off_streets": 21,
-      "off_settlements": 5,
-      "off_settlements_percent": 3.5
+      "off_streets": 20,
+      "off_settlements": 4,
+      "off_settlements_percent": 2.8
     },
     {
       "name": "Житомирський",
