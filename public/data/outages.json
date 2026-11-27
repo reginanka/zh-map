@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27T08:41:37.324614+00:00",
+  "updated_at": "2026-11-27T08:59:34.046800+00:00",
   "data": {
     "фасова": 100.0,
     "небіж": 33.3,
@@ -9,19 +9,13 @@
     "рудня-фасова": 100.0,
     "томашівка": 100.0,
     "ісаківка": 100.0,
-    "краснорічка": 100.0,
-    "вигів": 10.0,
-    "горщик": 100.0,
-    "жупанівка": 100.0,
-    "дружбівка": 100.0,
-    "давидки": 87.5,
-    "видень": 100.0
+    "краснорічка": 100.0
   },
   "summary": {
-    "off_percent": 0.5,
-    "off_streets": 102,
+    "off_percent": 0.2,
+    "off_streets": 31,
     "total_streets": 20239,
-    "off_settlements": 15
+    "off_settlements": 9
   },
   "raions": [
     {
@@ -30,13 +24,6 @@
       "off_streets": 31,
       "off_settlements": 9,
       "off_settlements_percent": 12.9
-    },
-    {
-      "name": "Коростенський",
-      "off_percent": 4.2,
-      "off_streets": 71,
-      "off_settlements": 6,
-      "off_settlements_percent": 4.2
     }
   ]
 }
