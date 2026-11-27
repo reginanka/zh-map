@@ -1,41 +1,16 @@
 {
-  "updated_at": "2026-11-27T10:11:35.514441+00:00",
+  "updated_at": "2026-11-27T10:29:35.223869+00:00",
   "data": {
-    "фасова": 100.0,
-    "небіж": 33.3,
-    "червоногранітне": 100.0,
-    "лизник": 100.0,
-    "олішівка": 100.0,
-    "рудня-фасова": 100.0,
-    "томашівка": 100.0,
-    "ісаківка": 100.0,
-    "краснорічка": 100.0,
     "житомир": 0.2,
-    "мамрин": 76.9,
-    "стрижівка": 8.0,
     "івашківка": 42.9
   },
   "summary": {
-    "off_percent": 0.3,
-    "off_streets": 56,
+    "off_percent": 0.0,
+    "off_streets": 5,
     "total_streets": 20239,
-    "off_settlements": 14
+    "off_settlements": 2
   },
   "raions": [
-    {
-      "name": "Хорошівський",
-      "off_percent": 4.9,
-      "off_streets": 31,
-      "off_settlements": 9,
-      "off_settlements_percent": 12.9
-    },
-    {
-      "name": "Коростишівський",
-      "off_percent": 3.4,
-      "off_streets": 20,
-      "off_settlements": 3,
-      "off_settlements_percent": 5.2
-    },
     {
       "name": "Звягельський",
       "off_percent": 0.1,
