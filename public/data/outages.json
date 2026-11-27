@@ -1,7 +1,6 @@
 {
-  "updated_at": "2026-11-27T10:47:37.065923+00:00",
+  "updated_at": "2026-11-27T11:05:43.952613+00:00",
   "data": {
-    "житомир": 0.2,
     "івашківка": 42.9,
     "кожухівка": 100.0,
     "коростень": 5.2,
@@ -16,9 +15,9 @@
   },
   "summary": {
     "off_percent": 0.5,
-    "off_streets": 111,
+    "off_streets": 109,
     "total_streets": 20239,
-    "off_settlements": 13
+    "off_settlements": 12
   },
   "raions": [
     {
@@ -34,13 +33,6 @@
       "off_streets": 3,
       "off_settlements": 1,
       "off_settlements_percent": 0.5
-    },
-    {
-      "name": "Житомирський",
-      "off_percent": 0.1,
-      "off_streets": 2,
-      "off_settlements": 1,
-      "off_settlements_percent": 1.2
     }
   ]
 }
