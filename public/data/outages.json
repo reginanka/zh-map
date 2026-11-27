@@ -1,15 +1,31 @@
 {
-  "updated_at": "2026-11-27T06:17:30.646251+00:00",
+  "updated_at": "2026-11-27T06:35:35.157022+00:00",
   "data": {
+    "фасова": 100.0,
+    "небіж": 33.3,
+    "червоногранітне": 100.0,
+    "лизник": 100.0,
+    "олішівка": 100.0,
+    "рудня-фасова": 100.0,
+    "томашівка": 100.0,
+    "ісаківка": 100.0,
+    "краснорічка": 100.0,
     "радомишль": 9.2
   },
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 17,
+    "off_percent": 0.2,
+    "off_streets": 48,
     "total_streets": 20239,
-    "off_settlements": 1
+    "off_settlements": 10
   },
   "raions": [
+    {
+      "name": "Хорошівський",
+      "off_percent": 4.9,
+      "off_streets": 31,
+      "off_settlements": 9,
+      "off_settlements_percent": 12.9
+    },
     {
       "name": "Радомишльський",
       "off_percent": 2.3,
