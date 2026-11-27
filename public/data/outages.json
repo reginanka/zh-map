@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-11-27T12:35:32.257678+00:00",
+  "updated_at": "2026-11-27T12:53:38.656268+00:00",
   "data": {
+    "брусилів": 8.2,
     "болярка": 80.0,
     "михайлівка": 26.3,
     "осни": 50.0,
@@ -60,9 +61,9 @@
   },
   "summary": {
     "off_percent": 3.5,
-    "off_streets": 700,
+    "off_streets": 708,
     "total_streets": 20239,
-    "off_settlements": 63
+    "off_settlements": 64
   },
   "raions": [
     {
@@ -78,6 +79,13 @@
       "off_streets": 106,
       "off_settlements": 11,
       "off_settlements_percent": 7.7
+    },
+    {
+      "name": "Брусилівський",
+      "off_percent": 2.2,
+      "off_streets": 8,
+      "off_settlements": 1,
+      "off_settlements_percent": 3.3
     }
   ]
 }
