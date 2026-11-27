@@ -1,7 +1,6 @@
 {
-  "updated_at": "2026-11-27T14:05:32.876152+00:00",
+  "updated_at": "2026-11-27T14:23:31.401221+00:00",
   "data": {
-    "брусилів": 8.2,
     "пулини": 52.2,
     "івановичі": 7.1,
     "болярка": 80.0,
@@ -62,10 +61,10 @@
     "лугини": 9.9
   },
   "summary": {
-    "off_percent": 3.7,
-    "off_streets": 745,
+    "off_percent": 3.6,
+    "off_streets": 737,
     "total_streets": 20239,
-    "off_settlements": 66
+    "off_settlements": 65
   },
   "raions": [
     {
@@ -88,13 +87,6 @@
       "off_streets": 106,
       "off_settlements": 11,
       "off_settlements_percent": 7.7
-    },
-    {
-      "name": "Брусилівський",
-      "off_percent": 2.2,
-      "off_streets": 8,
-      "off_settlements": 1,
-      "off_settlements_percent": 3.3
     }
   ]
 }
