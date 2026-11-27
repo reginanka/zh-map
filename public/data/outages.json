@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27T09:35:35.823037+00:00",
+  "updated_at": "2026-11-27T09:53:35.827155+00:00",
   "data": {
     "фасова": 100.0,
     "небіж": 33.3,
@@ -9,13 +9,15 @@
     "рудня-фасова": 100.0,
     "томашівка": 100.0,
     "ісаківка": 100.0,
-    "краснорічка": 100.0
+    "краснорічка": 100.0,
+    "житомир": 0.2,
+    "івашківка": 42.9
   },
   "summary": {
     "off_percent": 0.2,
-    "off_streets": 31,
+    "off_streets": 36,
     "total_streets": 20239,
-    "off_settlements": 9
+    "off_settlements": 11
   },
   "raions": [
     {
@@ -24,6 +26,20 @@
       "off_streets": 31,
       "off_settlements": 9,
       "off_settlements_percent": 12.9
+    },
+    {
+      "name": "Звягельський",
+      "off_percent": 0.1,
+      "off_streets": 3,
+      "off_settlements": 1,
+      "off_settlements_percent": 0.5
+    },
+    {
+      "name": "Житомирський",
+      "off_percent": 0.1,
+      "off_streets": 2,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.2
     }
   ]
 }
