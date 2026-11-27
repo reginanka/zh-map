@@ -1,8 +1,6 @@
 {
-  "updated_at": "2026-11-27T15:17:33.534453+00:00",
+  "updated_at": "2026-11-27T15:35:33.524920+00:00",
   "data": {
-    "пулини": 52.2,
-    "івановичі": 7.1,
     "болярка": 80.0,
     "михайлівка": 26.3,
     "осни": 50.0,
@@ -61,10 +59,10 @@
     "лугини": 9.9
   },
   "summary": {
-    "off_percent": 3.6,
-    "off_streets": 737,
+    "off_percent": 3.5,
+    "off_streets": 700,
     "total_streets": 20239,
-    "off_settlements": 65
+    "off_settlements": 63
   },
   "raions": [
     {
@@ -73,13 +71,6 @@
       "off_streets": 594,
       "off_settlements": 52,
       "off_settlements_percent": 85.2
-    },
-    {
-      "name": "Пулинський",
-      "off_percent": 7.1,
-      "off_streets": 37,
-      "off_settlements": 2,
-      "off_settlements_percent": 3.2
     },
     {
       "name": "Коростенський",
