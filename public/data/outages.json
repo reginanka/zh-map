@@ -1,15 +1,33 @@
 {
-  "updated_at": "2026-11-28T15:53:43.434915+00:00",
+  "updated_at": "2026-11-28T16:11:37.166020+00:00",
   "data": {
+    "мала деревичка": 72.7,
+    "глезне": 88.9,
+    "коростки": 100.0,
+    "стара чортория": 100.0,
+    "нова чортория": 100.0,
+    "привітів": 100.0,
+    "горопаї": 22.2,
+    "меленці": 57.1,
+    "борушківці": 40.0,
+    "перетік": 100.0,
+    "дослідне": 100.0,
     "коростень": 8.1
   },
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 28,
+    "off_percent": 0.6,
+    "off_streets": 120,
     "total_streets": 20239,
-    "off_settlements": 1
+    "off_settlements": 12
   },
   "raions": [
+    {
+      "name": "Любарський",
+      "off_percent": 14.7,
+      "off_streets": 92,
+      "off_settlements": 11,
+      "off_settlements_percent": 23.9
+    },
     {
       "name": "Коростенський",
       "off_percent": 1.7,
@@ -19,31 +37,14 @@
     }
   ],
   "repairs": {
-    "updated_at": "2026-11-28T15:53:43.434895+00:00",
+    "updated_at": "2026-11-28T16:11:37.166000+00:00",
     "summary": {
-      "off_percent": 0.7,
-      "off_streets": 137,
+      "off_percent": 0.0,
+      "off_streets": 0,
       "total_streets": 20239,
-      "off_settlements": 8
+      "off_settlements": 0
     },
-    "raions": [
-      {
-        "name": "Коростенський",
-        "off_percent": 8.1,
-        "off_streets": 137,
-        "off_settlements": 8,
-        "off_settlements_percent": 5.6
-      }
-    ],
-    "data": {
-      "шатрище": 91.7,
-      "бехи": 70.0,
-      "коростень": 15.9,
-      "вороневе": 100.0,
-      "грозине": 83.3,
-      "немирівка": 100.0,
-      "купеч": 100.0,
-      "сингаї": 68.2
-    }
+    "raions": [],
+    "data": {}
   }
 }
