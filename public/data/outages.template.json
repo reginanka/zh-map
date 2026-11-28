@@ -34,5 +34,34 @@
     "коростишів": 32.5,
     "бердичів": 63.1,
     "коростень": 15.0
+  },
+  "repairs": {
+    "updated_at": "2026-01-01T12:00:00Z",
+    "summary": {
+      "off_percent": 3.2,
+      "off_streets": 60,
+      "total_streets": 18000,
+      "off_settlements": 8
+    },
+    "raions": [
+      {
+        "name": "Житомирський",
+        "off_percent": 6.1,
+        "off_streets": 35,
+        "off_settlements": 5,
+        "off_settlements_percent": 5.0
+      },
+      {
+        "name": "Коростишівський",
+        "off_percent": 2.4,
+        "off_streets": 25,
+        "off_settlements": 3,
+        "off_settlements_percent": 7.5
+      }
+    ],
+    "data": {
+      "житомир": 4.5,
+      "коростишів": 12.0
+    }
   }
 }
