@@ -1,7 +1,10 @@
 {
-  "updated_at": "2026-11-28T09:53:35.399777+00:00",
+  "updated_at": "2026-11-28T10:11:38.866580+00:00",
   "data": {
-    "киянка": 9.7,
+    "яблунівка": 100.0,
+    "биківка": 100.0,
+    "голубин": 100.0,
+    "нивна": 100.0,
     "кожухівка": 9.1,
     "коростень": 8.1,
     "клочеве": 90.0,
@@ -13,10 +16,10 @@
     "лугини": 9.9
   },
   "summary": {
-    "off_percent": 0.5,
-    "off_streets": 107,
+    "off_percent": 0.7,
+    "off_streets": 137,
     "total_streets": 20239,
-    "off_settlements": 12
+    "off_settlements": 14
   },
   "raions": [
     {
@@ -27,11 +30,11 @@
       "off_settlements_percent": 7.0
     },
     {
-      "name": "Звягельський",
-      "off_percent": 0.1,
-      "off_streets": 3,
-      "off_settlements": 2,
-      "off_settlements_percent": 0.9
+      "name": "Романівський",
+      "off_percent": 5.9,
+      "off_streets": 33,
+      "off_settlements": 4,
+      "off_settlements_percent": 6.7
     }
   ]
 }
