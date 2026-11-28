@@ -1,13 +1,14 @@
 {
-  "updated_at": "2026-11-28T13:31:22.380413+00:00",
+  "updated_at": "2026-11-28T13:47:32.197465+00:00",
   "data": {
+    "зарічани": 12.9,
     "коростень": 8.1
   },
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 28,
+    "off_percent": 0.2,
+    "off_streets": 40,
     "total_streets": 20239,
-    "off_settlements": 1
+    "off_settlements": 2
   },
   "raions": [
     {
@@ -16,10 +17,17 @@
       "off_streets": 28,
       "off_settlements": 1,
       "off_settlements_percent": 0.7
+    },
+    {
+      "name": "Житомирський",
+      "off_percent": 0.4,
+      "off_streets": 12,
+      "off_settlements": 1,
+      "off_settlements_percent": 1.2
     }
   ],
   "repairs": {
-    "updated_at": "2026-11-28T13:31:22.380395+00:00",
+    "updated_at": "2026-11-28T13:47:32.197446+00:00",
     "summary": {
       "off_percent": 0.7,
       "off_streets": 137,
