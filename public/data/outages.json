@@ -1,40 +1,21 @@
 {
-  "updated_at": "2026-11-28T10:11:38.866580+00:00",
+  "updated_at": "2026-11-28T10:29:39.820308+00:00",
   "data": {
-    "яблунівка": 100.0,
-    "биківка": 100.0,
-    "голубин": 100.0,
-    "нивна": 100.0,
-    "кожухівка": 9.1,
-    "коростень": 8.1,
-    "клочеве": 90.0,
-    "глухова": 100.0,
-    "бовсуни": 100.0,
-    "солов'ї": 100.0,
-    "літки": 100.0,
-    "діброва": 29.4,
-    "лугини": 9.9
+    "коростень": 8.1
   },
   "summary": {
-    "off_percent": 0.7,
-    "off_streets": 137,
+    "off_percent": 0.1,
+    "off_streets": 28,
     "total_streets": 20239,
-    "off_settlements": 14
+    "off_settlements": 1
   },
   "raions": [
     {
       "name": "Коростенський",
-      "off_percent": 6.1,
-      "off_streets": 104,
-      "off_settlements": 10,
-      "off_settlements_percent": 7.0
-    },
-    {
-      "name": "Романівський",
-      "off_percent": 5.9,
-      "off_streets": 33,
-      "off_settlements": 4,
-      "off_settlements_percent": 6.7
+      "off_percent": 1.7,
+      "off_streets": 28,
+      "off_settlements": 1,
+      "off_settlements_percent": 0.7
     }
   ]
 }
