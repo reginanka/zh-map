@@ -1,8 +1,9 @@
 {
-  "updated_at": "2026-11-28T09:17:35.531949+00:00",
+  "updated_at": "2026-11-28T09:35:42.754849+00:00",
   "data": {
     "киянка": 9.7,
     "кожухівка": 9.1,
+    "коростень": 8.1,
     "клочеве": 90.0,
     "глухова": 100.0,
     "бовсуни": 100.0,
@@ -12,18 +13,18 @@
     "лугини": 9.9
   },
   "summary": {
-    "off_percent": 0.4,
-    "off_streets": 79,
+    "off_percent": 0.5,
+    "off_streets": 107,
     "total_streets": 20239,
-    "off_settlements": 11
+    "off_settlements": 12
   },
   "raions": [
     {
       "name": "Коростенський",
-      "off_percent": 4.5,
-      "off_streets": 76,
-      "off_settlements": 9,
-      "off_settlements_percent": 6.3
+      "off_percent": 6.1,
+      "off_streets": 104,
+      "off_settlements": 10,
+      "off_settlements_percent": 7.0
     },
     {
       "name": "Звягельський",
