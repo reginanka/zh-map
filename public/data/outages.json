@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-28T16:11:37.166020+00:00",
+  "updated_at": "2026-11-28T16:29:36.428743+00:00",
   "data": {
     "мала деревичка": 72.7,
     "глезне": 88.9,
@@ -11,14 +11,13 @@
     "меленці": 57.1,
     "борушківці": 40.0,
     "перетік": 100.0,
-    "дослідне": 100.0,
-    "коростень": 8.1
+    "дослідне": 100.0
   },
   "summary": {
-    "off_percent": 0.6,
-    "off_streets": 120,
+    "off_percent": 0.5,
+    "off_streets": 92,
     "total_streets": 20239,
-    "off_settlements": 12
+    "off_settlements": 11
   },
   "raions": [
     {
@@ -27,17 +26,10 @@
       "off_streets": 92,
       "off_settlements": 11,
       "off_settlements_percent": 23.9
-    },
-    {
-      "name": "Коростенський",
-      "off_percent": 1.7,
-      "off_streets": 28,
-      "off_settlements": 1,
-      "off_settlements_percent": 0.7
     }
   ],
   "repairs": {
-    "updated_at": "2026-11-28T16:11:37.166000+00:00",
+    "updated_at": "2026-11-28T16:29:36.428725+00:00",
     "summary": {
       "off_percent": 0.0,
       "off_streets": 0,
