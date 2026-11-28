@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-28T13:29:38.191465+00:00",
+  "updated_at": "2026-11-28T13:31:22.380413+00:00",
   "data": {
     "коростень": 8.1
   },
@@ -17,5 +17,33 @@
       "off_settlements": 1,
       "off_settlements_percent": 0.7
     }
-  ]
+  ],
+  "repairs": {
+    "updated_at": "2026-11-28T13:31:22.380395+00:00",
+    "summary": {
+      "off_percent": 0.7,
+      "off_streets": 137,
+      "total_streets": 20239,
+      "off_settlements": 8
+    },
+    "raions": [
+      {
+        "name": "Коростенський",
+        "off_percent": 8.1,
+        "off_streets": 137,
+        "off_settlements": 8,
+        "off_settlements_percent": 5.6
+      }
+    ],
+    "data": {
+      "шатрище": 91.7,
+      "бехи": 70.0,
+      "коростень": 15.9,
+      "вороневе": 100.0,
+      "грозине": 83.3,
+      "немирівка": 100.0,
+      "купеч": 100.0,
+      "сингаї": 68.2
+    }
+  }
 }
