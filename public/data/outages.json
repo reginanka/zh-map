@@ -1,23 +1,10 @@
 {
-  "updated_at": "2026-11-28T06:53:33.173647+00:00",
-  "data": {
-    "житомир": 0.1,
-    "світин": 76.5,
-    "вереси": 24.7
-  },
+  "updated_at": "2026-11-28T07:11:33.611645+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.2,
-    "off_streets": 38,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 4
-  },
-  "raions": [
-    {
-      "name": "Житомирський",
-      "off_percent": 1.4,
-      "off_streets": 38,
-      "off_settlements": 4,
-      "off_settlements_percent": 4.7
-    }
-  ]
+    "off_settlements": 0
+  }
 }
