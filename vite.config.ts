@@ -57,7 +57,10 @@ export default defineConfig(() => {
           globIgnores: ['**/data/outages*.json'],
           runtimeCaching: [
             {
-              urlPattern: /data\/outages\.json/,
+              // Лише файл із нашого домену (fallback). Запити до GitHub API сервіс-воркер не чіпає,
+              // щоб працювала перевірка свіжості через ETag.
+              urlPattern: ({url}: {url: URL}) =>
+                url.origin === self.location.origin && /data\/outages\.json$/.test(url.pathname),
               handler: 'NetworkFirst',
               options: {
                 cacheName: 'outages-data',
