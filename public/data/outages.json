@@ -1,24 +1,10 @@
 {
-  "updated_at": "2026-11-27T23:59:29.695278+00:00",
-  "data": {
-    "науменка": 100.0,
-    "нераж": 100.0,
-    "видибор": 50.0,
-    "ганнопіль": 100.0
-  },
+  "updated_at": "2026-11-28T00:17:32.311124+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.1,
-    "off_streets": 20,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 4
-  },
-  "raions": [
-    {
-      "name": "Черняхівський",
-      "off_percent": 2.6,
-      "off_streets": 20,
-      "off_settlements": 4,
-      "off_settlements_percent": 7.0
-    }
-  ]
+    "off_settlements": 0
+  }
 }
