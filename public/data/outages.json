@@ -1,35 +1,14 @@
 {
-  "updated_at": "2026-11-28T18:17:34.211680+00:00",
-  "data": {
-    "мала деревичка": 72.7,
-    "глезне": 88.9,
-    "коростки": 100.0,
-    "стара чортория": 100.0,
-    "нова чортория": 100.0,
-    "привітів": 100.0,
-    "горопаї": 22.2,
-    "меленці": 57.1,
-    "борушківці": 40.0,
-    "перетік": 100.0,
-    "дослідне": 100.0
-  },
+  "updated_at": "2026-11-28T18:35:35.676894+00:00",
+  "data": {},
   "summary": {
-    "off_percent": 0.5,
-    "off_streets": 92,
+    "off_percent": 0.0,
+    "off_streets": 0,
     "total_streets": 20239,
-    "off_settlements": 11
+    "off_settlements": 0
   },
-  "raions": [
-    {
-      "name": "Любарський",
-      "off_percent": 14.7,
-      "off_streets": 92,
-      "off_settlements": 11,
-      "off_settlements_percent": 23.9
-    }
-  ],
   "repairs": {
-    "updated_at": "2026-11-28T18:17:34.211662+00:00",
+    "updated_at": "2026-11-28T18:35:35.676874+00:00",
     "summary": {
       "off_percent": 0.0,
       "off_streets": 0,
