@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-11-28T08:59:40.760593+00:00",
+  "updated_at": "2026-11-28T09:17:35.531949+00:00",
   "data": {
+    "киянка": 9.7,
     "кожухівка": 9.1,
     "клочеве": 90.0,
     "глухова": 100.0,
@@ -12,9 +13,9 @@
   },
   "summary": {
     "off_percent": 0.4,
-    "off_streets": 76,
+    "off_streets": 79,
     "total_streets": 20239,
-    "off_settlements": 9
+    "off_settlements": 11
   },
   "raions": [
     {
@@ -23,6 +24,13 @@
       "off_streets": 76,
       "off_settlements": 9,
       "off_settlements_percent": 6.3
+    },
+    {
+      "name": "Звягельський",
+      "off_percent": 0.1,
+      "off_streets": 3,
+      "off_settlements": 2,
+      "off_settlements_percent": 0.9
     }
   ]
 }
