@@ -62,11 +62,48 @@ interface OutagesRaionItem {
   off_settlements_percent?: number;
 }
 
-interface OutagesPayload {
-  updated_at: string | null;
+type OutageMode = 'emergency' | 'repairs';
+
+/** Один «зріз» відключень: або аварійні (корінь JSON), або ремонти (блок repairs). */
+interface OutagesModeSlice {
+  updated_at?: string | null;
   summary?: OutagesSummary;
   raions?: OutagesRaionItem[];
   data: Record<string, number>;
+}
+
+interface OutagesPayload extends OutagesModeSlice {
+  updated_at: string | null;
+  repairs?: OutagesModeSlice;
+}
+
+const DEFAULT_OUTAGE_MODE: OutageMode = 'emergency';
+
+const OUTAGE_MODE_OPTIONS: Array<{ id: OutageMode; label: string; title: string }> = [
+  { id: 'emergency', label: 'Аварійні', title: 'Аварійні відключення' },
+  { id: 'repairs', label: 'Ремонти', title: 'Планові ремонти' },
+];
+
+function resolveModeSlice(payload: OutagesPayload, mode: OutageMode): OutagesModeSlice {
+  if (mode === 'repairs') {
+    const repairs = payload.repairs;
+    if (!repairs) {
+      // Блоку repairs ще немає — усі пункти показують 0%
+      return { updated_at: payload.updated_at, data: {} };
+    }
+    return {
+      updated_at: repairs.updated_at ?? payload.updated_at,
+      summary: repairs.summary,
+      raions: repairs.raions,
+      data: repairs.data ?? {},
+    };
+  }
+  return {
+    updated_at: payload.updated_at,
+    summary: payload.summary,
+    raions: payload.raions,
+    data: payload.data ?? {},
+  };
 }
 
 // MapLibre 6 шукає воркер поруч із бандлом, а Vite його туди не кладе — вказуємо файл явно.
@@ -82,13 +119,18 @@ const VILLAGE_LABEL_NO_COLLISION_ZOOM = 11.5;
 function getOblastFitPadding(): maplibregl.PaddingOptions {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
   if (isMobile) {
-    return { top: 76, bottom: 156, left: 18, right: 18 };
+    // Верхній ряд кнопок (44px) + другий ряд із перемикачем режимів (36px) + відступи
+    return { top: 116, bottom: 156, left: 18, right: 18 };
   }
   return { top: 44, bottom: 44, left: 48, right: 48 };
 }
 // Щоб брати дані з іншого репозиторію, замініть на:
 // 'https://raw.githubusercontent.com/<USER>/<REPO>/main/outages.json'
 const OUTAGES_URL = './data/outages.json';
+// Свіжа копія файлу напряму з репозиторію (публічний, без токена; анонімний ліміт GitHub — 60 запитів/год з IP).
+// Якщо переносите репозиторій — змініть власника/назву/гілку.
+const OUTAGES_API_URL =
+  'https://api.github.com/repos/reginanka/zh-map/contents/public/data/outages.json?ref=main';
 
 const DARK_ISOLATED_STYLE: maplibregl.StyleSpecification = {
   version: 8,
@@ -125,10 +167,10 @@ function buildFormulaGradientCss(): string {
   return `linear-gradient(90deg, ${stops.join(', ')})`;
 }
 
-function formatStatusLabel(pct: number | null): string {
+function formatStatusLabel(pct: number | null, mode: OutageMode): string {
   if (pct === null) return 'немає даних';
   if (pct === 0) return 'світло є';
-  if (pct >= 80) return 'аварія · без світла';
+  if (pct >= 80) return mode === 'repairs' ? 'ремонт · без світла' : 'аварія · без світла';
   return 'без світла';
 }
 
@@ -166,14 +208,68 @@ function normalizeOutageKey(raw: unknown): string {
     .trim();
 }
 
-async function fetchOutagesPayload(): Promise<OutagesPayload> {
+function isOutagesPayload(value: unknown): value is OutagesPayload {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    typeof (value as { data?: unknown }).data === 'object' &&
+    (value as { data?: unknown }).data !== null
+  );
+}
+
+// Якщо GitHub API відповів лімітом (403/429) — на цей час переходимо лише на Pages, щоб не штурмувати API.
+let outagesApiBlockedUntil = 0;
+const OUTAGES_API_COOLDOWN_MS = 10 * 60 * 1000;
+const OUTAGES_API_TIMEOUT_MS = 6000;
+
+/**
+ * Основний шлях — GitHub API (без токена): файл доступний одразу після коміту бота, без очікування
+ * збірки й деплою Pages. Якщо API недоступний, відповів лімітом або віддав некоректні дані —
+ * беремо файл із Pages (повільніше, але надійно).
+ */
+async function fetchFromGithubApi(): Promise<OutagesPayload> {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), OUTAGES_API_TIMEOUT_MS);
+  try {
+    const res = await fetch(OUTAGES_API_URL, {
+      // no-cache: браузер щоразу перевіряє свіжість (ETag), а не бере власний кеш на 60 с
+      cache: 'no-cache',
+      headers: { Accept: 'application/vnd.github.raw+json' },
+      signal: controller.signal,
+    });
+    if (res.status === 403 || res.status === 429) {
+      outagesApiBlockedUntil = Date.now() + OUTAGES_API_COOLDOWN_MS;
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json: unknown = await res.json();
+    if (!isOutagesPayload(json)) throw new Error('Invalid payload');
+    return json;
+  } finally {
+    window.clearTimeout(timer);
+  }
+}
+
+async function fetchFromPages(): Promise<OutagesPayload> {
   const res = await fetch(`${OUTAGES_URL}?t=${Date.now()}`, {
     cache: 'no-store',
   });
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
   }
-  return (await res.json()) as OutagesPayload;
+  const json: unknown = await res.json();
+  if (!isOutagesPayload(json)) throw new Error('Invalid payload');
+  return json;
+}
+
+async function fetchOutagesPayload(): Promise<OutagesPayload> {
+  if (Date.now() >= outagesApiBlockedUntil) {
+    try {
+      return await fetchFromGithubApi();
+    } catch {
+      // падаємо на Pages
+    }
+  }
+  return fetchFromPages();
 }
 
 interface BaseVillageFeature {
@@ -188,6 +284,43 @@ interface BaseVillageFeature {
   strippedName: string;
 }
 
+function ModeSwitch({
+  mode,
+  onChange,
+  className = '',
+}: {
+  mode: OutageMode;
+  onChange: (next: OutageMode) => void;
+  className?: string;
+}) {
+  return (
+    <div
+      role="group"
+      aria-label="Тип відключень"
+      className={`inline-flex items-center gap-1 p-1 h-9 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] ${className}`}
+    >
+      {OUTAGE_MODE_OPTIONS.map((opt) => {
+        const active = mode === opt.id;
+        return (
+          <button
+            key={opt.id}
+            type="button"
+            aria-pressed={active}
+            onClick={() => onChange(opt.id)}
+            className={`h-7 px-3 rounded-lg text-[12.5px] font-semibold whitespace-nowrap transition-colors ${
+              active
+                ? 'bg-[#fcd34d] text-[#090d16] shadow-sm'
+                : 'text-slate-300 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            {opt.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function App() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -200,6 +333,10 @@ export default function App() {
   // Відбиток останніх застосованих даних: якщо після чергового опитування дані не змінились —
   // мапу й інтерфейс не чіпаємо взагалі (бот оновлює outages.json раз на ~18 хв, а опитування — кожні 2).
   const lastPayloadSigRef = useRef<string>('');
+  // Останній завантажений outages.json — щоб перемикання режиму рахувалось з пам'яті без fetch.
+  const lastPayloadRef = useRef<OutagesPayload | null>(null);
+  const modeRef = useRef<OutageMode>(DEFAULT_OUTAGE_MODE);
+  const [mode, setMode] = useState<OutageMode>(DEFAULT_OUTAGE_MODE);
   const [settlements, setSettlements] = useState<SettlementItem[]>([]);
   const [outagesSummary, setOutagesSummary] = useState<OutagesSummary | null>(null);
   const [outagesRaions, setOutagesRaions] = useState<OutagesRaionItem[] | null>(null);
@@ -215,13 +352,16 @@ export default function App() {
     pct: number | null;
   } | null>(null);
 
-  const applyOutagesPayload = useCallback((outagesPayload: OutagesPayload): GeoJsonFeatureCollection => {
-    setUpdatedAt(outagesPayload.updated_at);
-    setOutagesSummary(outagesPayload.summary ?? null);
-    setOutagesRaions(outagesPayload.raions ?? null);
+  const applyOutagesPayload = useCallback(
+    (outagesPayload: OutagesPayload, outageMode: OutageMode): GeoJsonFeatureCollection => {
+    lastPayloadRef.current = outagesPayload;
+    const slice = resolveModeSlice(outagesPayload, outageMode);
+    setUpdatedAt(slice.updated_at ?? outagesPayload.updated_at ?? null);
+    setOutagesSummary(slice.summary ?? null);
+    setOutagesRaions(slice.raions ?? null);
     setLoadError(null);
 
-    const outagesMap = outagesPayload.data || {};
+    const outagesMap = slice.data || {};
     const normalizedOutagesMap: Record<string, number> = {};
     for (const [k, v] of Object.entries(outagesMap)) {
       if (v === undefined || v === null) continue;
@@ -286,7 +426,9 @@ export default function App() {
       type: 'FeatureCollection',
       features,
     };
-  }, []);
+    },
+    []
+  );
 
   const refreshOutagesData = useCallback(
     async (manual = false) => {
@@ -308,7 +450,8 @@ export default function App() {
         if (sig === lastPayloadSigRef.current) return;
         lastPayloadSigRef.current = sig;
 
-        const updatedGeojson = applyOutagesPayload(payload);
+        // Застосовуємо поточний активний режим, а не скидаємось на «Аварійні»
+        const updatedGeojson = applyOutagesPayload(payload, modeRef.current);
 
         const source = mapRef.current?.getSource('villages') as maplibregl.GeoJSONSource | undefined;
         if (source) {
@@ -594,7 +737,7 @@ export default function App() {
 
         baseVillagesRef.current = baseVillages;
         lastPayloadSigRef.current = JSON.stringify(outagesPayload);
-        const styledGeojson = applyOutagesRef.current(outagesPayload);
+        const styledGeojson = applyOutagesRef.current(outagesPayload, modeRef.current);
         const indexList: SettlementItem[] = styledGeojson.features.map((feat, idx) => ({
           featureId: idx,
           id: baseVillages[idx].id,
@@ -997,6 +1140,22 @@ export default function App() {
     };
   }, []);
 
+  const handleModeChange = (next: OutageMode) => {
+    if (next === modeRef.current) return;
+    modeRef.current = next;
+    setMode(next);
+    setHoverInfo(null);
+
+    // Перерахунок з пам'яті — без мережевих запитів
+    const payload = lastPayloadRef.current;
+    if (!payload) return;
+    const updatedGeojson = applyOutagesPayload(payload, next);
+    const source = mapRef.current?.getSource('villages') as maplibregl.GeoJSONSource | undefined;
+    if (source) {
+      source.setData(updatedGeojson as unknown as Parameters<maplibregl.GeoJSONSource['setData']>[0]);
+    }
+  };
+
   const handleSelectSettlement = (item: SettlementItem) => {
     setSituationOpen(false);
     const map = mapRef.current;
@@ -1011,7 +1170,7 @@ export default function App() {
 
     const bounds = getFeatureBounds(item.geometry);
     map.fitBounds(bounds, {
-      padding: { top: 90, bottom: 110, left: 60, right: 60 },
+      padding: { top: window.innerWidth < 640 ? 130 : 90, bottom: 110, left: 60, right: 60 },
       maxZoom: 12.5,
       duration: 850,
     });
@@ -1028,7 +1187,7 @@ export default function App() {
     if (!bounds || !mapRef.current) return;
     hasUserInteractedRef.current = true;
     mapRef.current.fitBounds(bounds, {
-      padding: { top: 80, bottom: 90, left: 50, right: 50 },
+      padding: { top: window.innerWidth < 640 ? 120 : 80, bottom: 90, left: 50, right: 50 },
       maxZoom: 10.2,
       duration: 800,
     });
@@ -1063,21 +1222,25 @@ export default function App() {
         aria-label="Інтерактивна мапа відключень Житомирської області"
       />
 
-      {/* Кнопка перегляду ситуації по області (верхній лівий кут) */}
-      <button
-        type="button"
-        onClick={() => setSituationOpen(true)}
-        aria-label="Переглянути, скільки населених пунктів без світла по області"
-        className="absolute top-4 left-4 z-20 inline-flex items-center gap-2.5 h-11 px-3.5 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/25 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/55 active:scale-[0.98] transition-all whitespace-nowrap"
-      >
-        <BarChart3 className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
-        <span>Загалом без світла</span>
-        {settlements.length > 0 && (
-          <span className="font-mono-tabular text-amber-300 font-bold">
-            {situationStats.oblastOffPct}%
-          </span>
-        )}
-      </button>
+      {/* Верхній лівий кут: «Загалом без світла» + перемикач режимів
+          (на мобільному — другим рядком, на десктопі — поруч) */}
+      <div className="absolute top-4 left-4 z-20 flex flex-col sm:flex-row items-start sm:items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setSituationOpen(true)}
+          aria-label="Переглянути, скільки населених пунктів без світла по області"
+          className="inline-flex items-center gap-2.5 h-11 px-3.5 bg-[#0d101a]/88 backdrop-blur-md border border-amber-400/25 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)] text-[13px] font-semibold text-slate-50 hover:border-amber-400/55 active:scale-[0.98] transition-all whitespace-nowrap"
+        >
+          <BarChart3 className="w-4 h-4 text-amber-400 shrink-0" aria-hidden="true" />
+          <span>Загалом без світла</span>
+          {settlements.length > 0 && (
+            <span className="font-mono-tabular text-amber-300 font-bold">
+              {situationStats.oblastOffPct}%
+            </span>
+          )}
+        </button>
+        <ModeSwitch mode={mode} onChange={handleModeChange} />
+      </div>
 
       {/* Кнопка скидання виду */}
       <button
@@ -1119,7 +1282,7 @@ export default function App() {
             <span className="font-mono-tabular">
               {hoverInfo.pct !== null ? `${hoverInfo.pct}%` : '—'}
             </span>
-            <span>{formatStatusLabel(hoverInfo.pct)}</span>
+            <span>{formatStatusLabel(hoverInfo.pct, mode)}</span>
           </div>
         </div>
       )}
@@ -1128,7 +1291,7 @@ export default function App() {
       {selectedInfo && (
         <aside
           aria-live="polite"
-          className="absolute top-[70px] left-3 right-3 sm:top-auto sm:left-auto sm:bottom-4 sm:right-4 z-25 sm:w-[300px] px-4 py-3.5 bg-[#0d101a]/92 backdrop-blur-lg border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)]"
+          className="absolute top-[112px] left-3 right-3 sm:top-auto sm:left-auto sm:bottom-4 sm:right-4 z-25 sm:w-[300px] px-4 py-3.5 bg-[#0d101a]/92 backdrop-blur-lg border border-amber-400/20 rounded-xl shadow-[0_10px_36px_rgba(0,0,0,0.55)]"
         >
           <div className="flex items-start justify-between gap-3">
             <div>
@@ -1163,7 +1326,7 @@ export default function App() {
               {selectedInfo.pct !== null ? `${selectedInfo.pct}%` : '—'}
             </span>
             <span className="text-[13px] text-slate-300">
-              {formatStatusLabel(selectedInfo.pct)}
+              {formatStatusLabel(selectedInfo.pct, mode)}
             </span>
           </div>
         </aside>
@@ -1218,6 +1381,9 @@ export default function App() {
             {/* Верхній блок: % зі світлом + кнопка закриття */}
             <div className="flex items-start justify-between gap-3">
               <div>
+                <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-amber-300/90">
+                  {OUTAGE_MODE_OPTIONS.find((o) => o.id === mode)?.title}
+                </div>
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="font-mono-tabular text-3xl sm:text-4xl font-bold text-[#fbbf24] tracking-tight">
                     {situationStats.oblastOffPct}%
@@ -1241,6 +1407,9 @@ export default function App() {
                 <X className="w-4 h-4" />
               </button>
             </div>
+
+            {/* Той самий перемикач режимів у модалці — для порівняння без закриття вікна */}
+            <ModeSwitch mode={mode} onChange={handleModeChange} className="mt-3 self-start" />
 
             {/* Загальний прогрес-бар області */}
             <div className="mt-3.5 h-3.5 w-full rounded-full bg-[#17213a] overflow-hidden">
