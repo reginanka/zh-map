@@ -1,10 +1,28 @@
 {
-  "updated_at": "2026-11-28T07:47:35.154106+00:00",
-  "data": {},
+  "updated_at": "2026-11-28T08:05:34.463974+00:00",
+  "data": {
+    "кожухівка": 9.1,
+    "клочеве": 90.0,
+    "глухова": 100.0,
+    "бовсуни": 100.0,
+    "солов'ї": 100.0,
+    "літки": 100.0,
+    "діброва": 29.4,
+    "лугини": 9.9
+  },
   "summary": {
-    "off_percent": 0.0,
-    "off_streets": 0,
+    "off_percent": 0.4,
+    "off_streets": 76,
     "total_streets": 20239,
-    "off_settlements": 0
-  }
+    "off_settlements": 9
+  },
+  "raions": [
+    {
+      "name": "Коростенський",
+      "off_percent": 4.5,
+      "off_streets": 76,
+      "off_settlements": 9,
+      "off_settlements_percent": 6.3
+    }
+  ]
 }
